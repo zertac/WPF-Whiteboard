@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -36,7 +37,8 @@ namespace XPDFDoc
     public static Dictionary<string, XShape> Objects;
     public static bool IsEditMode;
 
-    public static bool IsObjectCreated;
+    public static bool IsObjectCreating;
+    public static bool IsDrawEnded = true;
 
     public static void Initialize(Canvas canvas)
     {
@@ -113,8 +115,12 @@ namespace XPDFDoc
       }
       else if (DrawType == Type.Triangle)
       {
-        var o = new XTriangle();
-        Objects.Add(o.Id, o);
+        if (IsDrawEnded)
+        {
+          var o = new XTriangle();
+          Objects.Add(o.Id, o);
+        }
+
         Objects.Last().Value.ToType<XTriangle>().AddPoint(e);
       }
       else if (DrawType == Type.Line)
@@ -134,7 +140,7 @@ namespace XPDFDoc
     public static void UpdateDraw(Point e)
     {
       if (IsEditMode) return;
-      if (!IsObjectCreated) return;
+      if (!IsObjectCreating) return;
 
       if (DrawType == Type.Rectangle)
       {
@@ -176,7 +182,7 @@ namespace XPDFDoc
       }
       else if (DrawType == Type.Triangle)
       {
-
+        //Objects.Last().Value.Finish();
       }
       else if (DrawType == Type.Line)
       {
@@ -188,7 +194,7 @@ namespace XPDFDoc
         Objects.Last().Value.Finish();
       }
 
-      IsObjectCreated = false;
+      //IsObjectCreating = false;
     }
   }
 }

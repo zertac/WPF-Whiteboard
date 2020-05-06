@@ -64,9 +64,11 @@ namespace XPDFDoc
 
           if (OwnedControl != null)
           {
-            var o = OwnedControl as RichTextBox;
-            o.BorderBrush = new SolidColorBrush(Colors.Aqua);
-            o.BorderThickness = new Thickness(3);
+            if (OwnedControl is RichTextBox o)
+            {
+              o.BorderBrush = new SolidColorBrush(Colors.Aqua);
+              o.BorderThickness = new Thickness(3);
+            }
           }
         }
         else
@@ -107,6 +109,8 @@ namespace XPDFDoc
         OwnedShape.Opacity = StyleHelper.CurrentStyle.Opacity;
 
       Drawer.DrawType = Drawer.ContinuousDraw ? Drawer.DrawType : Type.None;
+      Drawer.IsObjectCreating = false;
+      Drawer.IsDrawEnded = true;
     }
 
     public void Cancel()

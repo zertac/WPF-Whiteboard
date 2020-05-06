@@ -23,7 +23,7 @@ namespace XPDFDoc
       StartPoint = e;
 
       Drawing = new Polygon();
-      Drawing.Fill = StyleHelper.CurrentStyle.Background;
+      Drawing.Fill = new SolidColorBrush(Colors.Black);
       Drawing.Stroke = StyleHelper.CurrentStyle.Border;
       Drawing.StrokeThickness = StyleHelper.CurrentStyle.BorderSize;
       Drawing.Opacity = 0.2;
@@ -42,10 +42,13 @@ namespace XPDFDoc
       Canvas.SetTop(Drawing, e.Y);
 
       Drawer.Page.Children.Add(Drawing);
+      Drawer.IsObjectCreating = true;
+      Drawer.IsDrawEnded = false;
     }
 
     public void Update(Point e)
     {
+      Console.WriteLine(_addedPoint);
       switch (_addedPoint)
       {
         case 1:
@@ -68,17 +71,13 @@ namespace XPDFDoc
     {
       if (_addedPoint < 3) return;
 
-      IsDrawing = false;
-      OwnedShape.Opacity = StyleHelper.CurrentStyle.Opacity;
-
-      Drawer.DrawType = Drawer.ContinuousDraw ? Drawer.DrawType : Drawers.Type.None;
+      base.Finish();
 
       Drawer.Page.Children.Remove(_shadowLine);
 
       FindMinPoints();
 
       IsFinished = true;
-
       Drawing.Stretch = Stretch.Fill;
     }
 

@@ -27,6 +27,7 @@ namespace XPDFDoc.Drawers
       Drawing.MouseLeftButtonDown += base.OnSelect;
 
       Drawer.Page.Children.Add(Drawing);
+      Drawer.IsObjectCreating = true;
     }
 
     public void Update(Point e)
