@@ -85,11 +85,16 @@ namespace XPDFDoc
       {
         Drawer.DrawType = Type.Text;
       };
-    }
 
-    private void Test()
-    {
+      ChkCont.Click += delegate (object sender, RoutedEventArgs args)
+      {
+        Drawer.ContinuousDraw = ChkCont.IsChecked == true ? true : false;
+      };
 
+      BtnObjectCount.Click += delegate (object sender, RoutedEventArgs args)
+         {
+           MessageBox.Show(Drawer.Objects.Count.ToString());
+         };
     }
 
     private void MainWindow_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

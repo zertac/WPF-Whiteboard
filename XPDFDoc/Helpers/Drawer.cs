@@ -20,7 +20,7 @@ namespace XPDFDoc
       {
         _drawType = value;
 
-        InitTool();
+        //InitTool();
       }
     }
 
@@ -35,6 +35,8 @@ namespace XPDFDoc
     public static bool ContinuousDraw;
     public static Dictionary<string, XShape> Objects;
     public static bool IsEditMode;
+
+    public static bool IsObjectCreated;
 
     public static void Initialize(Canvas canvas)
     {
@@ -71,11 +73,10 @@ namespace XPDFDoc
     {
       if (e.ClickCount == 1)
       {
-
-        if (Objects.Count(x => x.Value.IsSelected) > 0)
-        {
-          AdornerHelper.RemoveAllAdorners();
-        }
+        //if (Objects.Count(x => x.Value.IsSelected) > 0)
+        //{
+        //  AdornerHelper.RemoveAllAdorners();
+        //}
 
         IsEditMode = false;
 
@@ -86,6 +87,7 @@ namespace XPDFDoc
       else if (e.ClickCount == 2)
       {
         Drawer.DrawType = Type.None;
+        AdornerHelper.RemoveAllAdorners();
       }
     }
 
@@ -99,22 +101,32 @@ namespace XPDFDoc
       }
       else if (DrawType == Type.Rectangle)
       {
+        var o = new XRectangle();
+        Objects.Add(o.Id, o);
         Objects.Last().Value.ToType<XRectangle>().Create(e);
       }
       else if (DrawType == Type.Ellipse)
       {
+        var o = new XEllipse();
+        Objects.Add(o.Id, o);
         Objects.Last().Value.ToType<XEllipse>().Create(e);
       }
       else if (DrawType == Type.Triangle)
       {
+        var o = new XTriangle();
+        Objects.Add(o.Id, o);
         Objects.Last().Value.ToType<XTriangle>().AddPoint(e);
       }
       else if (DrawType == Type.Line)
       {
+        var o = new XLine();
+        Objects.Add(o.Id, o);
         Objects.Last().Value.ToType<XLine>().Create(e);
       }
       else if (DrawType == Type.Text)
       {
+        var o = new XText();
+        Objects.Add(o.Id, o);
         Objects.Last().Value.ToType<XText>().Create(e);
       }
     }
@@ -122,6 +134,7 @@ namespace XPDFDoc
     public static void UpdateDraw(Point e)
     {
       if (IsEditMode) return;
+      if (!IsObjectCreated) return;
 
       if (DrawType == Type.Rectangle)
       {
@@ -174,37 +187,8 @@ namespace XPDFDoc
         Objects.Last().Value.Edit();
         Objects.Last().Value.Finish();
       }
-    }
 
-    private static void InitTool()
-    {
-      if (IsEditMode) return;
-
-      if (DrawType == Type.Rectangle)
-      {
-        var o = XShape.Init<XRectangle>();
-        Objects.Add(o.Id, o);
-      }
-      else if (DrawType == Type.Ellipse)
-      {
-        var o = XShape.Init<XEllipse>();
-        Objects.Add(o.Id, o);
-      }
-      else if (DrawType == Type.Triangle)
-      {
-        var o = XShape.Init<XTriangle>();
-        Objects.Add(o.Id, o);
-      }
-      else if (DrawType == Type.Line)
-      {
-        var o = XShape.Init<XLine>();
-        Objects.Add(o.Id, o);
-      }
-      else if (DrawType == Type.Text)
-      {
-        var o = XShape.Init<XText>();
-        Objects.Add(o.Id, o);
-      }
+      IsObjectCreated = false;
     }
   }
 }

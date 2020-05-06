@@ -39,6 +39,7 @@ namespace XPDFDoc.Drawers
 
       //Style = new DrawerStyle(StyleHelper.CurrentStyle);
       Drawer.Page.Children.Add(Shadow);
+      Drawer.IsObjectCreated = true;
     }
 
     public void Update(Point e)

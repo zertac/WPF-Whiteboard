@@ -19,11 +19,13 @@ namespace XPDFDoc.Helpers
 
     public static void StartSelect(Point e)
     {
+      return;
+
       if (Drawer.DrawType == Type.MoveResize) return;
 
       _startPoint = e;
       IsDrawing = true;
-      _rect = new System.Windows.Shapes.Rectangle();
+      _rect = new Rectangle();
       _rect.Width = 0;
       _rect.Height = 0;
       _rect.Fill = new SolidColorBrush(Colors.Blue);
@@ -130,6 +132,8 @@ namespace XPDFDoc.Helpers
 
     private static bool IsContains(XShape o)
     {
+      return false;
+
       var item = (UIElement)o.OwnedShape;
       if (item == null) return false;
 

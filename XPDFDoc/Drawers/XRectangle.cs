@@ -35,6 +35,7 @@ namespace XPDFDoc
       Canvas.SetTop(Drawing, e.Y);
 
       Drawer.Page.Children.Add(Drawing);
+      Drawer.IsObjectCreated = true;
     }
 
     public void Update(Point e)

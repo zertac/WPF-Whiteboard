@@ -10,74 +10,100 @@
     Height="450"
     mc:Ignorable="d">
     <Grid>
-        <Canvas x:Name="MainCanvas" Background="White" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Button
+                x:Name="BtnArrow"
+                Width="40"
+                Height="20"
+                Margin="4"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="Arrow" />
+
+            <Button
+                x:Name="BtnRectangle"
+                Width="40"
+                Height="20"
+                Margin="4"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="Rectangle" />
+
+            <Button
+                x:Name="BtnEllipse"
+                Width="40"
+                Height="20"
+                Margin="4"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="Ellipse" />
+
+            <Button
+                x:Name="BtnTriangle"
+                Width="40"
+                Height="20"
+                Margin="4"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="Triangle" />
+
+
+            <Button
+                x:Name="BtnLine"
+                Width="40"
+                Height="20"
+                Margin="4"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="Line" />
+
+            <Button
+                x:Name="BtnText"
+                Width="40"
+                Height="20"
+                Margin="4"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="Text" />
+
             <Button
                 x:Name="BtnStyle"
                 Width="40"
                 Height="20"
+                Margin="4"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Content="Style" Canvas.Left="57" Canvas.Top="304" />
-        </Canvas>
+                Content="Style" />
+
+            <CheckBox
+                x:Name="ChkCont"
+                Margin="6"
+                Content="Continuous Draw" />
+
+            <Button
+                x:Name="BtnObjectCount"
+                Width="100"
+                Height="20"
+                Margin="4"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="Object Count" />
+        </StackPanel>
+
+        <Canvas
+            x:Name="MainCanvas"
+            Grid.Row="1"
+            Background="White" />
+
         <InkCanvas
             x:Name="InkCanvas"
+            Grid.Row="1"
             Background="{x:Null}"
             Visibility="Hidden" />
-
-        <Button
-            x:Name="BtnArrow"
-            Width="40"
-            Height="20"
-            Margin="57,131,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Content="Arrow" />
-        <Button
-            x:Name="BtnRectangle"
-            Width="40"
-            Height="20"
-            Margin="57,169,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Content="Rectangle" />
-
-        <Button
-            x:Name="BtnEllipse"
-            Width="40"
-            Height="20"
-            Margin="57,204,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Content="Ellipse" />
-
-        <Button
-            x:Name="BtnTriangle"
-            Width="40"
-            Height="20"
-            Margin="57,239,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Content="Triangle" />
-
-        <Button
-            x:Name="BtnLine"
-            Width="40"
-            Height="20"
-            Margin="57,270,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Content="Line" />
-
-
-        <Button
-            x:Name="BtnText"
-            Width="40"
-            Height="20"
-            Margin="57,337,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Content="Text" />
-
-
     </Grid>
 </Window>
