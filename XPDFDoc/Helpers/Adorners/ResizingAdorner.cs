@@ -41,9 +41,20 @@ namespace XPDFDoc
 
     private UIElement mainAdorner;
 
+    private bool showResizeBorder;
+
     public ResizingAdorner(UIElement adorned) : base(adorned)
     {
       SetDefaults();
+
+      if (adorned is RichTextBox)
+      {
+        showResizeBorder = false;
+      }
+      else
+      {
+        showResizeBorder = true;
+      }
     }
 
     private void SetDefaults()
@@ -225,7 +236,7 @@ namespace XPDFDoc
         {
           moveThumb.Visibility = Visibility.Hidden;
         }
-     
+
         element.Tag.ToType<XShape>().OnDoubleClick?.Invoke();
       }
     }
@@ -266,14 +277,13 @@ namespace XPDFDoc
       middleLeftThumb.Arrange(new Rect(new Point(-offset, AdornedElement.RenderSize.Height / 2 - THUMB_SIZE / 2), sz));
       middleRightThumb.Arrange(new Rect(new Point(AdornedElement.RenderSize.Width - offset, AdornedElement.RenderSize.Height / 2 - THUMB_SIZE / 2), sz));
 
-
-
-      // rectMove.Arrange(new Rect(new Point(-offset, -offset), new Size(Width = AdornedElement.RenderSize.Width + THUMB_SIZE, Height = AdornedElement.RenderSize.Height + THUMB_SIZE)));
-      //thumbRectangle.Arrange(new Rect(new Point(-offset, -offset), new Size(Width = AdornedElement.RenderSize.Width + THUMB_SIZE, Height = AdornedElement.RenderSize.Height + THUMB_SIZE)));
+      if (showResizeBorder)
+      {
+        thumbRectangle.Arrange(new Rect(new Point(-offset, -offset), new Size(Width = AdornedElement.RenderSize.Width + THUMB_SIZE, Height = AdornedElement.RenderSize.Height + THUMB_SIZE)));
+      }
 
       moveThumb.Width = finalSize.Width;
       moveThumb.Height = finalSize.Height;
-
 
       var r = new Rect(0, 0, finalSize.Width - offset, finalSize.Height - offset);
       moveThumb.Arrange(r);

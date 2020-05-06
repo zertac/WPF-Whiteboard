@@ -28,7 +28,7 @@ namespace XPDFDoc.Helpers
       if (CurrentStyle == null)
       {
         CurrentStyle = new DrawerStyle();
-        CurrentStyle.Background = new SolidColorBrush(Colors.White);
+        CurrentStyle.Background = new SolidColorBrush(Colors.Transparent);
         CurrentStyle.Border = new SolidColorBrush(Colors.Black);
         CurrentStyle.BorderSize = 2;
         CurrentStyle.FontSize = 16;
