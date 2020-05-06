@@ -150,7 +150,8 @@ namespace XPDFDoc
             if (element.Width + e.HorizontalChange > MINIMAL_SIZE)
             {
               element.Width += e.HorizontalChange;
-              thumbRectangle.Width += e.HorizontalChange;
+              var m = thumbRectangle.Width + e.HorizontalChange;
+              thumbRectangle.Width = Math.Abs(m);
             }
             break;
         }
@@ -220,8 +221,11 @@ namespace XPDFDoc
     {
       if (AdornedElement is FrameworkElement element)
       {
-        //moveThumb.Visibility = Visibility.Hidden;
-
+        if (element is RichTextBox)
+        {
+          moveThumb.Visibility = Visibility.Hidden;
+        }
+     
         element.Tag.ToType<XShape>().OnDoubleClick?.Invoke();
       }
     }

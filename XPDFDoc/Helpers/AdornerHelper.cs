@@ -55,8 +55,6 @@ namespace XPDFDoc.Helpers
 
     public static void RemoveAllAdorners()
     {
-     // Drawer.DrawType = Type.None;
-
       foreach (var item in Drawer.Objects.Values)
       {
         if (item.OwnedShape != null)

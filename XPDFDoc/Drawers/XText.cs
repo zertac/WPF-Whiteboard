@@ -83,7 +83,12 @@ namespace XPDFDoc.Drawers
      
       Textbox.TextChanged+= delegate(object sender, TextChangedEventArgs args)
       {
-        Textbox.Width = Textbox.Document.GetFormattedText().WidthIncludingTrailingWhitespace + 20;
+        var newWidth = Textbox.Document.GetFormattedText().WidthIncludingTrailingWhitespace + 20;
+        if (newWidth > Textbox.ActualWidth)
+        {
+          Textbox.Width = Textbox.Document.GetFormattedText().WidthIncludingTrailingWhitespace + 20;
+        }
+      
 
         var adn = AdornerHelper.GetAdorner(sender);
 
@@ -114,13 +119,9 @@ namespace XPDFDoc.Drawers
 
     public void OnDoubleClickEvent()
     {
-      
       Drawer.IsEditMode = true;
       Textbox.IsReadOnly = false;
       Textbox.Focus();
-
-      Textbox.MinWidth = Textbox.ActualWidth;
-      Textbox.MinHeight = Textbox.ActualHeight;
     }
 
     public new void Finish()
