@@ -20,8 +20,6 @@ namespace XPDFDoc
       set
       {
         _drawType = value;
-
-        //InitTool();
       }
     }
 

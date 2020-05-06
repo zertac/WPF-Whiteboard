@@ -18,7 +18,6 @@ namespace XPDFDoc.Helpers
         al?.Add(adn);
 
         Drawer.DrawType = Type.MoveResize;
-        //Selector.SelectedObjects.Add(line.Tag.ToType<XShape>());
       }
       else
       {
@@ -28,8 +27,6 @@ namespace XPDFDoc.Helpers
         al?.Add(adn);
 
         Drawer.DrawType = Type.MoveResize;
-        // var o = (Shape)sender;
-        //Selector.SelectedObjects.Add(o.Tag.ToType<XShape>());
       }
     }
 
@@ -58,7 +55,7 @@ namespace XPDFDoc.Helpers
 
     public static void RemoveAllAdorners()
     {
-      Drawer.DrawType = Type.None;
+     // Drawer.DrawType = Type.None;
 
       foreach (var item in Drawer.Objects.Values)
       {

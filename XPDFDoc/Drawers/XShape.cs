@@ -44,6 +44,10 @@ namespace XPDFDoc
     public XShape()
     {
       Id = Guid.NewGuid().ToString();
+
+      AdornerHelper.RemoveAllAdorners();
+
+      Selector.DeselectAll();
     }
 
     public bool IsSelected
@@ -89,10 +93,7 @@ namespace XPDFDoc
 
       IsSelected = true;
 
-      if (e.ClickCount == 1)
-      {
-        AdornerHelper.AddAdorner(sender);
-      }
+      AdornerHelper.AddAdorner(sender);
     }
 
     internal static T Init<T>() where T : new()
