@@ -1,0 +1,83 @@
+﻿<Window
+    x:Class="XPDFDoc.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:XPDFDoc"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="MainWindow"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <Grid>
+        <Canvas x:Name="MainCanvas" Background="White" >
+            <Button
+                x:Name="BtnStyle"
+                Width="40"
+                Height="20"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="Style" Canvas.Left="57" Canvas.Top="304" />
+        </Canvas>
+        <InkCanvas
+            x:Name="InkCanvas"
+            Background="{x:Null}"
+            Visibility="Hidden" />
+
+        <Button
+            x:Name="BtnArrow"
+            Width="40"
+            Height="20"
+            Margin="57,131,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Arrow" />
+        <Button
+            x:Name="BtnRectangle"
+            Width="40"
+            Height="20"
+            Margin="57,169,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Rectangle" />
+
+        <Button
+            x:Name="BtnEllipse"
+            Width="40"
+            Height="20"
+            Margin="57,204,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Ellipse" />
+
+        <Button
+            x:Name="BtnTriangle"
+            Width="40"
+            Height="20"
+            Margin="57,239,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Triangle" />
+
+        <Button
+            x:Name="BtnLine"
+            Width="40"
+            Height="20"
+            Margin="57,270,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Line" />
+
+
+        <Button
+            x:Name="BtnText"
+            Width="40"
+            Height="20"
+            Margin="57,337,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Text" />
+
+
+    </Grid>
+</Window>
