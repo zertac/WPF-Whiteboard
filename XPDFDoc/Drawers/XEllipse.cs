@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using XPDFDoc.Drawers;
@@ -42,8 +43,19 @@ namespace XPDFDoc
     {
       if (!IsDrawing) return;
 
-      Drawing.Width = Math.Abs(StartPoint.X - e.X);
-      Drawing.Height = Math.Abs(StartPoint.Y - e.Y);
+
+      var state = Keyboard.IsKeyDown(Key.LeftCtrl);
+
+      if (state)
+      {
+        Drawing.Width = Math.Abs(StartPoint.X - e.X);
+        Drawing.Height = Drawing.Width;
+      }
+      else
+      {
+        Drawing.Width = Math.Abs(StartPoint.X - e.X);
+        Drawing.Height = Math.Abs(StartPoint.Y - e.Y);
+      }
     }
   }
 }

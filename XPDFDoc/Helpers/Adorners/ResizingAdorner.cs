@@ -147,7 +147,9 @@ namespace XPDFDoc
             if (element.Width - e.HorizontalChange > MINIMAL_SIZE)
             {
               element.Width -= e.HorizontalChange;
-              thumbRectangle.Width -= e.HorizontalChange;
+              var m = thumbRectangle.Width - e.HorizontalChange;
+
+              thumbRectangle.Width = Math.Abs(m);
               Canvas.SetLeft(element, Canvas.GetLeft(element) + e.HorizontalChange);
             }
             break;

@@ -81,8 +81,10 @@ namespace XPDFDoc.Helpers
 
         var path = new Path();
         path.Data = geometry;
-        path.Width = stroke.GetBounds().Width;
-        path.Height = stroke.GetBounds().Height;
+        //path.Width = stroke.GetBounds().Width;
+        //path.Height = stroke.GetBounds().Height;
+        path.VerticalAlignment = VerticalAlignment.Stretch;
+        path.HorizontalAlignment = HorizontalAlignment.Stretch;
         path.Fill = new SolidColorBrush(Colors.Black);
         path.Stretch = Stretch.Fill;
         border.Tag = this;

@@ -122,12 +122,12 @@ namespace XPDFDoc
       Drawer.Page.Children.Remove(OwnedShape);
     }
 
-    public void Edit()
+    public virtual void Edit()
     {
 
     }
 
-    public void EndEdit()
+    public virtual void EndEdit()
     {
 
     }
