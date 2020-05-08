@@ -50,7 +50,7 @@ namespace XPDFDoc.Drawers
       Shadow.Height = Math.Abs(StartPoint.Y - e.Y);
     }
 
-    public override void Edit()
+    public new void Edit()
     {
       IsDrawing = false;
       Drawer.IsEditMode = true;
@@ -130,7 +130,7 @@ namespace XPDFDoc.Drawers
       base.Finish();
     }
 
-    public override void EndEdit()
+    public new void EndEdit()
     {
       Textbox.IsReadOnly = true;
       Drawer.IsEditMode = false;

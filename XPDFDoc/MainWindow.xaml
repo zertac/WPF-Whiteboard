@@ -93,6 +93,15 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Content="Object Count" />
+
+            <Button
+                x:Name="BtnInk"
+                Width="40"
+                Height="20"
+                Margin="4"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="Ink" />
         </StackPanel>
 
         <Canvas
@@ -100,10 +109,5 @@
             Grid.Row="1"
             Background="White" />
 
-        <InkCanvas
-            x:Name="InkCanvas"
-            Grid.Row="1"
-            Background="{x:Null}"
-            Visibility="Hidden" />
     </Grid>
 </Window>

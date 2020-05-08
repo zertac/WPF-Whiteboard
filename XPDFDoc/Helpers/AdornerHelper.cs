@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Shapes;
@@ -61,7 +62,19 @@ namespace XPDFDoc.Helpers
           RemoveAdorner(item.OwnedShape);
 
         if (item.OwnedControl != null)
-          RemoveAdorner(item.OwnedControl);
+        {
+          if (item.OwnedControl is List<Border> borders)
+          {
+            foreach (var b in borders)
+            {
+              RemoveAdorner(b);
+            }
+          }
+          else
+          {
+            RemoveAdorner(item.OwnedControl);
+          }
+        }
       }
     }
 

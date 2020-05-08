@@ -19,7 +19,19 @@ namespace XPDFDoc
       get { return _drawType; }
       set
       {
+        if (value != Type.Ink && value != Type.MoveResize && _drawType == Type.Ink)
+        {
+          Selector.FinishDraw();
+        }
+
         _drawType = value;
+
+        if (value == Type.None)
+        {
+          Selector.EndEditForObject();
+        }
+
+      
       }
     }
 
@@ -37,6 +49,8 @@ namespace XPDFDoc
 
     public static bool IsObjectCreating;
     public static bool IsDrawEnded = true;
+
+    public static object ActiveObject;
 
     public static void Initialize(Canvas canvas)
     {
@@ -80,7 +94,7 @@ namespace XPDFDoc
 
         IsEditMode = false;
 
-        Selector.EndEdit();
+        Selector.EndEditForObject();
 
         StartDraw(e.GetPosition(Page));
       }
@@ -88,6 +102,7 @@ namespace XPDFDoc
       {
         Drawer.DrawType = Type.None;
         AdornerHelper.RemoveAllAdorners();
+        Selector.EndEditForObject();
       }
     }
 
@@ -132,6 +147,12 @@ namespace XPDFDoc
         var o = new XText();
         Objects.Add(o.Id, o);
         Objects.Last().Value.ToType<XText>().Create(e);
+      }
+      else if (DrawType == Type.Ink)
+      {
+        var o = new XInk();
+        Objects.Add(o.Id, o);
+        Objects.Last().Value.ToType<XInk>().Create(e);
       }
     }
 
@@ -193,6 +214,13 @@ namespace XPDFDoc
       }
 
       //IsObjectCreating = false;
+    }
+
+    public static XShape GetSelectedObject()
+    {
+      var o = ActiveObject as XShape;
+      return o;
+
     }
   }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -87,13 +88,29 @@ namespace XPDFDoc.Helpers
       }
     }
 
-    public static void EndEdit()
+    public static void EndEditForObject()
     {
       foreach (var item in Drawer.Objects.Values)
       {
         if (item.OwnedControl != null)
         {
           item.EndEdit();
+        }
+      }
+    }
+
+    public static void FinishDraw()
+    {
+      var lst = Drawer.Objects.ToList();
+
+      foreach (KeyValuePair<string, XShape> item in lst)
+      {
+        if (item.Value.OwnedControl != null)
+        {
+          if (item.Value.OwnedControl is List<Border> b)
+          {
+             (item.Value as XInk)?.Finish();
+          }
         }
       }
     }

@@ -119,7 +119,9 @@
     <Compile Include="Drawers\XText.cs" />
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Helpers\FlowDocumentExtension.cs" />
+    <Compile Include="Helpers\InkHelper.cs" />
     <Compile Include="Helpers\StyleHelper.cs" />
+    <Compile Include="Drawers\XInk.cs" />
     <Compile Include="Models.cs" />
     <Compile Include="Drawers\XLine.cs" />
     <Compile Include="Helpers\AdornerHelper.cs" />

@@ -72,13 +72,15 @@ namespace XPDFDoc
 
       BtnStyle.Click += delegate (object sender, RoutedEventArgs args)
       {
-        var a = new DrawerStyle();
-        a.Background = new SolidColorBrush(Colors.Transparent);
-        a.Border = new SolidColorBrush(Colors.Blue);
-        a.BorderSize = 3;
-        a.Opacity = 1;
+        //var a = new DrawerStyle();
+        //a.Background = new SolidColorBrush(Colors.Transparent);
+        //a.Border = new SolidColorBrush(Colors.Blue);
+        //a.BorderSize = 3;
+        //a.Opacity = 1;
 
-        StyleHelper.CurrentStyle = a;
+        //StyleHelper.CurrentStyle = a;
+
+        Drawer.GetSelectedObject().SetTextStyle(FontSizeProperty, Convert.ToDouble(32));
       };
 
       BtnText.Click += delegate (object sender, RoutedEventArgs args)
@@ -92,9 +94,16 @@ namespace XPDFDoc
       };
 
       BtnObjectCount.Click += delegate (object sender, RoutedEventArgs args)
-         {
-           MessageBox.Show(Drawer.Objects.Count.ToString());
-         };
+      {
+        MessageBox.Show(Drawer.Objects.Count.ToString());
+      };
+
+      BtnInk.Click += delegate (object sender, RoutedEventArgs args)
+      {
+        //InkHelper.Create(InkCanvas, MainCanvas);
+
+        Drawer.DrawType = Type.Ink;
+      };
     }
 
     private void MainWindow_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -118,100 +127,88 @@ namespace XPDFDoc
 
     private void MainWindow_Loaded(object sender, RoutedEventArgs e)
     {
-      var drawingAttributes = new DrawingAttributes();
-      drawingAttributes.Color = Colors.Black;
-      drawingAttributes.IgnorePressure = false;
-      drawingAttributes.FitToCurve = true;
-      drawingAttributes.StylusTip = StylusTip.Ellipse;
-      drawingAttributes.Width = 4;
 
-      InkCanvas.DefaultDrawingAttributes = drawingAttributes;
     }
 
-    private void BtnDraw_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-    {
-      InkCanvas.Visibility = Visibility.Visible;
-    }
+    //private void Btn_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    //{
+    //  var svg = new SvgDocument();
+    //  var colorServer = new SvgColourServer(System.Drawing.Color.Black);
 
-    private void Btn_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-    {
-      var svg = new SvgDocument();
-      var colorServer = new SvgColourServer(System.Drawing.Color.Black);
+    //  var group = new SvgGroup { Fill = colorServer, Stroke = colorServer };
+    //  svg.Children.Add(group);
 
-      var group = new SvgGroup { Fill = colorServer, Stroke = colorServer };
-      svg.Children.Add(group);
+    //  var strokeList = InkCanvas.Strokes.ToList();
 
-      var strokeList = InkCanvas.Strokes.ToList();
+    //  foreach (var stroke in strokeList)
+    //  {
+    //    var geometry = stroke.GetGeometry(stroke.DrawingAttributes).GetOutlinedPathGeometry();
 
-      foreach (var stroke in strokeList)
-      {
-        var geometry = stroke.GetGeometry(stroke.DrawingAttributes).GetOutlinedPathGeometry();
+    //    var s = XamlWriter.Save(geometry);
 
-        var s = XamlWriter.Save(geometry);
+    //    var element = XElement.Parse(s);
 
-        var element = XElement.Parse(s);
+    //    var data = element.Attribute("Figures")?.Value;
 
-        var data = element.Attribute("Figures")?.Value;
+    //    var path = new SvgPath();
 
-        var path = new SvgPath();
+    //    path.PathData = SvgPathBuilder.Parse(data);
+    //    path.Fill = colorServer;
+    //    path.Stroke = colorServer;
 
-        path.PathData = SvgPathBuilder.Parse(data);
-        path.Fill = colorServer;
-        path.Stroke = colorServer;
-
-        var border = new Border();
-        border.Width = geometry.Bounds.Width;
-        border.Height = geometry.Bounds.Height;
-        border.Background = new SolidColorBrush(Colors.Transparent);
-        Canvas.SetLeft(border, geometry.Bounds.Left);
-        Canvas.SetTop(border, geometry.Bounds.Top);
+    //    var border = new Border();
+    //    border.Width = geometry.Bounds.Width;
+    //    border.Height = geometry.Bounds.Height;
+    //    border.Background = new SolidColorBrush(Colors.Transparent);
+    //    Canvas.SetLeft(border, geometry.Bounds.Left);
+    //    Canvas.SetTop(border, geometry.Bounds.Top);
 
 
-        var p = new Path();
-        p.Data = geometry;
-        p.Fill = new SolidColorBrush(Colors.Black);
-        p.VerticalAlignment = VerticalAlignment.Stretch;
-        p.HorizontalAlignment = HorizontalAlignment.Stretch;
-        //p.Width = geometry.Bounds.Width;
-        //p.Height = geometry.Bounds.Height;
-        p.Stretch = Stretch.Fill;
+    //    var p = new Path();
+    //    p.Data = geometry;
+    //    p.Fill = new SolidColorBrush(Colors.Black);
+    //    p.VerticalAlignment = VerticalAlignment.Stretch;
+    //    p.HorizontalAlignment = HorizontalAlignment.Stretch;
+    //    //p.Width = geometry.Bounds.Width;
+    //    //p.Height = geometry.Bounds.Height;
+    //    p.Stretch = Stretch.Fill;
 
 
-        //Canvas.SetLeft(p, geometry.Bounds.Left);
-        //Canvas.SetTop(p, geometry.Bounds.Top);
+    //    //Canvas.SetLeft(p, geometry.Bounds.Left);
+    //    //Canvas.SetTop(p, geometry.Bounds.Top);
 
-        InkCanvas.Strokes.Remove(stroke);
-        border.Child = p;
+    //    InkCanvas.Strokes.Remove(stroke);
+    //    border.Child = p;
 
-        MainCanvas.Children.Add(border);
+    //    MainCanvas.Children.Add(border);
 
-        InkCanvas.Visibility = Visibility.Hidden;
+    //    InkCanvas.Visibility = Visibility.Hidden;
 
-        border.PreviewMouseLeftButtonDown += P_PreviewMouseLeftButtonDown;
-        border.PreviewMouseLeftButtonUp += P_PreviewMouseLeftButtonUp;
-        //group.Children.Add(new SvgPath
-        //{
-        //  PathData = SvgPathBuilder.Parse(data),
-        //  Fill = colorServer,
-        //  Stroke = colorServer
-        //});
-        //if (s.IsNotNullOrEmpty())
-        //{
-        //  var element = XElement.Parse(s);
+    //    border.PreviewMouseLeftButtonDown += P_PreviewMouseLeftButtonDown;
+    //    border.PreviewMouseLeftButtonUp += P_PreviewMouseLeftButtonUp;
+    //    //group.Children.Add(new SvgPath
+    //    //{
+    //    //  PathData = SvgPathBuilder.Parse(data),
+    //    //  Fill = colorServer,
+    //    //  Stroke = colorServer
+    //    //});
+    //    //if (s.IsNotNullOrEmpty())
+    //    //{
+    //    //  var element = XElement.Parse(s);
 
-        //  var data = element.Attribute("Figures")?.Value;
+    //    //  var data = element.Attribute("Figures")?.Value;
 
-        //  if (data.IsNotNullOrEmpty())
-        //  {
-        //    group.Children.Add(new SvgPath
-        //    {
-        //      PathData = SvgPathBuilder.Parse(data),
-        //      Fill = colorServer,
-        //      Stroke = colorServer
-        //    });
-        //  }
-      }
-    }
+    //    //  if (data.IsNotNullOrEmpty())
+    //    //  {
+    //    //    group.Children.Add(new SvgPath
+    //    //    {
+    //    //      PathData = SvgPathBuilder.Parse(data),
+    //    //      Fill = colorServer,
+    //    //      Stroke = colorServer
+    //    //    });
+    //    //  }
+    //  }
+    //}
 
     private void P_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
     {

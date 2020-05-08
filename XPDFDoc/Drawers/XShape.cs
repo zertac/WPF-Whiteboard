@@ -48,6 +48,8 @@ namespace XPDFDoc
       AdornerHelper.RemoveAllAdorners();
 
       Selector.DeselectAll();
+
+      Drawer.ActiveObject = this;
     }
 
     public bool IsSelected
@@ -64,7 +66,6 @@ namespace XPDFDoc
             OwnedShape.Stroke = new SolidColorBrush(Colors.Aqua);
             OwnedShape.StrokeThickness = 3;
           }
-
 
           if (OwnedControl != null)
           {
@@ -94,6 +95,8 @@ namespace XPDFDoc
       IsSelected = true;
 
       AdornerHelper.AddAdorner(sender);
+
+      Drawer.ActiveObject = this;
     }
 
     internal static T Init<T>() where T : new()
@@ -119,14 +122,23 @@ namespace XPDFDoc
       Drawer.Page.Children.Remove(OwnedShape);
     }
 
-    public virtual void Edit()
+    public void Edit()
     {
 
     }
 
-    public virtual void EndEdit()
+    public void EndEdit()
     {
 
+    }
+
+    public void SetTextStyle(DependencyProperty property, object value)
+    {
+      var txt = OwnedControl as RichTextBox;
+
+      var ts = txt.Selection;
+      ts.ApplyPropertyValue(property, value);
+      txt.Focus();
     }
   }
 }
