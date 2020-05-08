@@ -7,3 +7,4 @@ Current shapes
 - Line
 - Triangle
 - Text
+- Ink Canvas
