@@ -20,8 +20,6 @@ namespace XPDFDoc.Drawers
       IsDrawing = true;
       StartPoint = e;
 
-    
-
       Drawing = new Path();
       Drawing.Data = Geometry.Parse(data);
       Drawing.Fill = StyleHelper.CurrentStyle.Background;

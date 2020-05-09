@@ -17,22 +17,24 @@ namespace XPDFDoc.Drawers
       IsDrawing = true;
       StartPoint = e;
 
+
       Drawing = new Line();
-      Drawing.X1 = e.X;
-      Drawing.Y1 = e.Y;
-      Drawing.Stroke = new SolidColorBrush(Colors.Black);
-      Drawing.StrokeThickness = 2;
-      Drawing.Opacity = 0.2;
-      Drawing.Tag = this;
       OwnedShape = Drawing;
 
       Style = new DrawerStyle(StyleHelper.CurrentStyle);
+
+      Drawing.X1 = e.X;
+      Drawing.Y1 = e.Y;
+      Drawing.Opacity = 0.2;
+      Drawing.Tag = this;
+      
       Drawing.MouseLeftButtonDown += base.OnSelect;
 
       Arrow = new Border();
-      Arrow.Background = new SolidColorBrush(Colors.Transparent);
+      Arrow.Background = Style.Background;
       Arrow.Width = 32;
       Arrow.Height = 32;
+      Arrow.Opacity = 0.2;
       Arrow.RenderTransformOrigin = new Point(0.5, 0.5);
 
       var draw = new Path();
@@ -69,7 +71,10 @@ namespace XPDFDoc.Drawers
     public new void Finish()
     {
       base.Finish();
+
       SetArrowPosition();
+
+      Arrow.Opacity = 1;
     }
 
     public void SetArrowPosition()

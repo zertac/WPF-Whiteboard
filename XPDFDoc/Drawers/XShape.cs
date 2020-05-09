@@ -122,6 +122,8 @@ namespace XPDFDoc
       Drawer.DrawType = Drawer.ContinuousDraw ? Drawer.DrawType : Type.None;
       Drawer.IsObjectCreating = false;
       Drawer.IsDrawEnded = true;
+
+      Style = Style;
     }
 
     public void Cancel()

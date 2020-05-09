@@ -128,7 +128,10 @@
         <Canvas
             x:Name="MainCanvas"
             Grid.Row="1"
-            Background="White" />
+            Background="White">
+
+            <!--<Line X1="0" Y1="0" X2="100" Y2="100" Stroke="Blue" StrokeThickness="4" Stretch="Fill"></Line>-->
+        </Canvas>
 
     </Grid>
 </Window>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using XPDFDoc.Drawers;
 using XPDFDoc.Helpers;
 using Type = XPDFDoc.Drawers.Type;
@@ -19,12 +20,14 @@ namespace XPDFDoc
       get { return _drawType; }
       set
       {
+
+        _drawType = value;
+
+        
         if (value != Type.Ink && value != Type.MoveResize && _drawType == Type.Ink)
         {
           Selector.FinishDraw();
         }
-
-        _drawType = value;
 
         if (value == Type.None)
         {
