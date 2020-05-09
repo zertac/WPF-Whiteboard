@@ -58,8 +58,8 @@ namespace XPDFDoc
         case 2:
           {
             var p = new Point();
-            p.X = e.X - StartPoint.X;
-            p.Y = e.Y - StartPoint.Y;
+            p.X = e.X - StartPoint.X ;
+            p.Y = e.Y - StartPoint.Y ;
 
             Drawing.Points[1] = p;
             break;

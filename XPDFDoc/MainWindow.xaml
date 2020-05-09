@@ -15,7 +15,10 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
+        <StackPanel
+            Grid.Row="0"
+            Background="#899AA9"
+            Orientation="Horizontal">
             <Button
                 x:Name="BtnNone"
                 Width="40"
@@ -83,6 +86,15 @@
                 RenderTransformOrigin="0,0" />
 
             <Button
+                x:Name="BtnInk"
+                Width="40"
+                Height="20"
+                Margin="4"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="Ink" />
+
+            <Button
                 x:Name="BtnCustom"
                 Width="40"
                 Height="20"
@@ -115,14 +127,7 @@
                 VerticalAlignment="Top"
                 Content="Object Count" />
 
-            <Button
-                x:Name="BtnInk"
-                Width="40"
-                Height="20"
-                Margin="4"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Content="Ink" />
+
         </StackPanel>
 
         <Canvas

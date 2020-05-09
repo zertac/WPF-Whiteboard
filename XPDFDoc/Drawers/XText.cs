@@ -37,7 +37,7 @@ namespace XPDFDoc.Drawers
       Canvas.SetLeft(Shadow, e.X);
       Canvas.SetTop(Shadow, e.Y);
 
-      //Style = new DrawerStyle(StyleHelper.CurrentStyle);
+      Style = new DrawerStyle(StyleHelper.CurrentStyle);
       Drawer.Page.Children.Add(Shadow);
       Drawer.IsObjectCreating = true;
     }
@@ -88,8 +88,7 @@ namespace XPDFDoc.Drawers
         {
           Textbox.Width = Textbox.Document.GetFormattedText().WidthIncludingTrailingWhitespace + 20;
         }
-      
-
+        
         var adn = AdornerHelper.GetAdorner(sender);
 
         if (adn != null)
@@ -127,6 +126,8 @@ namespace XPDFDoc.Drawers
     public new void Finish()
     {
       Shadow.Opacity = 1;
+
+      Drawer.IsEditMode = false;
       base.Finish();
     }
 

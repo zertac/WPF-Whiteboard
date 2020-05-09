@@ -20,10 +20,8 @@ namespace XPDFDoc
       get { return _drawType; }
       set
       {
-
         _drawType = value;
 
-        
         if (value != Type.Ink && value != Type.MoveResize && _drawType == Type.Ink)
         {
           Selector.FinishDraw();
@@ -88,6 +86,26 @@ namespace XPDFDoc
 
     private static void _canvas_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
+
+      if (DrawType == Type.None)
+      {
+        Selector.StartSelect(e.GetPosition(Page));
+        Selector.EndEditForObject();
+      }
+      else if (DrawType == Type.MoveResize)
+      {
+        Drawer.DrawType = Type.None;
+        AdornerHelper.RemoveAllAdorners();
+        Selector.EndEditForObject();
+      }
+      else
+      {
+        IsEditMode = false;
+        Selector.EndEditForObject();
+        StartDraw(e.GetPosition(Page));
+      }
+
+      return;
       if (e.ClickCount == 1)
       {
         //if (Objects.Count(x => x.Value.IsSelected) > 0)
@@ -96,10 +114,10 @@ namespace XPDFDoc
         //}
 
         IsEditMode = false;
-
         Selector.EndEditForObject();
-
         StartDraw(e.GetPosition(Page));
+
+
       }
       else if (e.ClickCount == 2)
       {
@@ -113,10 +131,10 @@ namespace XPDFDoc
     {
       if (IsEditMode) return;
 
-      if (DrawType == Type.None)
-      {
-        Selector.StartSelect(e);
-      }
+      //if (DrawType == Type.None)
+      //{
+      //  Selector.StartSelect(e);
+      //}
       else if (DrawType == Type.Rectangle)
       {
         var o = new XRectangle();
@@ -208,7 +226,7 @@ namespace XPDFDoc
 
     public static void FinishDraw()
     {
-      if (IsEditMode) return;
+      //if (IsEditMode) return;
 
       if (DrawType == Type.None)
       {

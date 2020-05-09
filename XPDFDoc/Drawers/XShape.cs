@@ -30,14 +30,28 @@ namespace XPDFDoc
       {
         _style = value;
 
-        if (!(OwnedShape is Line))
+        //if (!(OwnedShape is Line))
+        //{
+        //  if (OwnedShape == null) return;
+        //  OwnedShape.Fill = _style.Background;
+        //}
+
+        if (OwnedShape != null)
         {
-          OwnedShape.Fill = _style.Background;
+          OwnedShape.Stroke = _style.Border;
+          OwnedShape.StrokeThickness = _style.BorderSize;
+          OwnedShape.Opacity = _style.Opacity;
         }
 
-        OwnedShape.Stroke = _style.Border;
-        OwnedShape.StrokeThickness = _style.BorderSize;
-        OwnedShape.Opacity = _style.Opacity;
+        if (OwnedControl != null)
+        {
+          if (OwnedControl is RichTextBox txt)
+          {
+            txt.BorderBrush = _style.Border;
+            txt.BorderThickness = new Thickness(_style.BorderSize);
+            txt.Opacity = _style.Opacity;
+          }
+        }
       }
     }
 
@@ -85,6 +99,15 @@ namespace XPDFDoc
 
     public void OnSelect(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
+      if (sender is Polygon && IsDrawing)
+      {
+        e.Handled = false;
+      }
+      else
+      {
+        e.Handled = true;
+      }
+
       if (Drawer.DrawType != Type.None && Drawer.DrawType != Type.MoveResize) return;
 
       if (Drawer.IsEditMode) return;

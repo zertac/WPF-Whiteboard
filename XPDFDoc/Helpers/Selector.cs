@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 using Point = System.Windows.Point;
 using Type = XPDFDoc.Drawers.Type;
 
@@ -20,8 +21,6 @@ namespace XPDFDoc.Helpers
 
     public static void StartSelect(Point e)
     {
-      return;
-
       if (Drawer.DrawType == Type.MoveResize) return;
 
       _startPoint = e;
@@ -81,7 +80,7 @@ namespace XPDFDoc.Helpers
     {
       foreach (var item in Drawer.Objects.Values)
       {
-        if (item.OwnedShape != null)
+        if (item.OwnedShape != null || item.OwnedControl != null)
         {
           item.IsSelected = false;
         }
@@ -92,9 +91,9 @@ namespace XPDFDoc.Helpers
     {
       foreach (var item in Drawer.Objects.Values)
       {
-        if (item.OwnedControl != null)
+        if (item.OwnedControl != null && item.OwnedControl is RichTextBox txt)
         {
-          item.EndEdit();
+          txt.Tag.ToType<Drawers.XText>().EndEdit();
         }
       }
     }
@@ -149,10 +148,9 @@ namespace XPDFDoc.Helpers
 
     private static bool IsContains(XShape o)
     {
-      return false;
-
       var item = (UIElement)o.OwnedShape;
       if (item == null) return false;
+      if (_rect == null) return false;
 
       var xScale = (double)_rect.RenderTransform.GetValue(ScaleTransform.ScaleXProperty);
       var yScale = (double)_rect.RenderTransform.GetValue(ScaleTransform.ScaleYProperty);
