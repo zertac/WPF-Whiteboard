@@ -8,3 +8,5 @@ Current shapes
 - Triangle
 - Text
 - Ink Canvas
+- Arrow
+- Custom Shape
