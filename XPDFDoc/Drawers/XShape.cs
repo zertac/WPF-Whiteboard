@@ -105,7 +105,14 @@ namespace XPDFDoc
       }
       else
       {
-        e.Handled = true;
+        if (sender is RichTextBox)
+        {
+          e.Handled = false;
+        }
+        else
+        {
+          e.Handled = true;
+        }
       }
 
       if (Drawer.DrawType != Type.None && Drawer.DrawType != Type.MoveResize) return;

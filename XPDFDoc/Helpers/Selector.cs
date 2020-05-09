@@ -108,7 +108,7 @@ namespace XPDFDoc.Helpers
         {
           if (item.Value.OwnedControl is List<Border> b)
           {
-             (item.Value as XInk)?.Finish();
+            (item.Value as XInk)?.Finish();
           }
         }
       }
@@ -148,7 +148,17 @@ namespace XPDFDoc.Helpers
 
     private static bool IsContains(XShape o)
     {
-      var item = (UIElement)o.OwnedShape;
+      UIElement item = null;
+
+      if (o.OwnedShape != null)
+      {
+        item = (UIElement)o.OwnedShape;
+      }
+      else
+      {
+        item = (UIElement)o.OwnedControl;
+      }
+
       if (item == null) return false;
       if (_rect == null) return false;
 

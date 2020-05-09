@@ -86,7 +86,6 @@ namespace XPDFDoc
 
     private static void _canvas_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
-
       if (DrawType == Type.None)
       {
         Selector.StartSelect(e.GetPosition(Page));
@@ -100,8 +99,14 @@ namespace XPDFDoc
       }
       else
       {
+        //if (IsEditMode == false)
+        //{
         IsEditMode = false;
-        Selector.EndEditForObject();
+        if (DrawType != Type.Text)
+        {
+          Selector.EndEditForObject();
+        }
+        //}
         StartDraw(e.GetPosition(Page));
       }
 

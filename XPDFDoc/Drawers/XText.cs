@@ -136,6 +136,8 @@ namespace XPDFDoc.Drawers
       Textbox.IsReadOnly = true;
       Drawer.IsEditMode = false;
       Drawer.Page.Focus();
+
+     // Finish();
     }
   }
 }
