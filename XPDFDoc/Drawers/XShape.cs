@@ -22,7 +22,7 @@ namespace XPDFDoc
     private bool _isSelected;
     public Action OnDoubleClick;
     private DrawerStyle _style;
-
+    internal bool FollowItem;
     public DrawerStyle Style
     {
       get => _style;
@@ -94,7 +94,14 @@ namespace XPDFDoc
 
       IsSelected = true;
 
-      AdornerHelper.AddAdorner(sender);
+      if (FollowItem)
+      {
+        AdornerHelper.AddAdorner(sender, this);
+      }
+      else
+      {
+        AdornerHelper.AddAdorner(sender);
+      }
 
       Drawer.ActiveObject = this;
     }
@@ -105,7 +112,7 @@ namespace XPDFDoc
       return (T)Instance;
     }
 
-    public void Finish()
+    public virtual void Finish()
     {
       IsDrawing = false;
 

@@ -43,7 +43,6 @@ namespace XPDFDoc
     {
       if (!IsDrawing) return;
 
-
       var state = Keyboard.IsKeyDown(Key.LeftCtrl);
 
       if (state)

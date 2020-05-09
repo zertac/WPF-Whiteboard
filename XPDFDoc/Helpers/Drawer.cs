@@ -30,8 +30,6 @@ namespace XPDFDoc
         {
           Selector.EndEditForObject();
         }
-
-      
       }
     }
 
@@ -154,6 +152,12 @@ namespace XPDFDoc
         Objects.Add(o.Id, o);
         Objects.Last().Value.ToType<XInk>().Create(e);
       }
+      else if (DrawType == Type.Arrow)
+      {
+        var o = new XArrow();
+        Objects.Add(o.Id, o);
+        Objects.Last().Value.ToType<XArrow>().Create(e);
+      }
     }
 
     public static void UpdateDraw(Point e)
@@ -181,6 +185,10 @@ namespace XPDFDoc
       {
         Objects.Last().Value.ToType<XText>().Update(e);
       }
+      else if (DrawType == Type.Arrow)
+      {
+        Objects.Last().Value.ToType<XArrow>().Update(e);
+      }
     }
 
     public static void FinishDraw()
@@ -205,12 +213,16 @@ namespace XPDFDoc
       }
       else if (DrawType == Type.Line)
       {
-        Objects.Last().Value.Finish();
+        Objects.Last().Value.OwnedShape.Tag.ToType<XLine>().Finish();
       }
       else if (DrawType == Type.Text)
       {
         Objects.Last().Value.Edit();
         Objects.Last().Value.Finish();
+      }
+      else if (DrawType == Type.Arrow)
+      {
+        Objects.Last().Value.OwnedShape.Tag.ToType<XArrow>().Finish();
       }
 
       //IsObjectCreating = false;

@@ -49,7 +49,7 @@ namespace XPDFDoc.Helpers
 
     }
 
-    public new void Finish()
+    public override void Finish()
     {
       if (!IsDrawing || Drawing == null) return;
 

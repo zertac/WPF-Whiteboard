@@ -45,7 +45,7 @@ namespace XPDFDoc
       //this.BtnArrow.PreviewMouseLeftButtonDown += Btn_MouseLeftButtonDown;
       //BtnDraw.PreviewMouseLeftButtonDown += BtnDraw_PreviewMouseLeftButtonDown;
 
-      BtnArrow.Click += delegate (object sender, RoutedEventArgs args)
+      BtnNone.Click += delegate (object sender, RoutedEventArgs args)
       {
         Drawer.DrawType = Type.None;
       };
@@ -100,29 +100,13 @@ namespace XPDFDoc
 
       BtnInk.Click += delegate (object sender, RoutedEventArgs args)
       {
-        //InkHelper.Create(InkCanvas, MainCanvas);
-
         Drawer.DrawType = Type.Ink;
       };
-    }
 
-    private void MainWindow_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-    {
-      if (_activeElement != null)
+      BtnArrow.Click += delegate (object sender, RoutedEventArgs args)
       {
-        if (e.ClickCount == 2)
-        {
-          var al = AdornerLayer.GetAdornerLayer(_activeElement);
-
-          var toRemoveArray = al?.GetAdorners(_activeElement);
-          if (toRemoveArray != null)
-          {
-            var toRemove = (ResizingAdorner)toRemoveArray[0];
-
-            al.Remove(toRemove);
-          }
-        }
-      }
+        Drawer.DrawType = Type.Arrow;
+      };
     }
 
     private void MainWindow_Loaded(object sender, RoutedEventArgs e)

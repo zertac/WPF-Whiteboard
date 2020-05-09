@@ -6,6 +6,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using XPDFDoc.Drawers;
 
 namespace XPDFDoc.Helpers
 {
@@ -16,6 +17,8 @@ namespace XPDFDoc.Helpers
     private Line selectedLine;
     private VisualCollection visualChildren;
 
+    public object FollowItem;
+
     private FrameworkElementFactory GetThumbTemple(Brush back)
     {
       back.Opacity = 1;
@@ -25,7 +28,6 @@ namespace XPDFDoc.Helpers
       fef.SetValue(Ellipse.StrokeThicknessProperty, (double)1);
       return fef;
     }
-
 
     public LineAdorner(UIElement adornedElement) : base(adornedElement)
     {
@@ -105,6 +107,12 @@ namespace XPDFDoc.Helpers
 
       var endRect = new Rect(selectedLine.X2 - (endThumb.Width / 2), selectedLine.Y2 - (endThumb.Height / 2), endThumb.Width, endThumb.Height);
       endThumb.Arrange(endRect);
+
+      if (FollowItem != null)
+      {
+        var f = (XArrow)FollowItem;
+        f.SetArrowPosition();
+      }
 
       return finalSize;
     }

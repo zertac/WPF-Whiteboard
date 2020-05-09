@@ -17,13 +17,13 @@
 
         <StackPanel Grid.Row="0" Orientation="Horizontal">
             <Button
-                x:Name="BtnArrow"
+                x:Name="BtnNone"
                 Width="40"
                 Height="20"
                 Margin="4"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Content="Arrow" />
+                Content="None" />
 
             <Button
                 x:Name="BtnRectangle"
@@ -69,7 +69,18 @@
                 Margin="4"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Content="Text" />
+                Content="Text"
+                RenderTransformOrigin="0,0" />
+
+            <Button
+                x:Name="BtnArrow"
+                Width="40"
+                Height="20"
+                Margin="4"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="Arrow"
+                RenderTransformOrigin="0,0" />
 
             <Button
                 x:Name="BtnStyle"

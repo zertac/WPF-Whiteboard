@@ -16,7 +16,8 @@ namespace XPDFDoc.Drawers
     Ellipse,
     Text,
     MoveResize,
-    Triangle
+    Triangle,
+    Arrow
   }
 
   public class DrawerStyle

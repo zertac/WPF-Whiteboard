@@ -9,13 +9,13 @@ namespace XPDFDoc.Helpers
 {
   public static class AdornerHelper
   {
-    public static void AddAdorner(object sender)
+    public static void AddAdorner(object sender, object followItem = null)
     {
       if (sender is Line line)
       {
         var al = AdornerLayer.GetAdornerLayer(line);
         var adn = new LineAdorner(line);
-
+        adn.FollowItem = followItem;
         al?.Add(adn);
 
         Drawer.DrawType = Type.MoveResize;

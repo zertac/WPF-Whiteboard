@@ -116,10 +116,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Drawers\XArrow.cs" />
     <Compile Include="Drawers\XText.cs" />
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Helpers\FlowDocumentExtension.cs" />
-    <Compile Include="Helpers\InkHelper.cs" />
     <Compile Include="Helpers\StyleHelper.cs" />
     <Compile Include="Drawers\XInk.cs" />
     <Compile Include="Models.cs" />
