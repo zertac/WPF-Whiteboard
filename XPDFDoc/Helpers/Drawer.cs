@@ -59,9 +59,10 @@ namespace XPDFDoc
       Objects = new Dictionary<string, XShape>();
 
       _page = canvas;
-      _page.MouseLeftButtonDown += _canvas_PreviewMouseLeftButtonDown;
+      _page.PreviewMouseLeftButtonDown += _canvas_PreviewMouseLeftButtonDown;
+      //_page.MouseLeftButtonDown += _canvas_PreviewMouseLeftButtonDown;
       _page.MouseMove += _canvas_PreviewMouseMove;
-      _page.MouseLeftButtonUp += _canvas_PreviewMouseLeftButtonUp;
+      _page.PreviewMouseLeftButtonUp += _canvas_PreviewMouseLeftButtonUp;
     }
 
     private static void _canvas_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -88,6 +89,7 @@ namespace XPDFDoc
     {
       if (DrawType == Type.None)
       {
+        //Selector.DeselectAll();
         Selector.StartSelect(e.GetPosition(Page));
         Selector.EndEditForObject();
       }
@@ -99,36 +101,13 @@ namespace XPDFDoc
       }
       else
       {
-        //if (IsEditMode == false)
-        //{
         IsEditMode = false;
         if (DrawType != Type.Text)
         {
           Selector.EndEditForObject();
         }
-        //}
+
         StartDraw(e.GetPosition(Page));
-      }
-
-      return;
-      if (e.ClickCount == 1)
-      {
-        //if (Objects.Count(x => x.Value.IsSelected) > 0)
-        //{
-        //  AdornerHelper.RemoveAllAdorners();
-        //}
-
-        IsEditMode = false;
-        Selector.EndEditForObject();
-        StartDraw(e.GetPosition(Page));
-
-
-      }
-      else if (e.ClickCount == 2)
-      {
-        Drawer.DrawType = Type.None;
-        AdornerHelper.RemoveAllAdorners();
-        Selector.EndEditForObject();
       }
     }
 

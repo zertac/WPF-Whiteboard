@@ -111,7 +111,11 @@ namespace XPDFDoc
         }
         else
         {
-          e.Handled = true;
+          if (Drawer.DrawType != Type.None && Drawer.DrawType != Type.MoveResize)
+          {
+            e.Handled = true;
+          }
+         
         }
       }
 

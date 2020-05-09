@@ -23,6 +23,8 @@ namespace XPDFDoc.Helpers
     {
       if (Drawer.DrawType == Type.MoveResize) return;
 
+      DeselectAll();
+
       _startPoint = e;
       IsDrawing = true;
       _rect = new Rectangle();
@@ -116,29 +118,15 @@ namespace XPDFDoc.Helpers
 
     private static void FindContainsObjects()
     {
-      //var lst = new List<UIElement>();
       DeselectAll();
       foreach (var item in Drawer.Objects.Values)
       {
         var s = IsContains(item);
         if (s)
         {
-          //lst.Add(item);
           Identify(item);
         }
       }
-      //foreach (UIElement item in Canvas.Children)
-      //{
-      //  if (item.Uid != "x_selector")
-      //  {
-      //    var s = IsContains(item);
-      //    if (s)
-      //    {
-      //      lst.Add(item);
-      //      Identify(item);
-      //    }
-      //  }
-      //}
     }
 
     private static void Identify(XShape item)
@@ -184,7 +172,7 @@ namespace XPDFDoc.Helpers
       var y2 = Canvas.GetTop(item);
       var r2 = new Rect(x2, y2, item.RenderSize.Width, item.RenderSize.Height);
 
-      if (r1.IntersectsWith(r2))
+      if (r1.IntersectsWith(r2) && r1.Width > 0 && r1.Height > 0)
       {
         return true;
       }
