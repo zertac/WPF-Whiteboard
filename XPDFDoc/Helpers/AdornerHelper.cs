@@ -11,6 +11,8 @@ namespace XPDFDoc.Helpers
   {
     public static void AddAdorner(object sender, object followItem = null)
     {
+      Selector.FinishSelect();
+
       if (sender is Line line)
       {
         var al = AdornerLayer.GetAdornerLayer(line);

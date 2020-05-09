@@ -115,7 +115,6 @@ namespace XPDFDoc
           {
             e.Handled = true;
           }
-         
         }
       }
 
