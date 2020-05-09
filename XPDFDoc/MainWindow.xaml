@@ -83,6 +83,16 @@
                 RenderTransformOrigin="0,0" />
 
             <Button
+                x:Name="BtnCustom"
+                Width="40"
+                Height="20"
+                Margin="4"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="Custom"
+                RenderTransformOrigin="0,0" />
+
+            <Button
                 x:Name="BtnStyle"
                 Width="40"
                 Height="20"

@@ -107,6 +107,13 @@ namespace XPDFDoc
       {
         Drawer.DrawType = Type.Arrow;
       };
+
+      BtnCustom.Click += delegate (object sender, RoutedEventArgs args)
+      {
+        Drawer.CustomShapeData =
+          "M25 2C22.238281 2 20 4.238281 20 7C20 9.761719 22.238281 12 25 12C27.761719 12 30 9.761719 30 7C30 4.238281 27.761719 2 25 2 Z M 25 14C20.027344 14 16 18.027344 16 23L16 32L19.484375 33.390625L20.199219 47L29.800781 47L30.515625 33.390625L34 32L34 23C34 18.027344 29.972656 14 25 14Z";
+        Drawer.DrawType = Type.Custom;
+      };
     }
 
     private void MainWindow_Loaded(object sender, RoutedEventArgs e)

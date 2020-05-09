@@ -50,6 +50,8 @@ namespace XPDFDoc
 
     public static object ActiveObject;
 
+    public static string CustomShapeData;
+
     public static void Initialize(Canvas canvas)
     {
       Selector.Canvas = canvas;
@@ -158,6 +160,12 @@ namespace XPDFDoc
         Objects.Add(o.Id, o);
         Objects.Last().Value.ToType<XArrow>().Create(e);
       }
+      else if (DrawType == Type.Custom)
+      {
+        var o = new XCustom();
+        Objects.Add(o.Id, o);
+        Objects.Last().Value.ToType<XCustom>().Create(e, CustomShapeData);
+      }
     }
 
     public static void UpdateDraw(Point e)
@@ -188,6 +196,10 @@ namespace XPDFDoc
       else if (DrawType == Type.Arrow)
       {
         Objects.Last().Value.ToType<XArrow>().Update(e);
+      }
+      else if (DrawType == Type.Custom)
+      {
+        Objects.Last().Value.ToType<XCustom>().Update(e);
       }
     }
 
@@ -223,6 +235,10 @@ namespace XPDFDoc
       else if (DrawType == Type.Arrow)
       {
         Objects.Last().Value.OwnedShape.Tag.ToType<XArrow>().Finish();
+      }
+      else if (DrawType == Type.Custom)
+      {
+        Objects.Last().Value.Finish();
       }
 
       //IsObjectCreating = false;
