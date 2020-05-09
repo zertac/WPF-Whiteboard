@@ -121,10 +121,36 @@ namespace XPDFDoc.Helpers
       DeselectAll();
       foreach (var item in Drawer.Objects.Values)
       {
-        var s = IsContains(item);
-        if (s)
+
+        if (item.OwnedShape != null)
         {
-          Identify(item);
+          var s = IsContains(item.OwnedShape);
+          if (s)
+          {
+            Identify(item);
+          }
+        }
+        else if (item.OwnedControl != null)
+        {
+          if (item.OwnedControl is List<Border> inks)
+          {
+            foreach (var ink in inks)
+            {
+              var s = IsContains(ink);
+              if (s)
+              {
+                Identify(item);
+              }
+            }
+          }
+          else
+          {
+            var s = IsContains((UIElement)item.OwnedControl);
+            if (s)
+            {
+              Identify(item);
+            }
+          }
         }
       }
     }
@@ -134,18 +160,18 @@ namespace XPDFDoc.Helpers
       item.ToType<XShape>().IsSelected = true;
     }
 
-    private static bool IsContains(XShape o)
+    private static bool IsContains(UIElement item)
     {
-      UIElement item = null;
+      //UIElement item = null;
 
-      if (o.OwnedShape != null)
-      {
-        item = (UIElement)o.OwnedShape;
-      }
-      else
-      {
-        item = (UIElement)o.OwnedControl;
-      }
+      //if (o.OwnedShape != null)
+      //{
+      //  item = (UIElement)o.OwnedShape;
+      //}
+      //else
+      //{
+      //  item = (UIElement)o.OwnedControl;
+      //}
 
       if (item == null) return false;
       if (_rect == null) return false;

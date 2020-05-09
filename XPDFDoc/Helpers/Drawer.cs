@@ -22,7 +22,7 @@ namespace XPDFDoc
       {
         _drawType = value;
 
-        if (value != Type.Ink && value != Type.MoveResize && _drawType == Type.Ink)
+        if ((value != Type.Ink && value != Type.MoveResize) || _drawType == Type.Ink)
         {
           Selector.FinishDraw();
         }
@@ -30,6 +30,13 @@ namespace XPDFDoc
         if (value == Type.None)
         {
           Selector.EndEditForObject();
+        }
+
+        if (value == Type.Ink)
+        {
+          var o = new XInk();
+          Objects.Add(o.Id, o);
+          Objects.Last().Value.ToType<XInk>().Create(new Point());
         }
       }
     }
@@ -155,9 +162,9 @@ namespace XPDFDoc
       }
       else if (DrawType == Type.Ink)
       {
-        var o = new XInk();
-        Objects.Add(o.Id, o);
-        Objects.Last().Value.ToType<XInk>().Create(e);
+        //var o = new XInk();
+        //Objects.Add(o.Id, o);
+        //Objects.Last().Value.ToType<XInk>().Create(e);
       }
       else if (DrawType == Type.Arrow)
       {
