@@ -43,18 +43,39 @@ namespace XPDFDoc
     {
       if (!IsDrawing) return;
 
-      var state = Keyboard.IsKeyDown(Key.LeftCtrl);
+      //var state = Keyboard.IsKeyDown(Key.LeftCtrl);
 
-      if (state)
+      //if (state)
+      //{
+      //  Drawing.Width = Math.Abs(StartPoint.X - e.X);
+      //  Drawing.Height = Drawing.Width;
+      //}
+      //else
+      //{
+      //  Drawing.Width = Math.Abs(StartPoint.X - e.X);
+      //  Drawing.Height = Math.Abs(StartPoint.Y - e.Y);
+      //}
+
+
+      var diffX = e.X - StartPoint.X;
+      var diffY = e.Y - StartPoint.Y;
+      var scaleX = 1;
+      var scaleY = 1;
+
+      if (diffX < 0)
       {
-        Drawing.Width = Math.Abs(StartPoint.X - e.X);
-        Drawing.Height = Drawing.Width;
+        scaleX = -1;
       }
-      else
+
+      if (diffY < 0)
       {
-        Drawing.Width = Math.Abs(StartPoint.X - e.X);
-        Drawing.Height = Math.Abs(StartPoint.Y - e.Y);
+        scaleY = -1;
       }
+
+      Drawing.RenderTransform = new ScaleTransform(scaleX, scaleY);
+
+      Drawing.Width = Math.Abs(diffX);
+      Drawing.Height = Math.Abs(diffY);
     }
   }
 }

@@ -121,7 +121,6 @@ namespace XPDFDoc.Helpers
       DeselectAll();
       foreach (var item in Drawer.Objects.Values)
       {
-
         if (item.OwnedShape != null)
         {
           var s = IsContains(item.OwnedShape);

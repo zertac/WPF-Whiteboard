@@ -80,22 +80,22 @@ namespace XPDFDoc.Drawers
 
       Textbox.Focus();
       //Textbox.TextChanged += (o, e) => 
-     
-      Textbox.TextChanged+= delegate(object sender, TextChangedEventArgs args)
-      {
-        var newWidth = Textbox.Document.GetFormattedText().WidthIncludingTrailingWhitespace + 20;
-        if (newWidth > Textbox.ActualWidth)
-        {
-          Textbox.Width = Textbox.Document.GetFormattedText().WidthIncludingTrailingWhitespace + 20;
-        }
-        
-        var adn = AdornerHelper.GetAdorner(sender);
 
-        if (adn != null)
-        {
-          adn.OnChange();
-        }
-      };
+      Textbox.TextChanged += delegate (object sender, TextChangedEventArgs args)
+       {
+         var newWidth = Textbox.Document.GetFormattedText().WidthIncludingTrailingWhitespace + 20;
+         if (newWidth > Textbox.ActualWidth)
+         {
+           Textbox.Width = Textbox.Document.GetFormattedText().WidthIncludingTrailingWhitespace + 20;
+         }
+
+         var adn = AdornerHelper.GetAdorner(sender);
+
+         if (adn != null)
+         {
+           adn.OnChange();
+         }
+       };
       Textbox.PreviewMouseLeftButtonDown += OnSelect;
       Textbox.Focus();
 
@@ -106,7 +106,7 @@ namespace XPDFDoc.Drawers
 
     public new void OnSelect(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
-      base.OnSelect(sender,e);
+      base.OnSelect(sender, e);
 
       var adn = AdornerHelper.GetAdorner(sender);
 
@@ -137,7 +137,7 @@ namespace XPDFDoc.Drawers
       Drawer.IsEditMode = false;
       Drawer.Page.Focus();
 
-     // Finish();
+      // Finish();
     }
   }
 }
