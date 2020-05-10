@@ -25,6 +25,21 @@ This repository contains wpf canvas based whiteboard project.
 ### Using
 
 Initialize XDrawer
-
 ```csharp
 Drawer.Initialize({Your own canvas});
+
+User your first brush
+```csharp
+ Drawer.DrawTool = Tool.Rectangle;
+ 
+ Change default brush style
+ ```csharp
+  var style = new DrawerStyle();
+  style.Border = new SolidColorBrush(Colors.Black);
+  style.Background = new SolidColorBrush(Colors.Red);
+  style.Opacity = 1;
+  style.BorderSize = 3;
+  
+  StyleHelper.CurrentStyle = style;
+ 
+
