@@ -78,6 +78,24 @@ namespace XDrawerLib.Helpers
 
     }
 
+    public static void DeleteSelected()
+    {
+      if (Drawer.ActiveObject == null) return;
+
+      var o = Drawer.ActiveObject.ToType<XShape>();
+      if (o.OwnedShape != null)
+      {
+        Drawer.Page.Children.Remove(o.OwnedShape);
+      }
+
+      if (o.OwnedControl != null)
+      {
+        Drawer.Page.Children.Remove((UIElement)o.OwnedControl);
+      }
+
+      Drawer.Objects.Remove(o.Id);
+    }
+
     public static void DeselectAll()
     {
       foreach (var item in Drawer.Objects.Values)

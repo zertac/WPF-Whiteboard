@@ -27,6 +27,7 @@ namespace XDrawerLib.Helpers
       Shortcuts.Add(KeyFunction.Custom, new HotKey { PrimaryKey = Key.LeftCtrl, SecondaryKey = Key.H });
       Shortcuts.Add(KeyFunction.PreserveSize, new HotKey { PrimaryKey = Key.LeftShift });
       Shortcuts.Add(KeyFunction.Cancel, new HotKey { PrimaryKey = Key.Escape, SecondaryKey = Key.None });
+      Shortcuts.Add(KeyFunction.Delete, new HotKey { PrimaryKey = Key.T });
     }
 
     public static void ExecuteShortcut()
@@ -81,6 +82,10 @@ namespace XDrawerLib.Helpers
         else if (function.Key == KeyFunction.Cancel)
         {
 
+        }
+        else if (function.Key == KeyFunction.Delete)
+        {
+          Selector.DeleteSelected();
         }
       }
     }

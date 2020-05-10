@@ -75,7 +75,7 @@ namespace XDrawerLib.Helpers
 
     private static void P_PreviewKeyDown(object sender, KeyEventArgs e)
     {
-    HotKeyHelper.ExecuteShortcut();
+      HotKeyHelper.ExecuteShortcut();
     }
 
     private static void _canvas_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)

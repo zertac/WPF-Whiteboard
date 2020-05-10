@@ -134,6 +134,7 @@
     <Compile Include="Helpers\HotKeyHelper.cs" />
     <Compile Include="Helpers\Selector.cs" />
     <Compile Include="Helpers\StyleHelper.cs" />
+    <Compile Include="Helpers\UndoHelper.cs" />
     <Compile Include="Models.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
