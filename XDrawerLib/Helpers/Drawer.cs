@@ -68,9 +68,7 @@ namespace XDrawerLib.Helpers
       _page.MouseMove += _canvas_PreviewMouseMove;
       _page.PreviewMouseLeftButtonUp += _canvas_PreviewMouseLeftButtonUp;
 
-      var p = (_page.Parent as Grid).Parent as Window;
-
-      p.PreviewKeyDown += P_PreviewKeyDown;
+      if ((_page.Parent as Grid)?.Parent is Window p) p.PreviewKeyDown += P_PreviewKeyDown;
     }
 
     private static void P_PreviewKeyDown(object sender, KeyEventArgs e)

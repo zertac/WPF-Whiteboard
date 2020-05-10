@@ -39,6 +39,7 @@ namespace XDrawerLib.Drawers
           OwnedShape.Stroke = _style.Border;
           OwnedShape.StrokeThickness = _style.BorderSize;
           OwnedShape.Opacity = _style.Opacity;
+          OwnedShape.Fill = _style.Background;
         }
 
         if (OwnedControl != null)
@@ -48,6 +49,7 @@ namespace XDrawerLib.Drawers
             txt.BorderBrush = _style.Border;
             txt.BorderThickness = new Thickness(_style.BorderSize);
             txt.Opacity = _style.Opacity;
+            txt.Background = _style.Background;
           }
         }
       }
@@ -155,6 +157,8 @@ namespace XDrawerLib.Drawers
       Drawer.IsDrawEnded = true;
 
       Style = Style;
+
+      UndoHelper.AddStep(UndoHelper.ActionType.Create, this);
     }
 
     public void Cancel()
@@ -179,6 +183,12 @@ namespace XDrawerLib.Drawers
       var ts = txt.Selection;
       ts.ApplyPropertyValue(property, value);
       txt.Focus();
+    }
+
+    public void SetPosition(Point position)
+    {
+      Canvas.SetLeft(OwnedShape,position.X);
+      Canvas.SetTop(OwnedShape,position.Y);
     }
   }
 }

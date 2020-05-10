@@ -86,14 +86,51 @@ namespace XDrawerLib.Helpers
       if (o.OwnedShape != null)
       {
         Drawer.Page.Children.Remove(o.OwnedShape);
+        Drawer.Objects.Remove(o.Id);
       }
 
       if (o.OwnedControl != null)
       {
-        Drawer.Page.Children.Remove((UIElement)o.OwnedControl);
+        if (o.OwnedControl is List<Border> borders)
+        {
+          foreach (var b in borders)
+          {
+            Drawer.Page.Children.Remove(b);
+            Drawer.Objects.Remove(b.Tag.ToType<XInk>().Id);
+          }
+        }
+        else
+        {
+          Drawer.Page.Children.Remove((UIElement)o.OwnedControl);
+          Drawer.Objects.Remove(o.Id);
+        }
+      }
+    }
+
+    public static void DeleteObject(XShape o)
+    {
+      if (o.OwnedShape != null)
+      {
+        Drawer.Page.Children.Remove(o.OwnedShape);
+        Drawer.Objects.Remove(o.Id);
       }
 
-      Drawer.Objects.Remove(o.Id);
+      if (o.OwnedControl != null)
+      {
+        if (o.OwnedControl is List<Border> borders)
+        {
+          foreach (var b in borders)
+          {
+            Drawer.Page.Children.Remove(b);
+            Drawer.Objects.Remove(b.Tag.ToType<XInk>().Id);
+          }
+        }
+        else
+        {
+          Drawer.Page.Children.Remove((UIElement)o.OwnedControl);
+          Drawer.Objects.Remove(o.Id);
+        }
+      }
     }
 
     public static void DeselectAll()

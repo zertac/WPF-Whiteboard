@@ -28,7 +28,9 @@ public enum KeyFunction
   Custom,
   PreserveSize,
   Cancel,
-  Delete
+  Delete,
+  Undo,
+  Redo
 }
 
 public class DrawerStyle

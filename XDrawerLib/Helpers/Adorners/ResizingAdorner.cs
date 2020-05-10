@@ -106,6 +106,8 @@ namespace XDrawerLib.Helpers.Adorners
           VisualTree = GetThumbTemple(new SolidColorBrush(Colors.White))
         }
       };
+
+
       thumb.DragDelta += (s, e) =>
       {
         var element = AdornedElement as FrameworkElement;
@@ -202,6 +204,8 @@ namespace XDrawerLib.Helpers.Adorners
       return fef;
     }
 
+    private Point _firstPosition;
+
     private Thumb GetMoveAndRotateThumb()
     {
       var thumb = new Thumb()
@@ -214,7 +218,8 @@ namespace XDrawerLib.Helpers.Adorners
           VisualTree = GetThumbTemple2(GetRectangleBack())
         }
       };
-
+      thumb.DragStarted += Thumb_DragStarted;
+      thumb.DragCompleted += Thumb_DragCompleted;
       thumb.DragDelta += (s, e) =>
       {
         var element = AdornedElement as FrameworkElement;
@@ -228,6 +233,19 @@ namespace XDrawerLib.Helpers.Adorners
       thumb.MouseDoubleClick += Thumb_MouseDoubleClick;
 
       return thumb;
+    }
+
+    private void Thumb_DragCompleted(object sender, DragCompletedEventArgs e)
+    {
+      if (AdornedElement is FrameworkElement element)
+      {
+        UndoHelper.AddStep(UndoHelper.ActionType.Move, element.Tag.ToType<XShape>(), _firstPosition);
+      }
+    }
+
+    private void Thumb_DragStarted(object sender, DragStartedEventArgs e)
+    {
+      _firstPosition = new Point(Canvas.GetLeft(AdornedElement), Canvas.GetTop(AdornedElement));
     }
 
     private void Thumb_MouseDoubleClick(object sender, MouseButtonEventArgs e)

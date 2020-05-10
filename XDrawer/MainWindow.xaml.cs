@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
 using XDrawerLib.Helpers;
 using XDrawerLib.Helpers.Adorners;
 
@@ -65,7 +66,19 @@ namespace XDrawer.Whiteboard
 
         //StyleHelper.CurrentStyle = a;
 
-        Drawer.GetSelectedObject().SetTextStyle(FontSizeProperty, Convert.ToDouble(32));
+        //Drawer.GetSelectedObject().SetTextStyle(FontSizeProperty, Convert.ToDouble(32));
+
+       
+
+        var style = new DrawerStyle();
+        style.Border = new SolidColorBrush(Colors.Black);
+        style.Background = new SolidColorBrush(Colors.Red);
+        style.Opacity = 1;
+        style.BorderSize = 3;
+
+        UndoHelper.AddStep(UndoHelper.ActionType.SetStyle,Drawer.GetSelectedObject(),new Point(),new Size(), Drawer.GetSelectedObject().Style);
+
+        Drawer.GetSelectedObject().Style = style;
       };
 
       BtnText.Click += delegate (object sender, RoutedEventArgs args)
