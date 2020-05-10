@@ -18,7 +18,7 @@ namespace XDrawerLib.Helpers
 
     private static Rectangle _rect;
     private static Point _startPoint;
-    
+
     public static void StartSelect(Point e)
     {
       if (Drawer.DrawTool == Tool.MoveResize) return;
@@ -88,6 +88,7 @@ namespace XDrawerLib.Helpers
       {
         Drawer.Page.Children.Remove(o.OwnedShape);
         Drawer.Objects.Remove(o.Id);
+        UndoHelper.AddStep(UndoHelper.ActionType.Delete, o.OwnedShape);
       }
 
       if (o.OwnedControl != null)
@@ -99,7 +100,8 @@ namespace XDrawerLib.Helpers
             if (Drawer.ActiveObject.Uid == b.Uid)
             {
               Drawer.Page.Children.Remove(b);
-              Drawer.Objects.Remove(b.Uid); 
+              Drawer.Objects.Remove(b.Uid);
+              UndoHelper.AddStep(UndoHelper.ActionType.Delete, b);
               break;
             }
           }
@@ -108,6 +110,7 @@ namespace XDrawerLib.Helpers
         {
           Drawer.Page.Children.Remove((UIElement)o.OwnedControl);
           Drawer.Objects.Remove(o.Id);
+          UndoHelper.AddStep(UndoHelper.ActionType.Delete, (FrameworkElement)o.OwnedControl);
         }
       }
     }

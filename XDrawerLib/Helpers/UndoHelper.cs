@@ -83,6 +83,36 @@ namespace XDrawerLib.Helpers
       {
         Selector.DeleteObject(lastAction.Object);
       }
+      if (lastAction.Type == ActionType.Delete)
+      {
+        var shape = lastAction.Object.Tag.ToType<XShape>();
+        if (shape.OwnedShape != null)
+        {
+          Drawer.Page.Children.Add(shape.OwnedShape);
+          Drawer.Objects.Add(shape.Id, shape);
+        }
+
+        if (shape.OwnedControl != null)
+        {
+          if (shape.OwnedControl is List<Border> borders)
+          {
+            foreach (var b in borders)
+            {
+              if (b.Uid == lastAction.Object.Uid)
+              {
+                Drawer.Page.Children.Add(b);
+                Drawer.Objects.Add(b.Uid, shape);
+                break;
+              }
+            }
+          }
+          else
+          {
+            Drawer.Page.Children.Add((FrameworkElement)shape.OwnedControl);
+            Drawer.Objects.Add(shape.Id, shape);
+          }
+        }
+      }
       else if (lastAction.Type == ActionType.Move)
       {
         lastAction.Object.Tag.ToType<XShape>().SetPosition(lastAction.PreviousProps.Location);
@@ -140,6 +170,10 @@ namespace XDrawerLib.Helpers
             Drawer.Objects.Add(shape.Id, shape);
           }
         }
+      }
+      else if (lastAction.Type == ActionType.Delete)
+      {
+        Selector.DeleteObject(lastAction.Object);
       }
       else if (lastAction.Type == ActionType.Move)
       {
