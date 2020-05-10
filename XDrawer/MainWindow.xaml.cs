@@ -178,20 +178,5 @@ namespace XDrawer.Whiteboard
     //    //  }
     //  }
     //}
-
-    private void P_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-    {
-
-    }
-
-    private void P_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-    {
-      _activeElement = (UIElement)sender;
-
-      var al = AdornerLayer.GetAdornerLayer((UIElement)sender);
-      var adn = new ResizingAdorner((UIElement)sender);
-
-      al?.Add(adn);
-    }
   }
 }
