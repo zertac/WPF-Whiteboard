@@ -12,7 +12,6 @@ namespace XDrawerLib.Drawers
   {
     public Rectangle Shadow;
     public RichTextBox Textbox;
-    //public StackPanel Container;
 
     public void Create(Point e)
     {
@@ -52,7 +51,7 @@ namespace XDrawerLib.Drawers
 
       var myFlowDoc = new FlowDocument();
       myFlowDoc.Blocks.Add(new Paragraph(new Run("Paragraph 1")));
-      //Container = new StackPanel();
+
       Textbox = new RichTextBox
       {
         Width = Shadow.Width,
@@ -63,8 +62,6 @@ namespace XDrawerLib.Drawers
         IsReadOnly = false
       };
 
-      //Container.Children.Add(Textbox);
-
       Canvas.SetLeft(Textbox, Canvas.GetLeft(Shadow));
       Canvas.SetTop(Textbox, Canvas.GetTop(Shadow));
 
@@ -72,9 +69,7 @@ namespace XDrawerLib.Drawers
       Drawer.Page.Children.Remove(Shadow);
 
       Textbox.Tag = this;
-
       Textbox.Focus();
-      //Textbox.TextChanged += (o, e) => 
 
       Textbox.TextChanged += delegate (object sender, TextChangedEventArgs args)
        {
@@ -85,17 +80,13 @@ namespace XDrawerLib.Drawers
          }
 
          var adn = AdornerHelper.GetAdorner(sender);
+         adn?.OnChange();
 
-         if (adn != null)
-         {
-           adn.OnChange();
-         }
        };
       Textbox.PreviewMouseLeftButtonDown += OnSelect;
       Textbox.Focus();
 
       OwnedControl = Textbox;
-
       OnDoubleClick += OnDoubleClickEvent;
     }
 
@@ -105,10 +96,7 @@ namespace XDrawerLib.Drawers
 
       var adn = AdornerHelper.GetAdorner(sender);
 
-      if (adn != null)
-      {
-        adn.OnChange();
-      }
+      adn?.OnChange();
     }
 
     public void OnDoubleClickEvent()
@@ -131,8 +119,6 @@ namespace XDrawerLib.Drawers
       Textbox.IsReadOnly = true;
       Drawer.IsEditMode = false;
       Drawer.Page.Focus();
-
-      // Finish();
     }
   }
 }

@@ -64,7 +64,6 @@ namespace XDrawerLib.Helpers
 
       _page = canvas;
       _page.PreviewMouseLeftButtonDown += _canvas_PreviewMouseLeftButtonDown;
-      //_page.MouseLeftButtonDown += _canvas_PreviewMouseLeftButtonDown;
       _page.MouseMove += _canvas_PreviewMouseMove;
       _page.PreviewMouseLeftButtonUp += _canvas_PreviewMouseLeftButtonUp;
 
@@ -100,7 +99,6 @@ namespace XDrawerLib.Helpers
     {
       if (DrawTool == Tool.None)
       {
-        //Selector.DeselectAll();
         Selector.StartSelect(e.GetPosition(Page));
         Selector.EndEditForObject();
       }
@@ -126,11 +124,7 @@ namespace XDrawerLib.Helpers
     {
       if (IsEditMode) return;
 
-      //if (DrawTool == Tool.None)
-      //{
-      //  Selector.StartSelect(e);
-      //}
-      else if (DrawTool == Tool.Rectangle)
+      if (DrawTool == Tool.Rectangle)
       {
         var o = new XRectangle();
         Objects.Add(o.Id, o);
@@ -237,7 +231,7 @@ namespace XDrawerLib.Helpers
       }
       else if (DrawTool == Tool.Triangle)
       {
-        //Objects.Last().Value.Finish();
+       
       }
       else if (DrawTool == Tool.Line)
       {
@@ -256,15 +250,12 @@ namespace XDrawerLib.Helpers
       {
         Objects.Last().Value.Finish();
       }
-
-      //IsObjectCreating = false;
     }
 
     public static XShape GetSelectedObject()
     {
       var o = ActiveObject as XShape;
       return o;
-
     }
   }
 }

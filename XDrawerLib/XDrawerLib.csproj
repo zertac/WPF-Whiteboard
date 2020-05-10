@@ -130,7 +130,6 @@
     <Compile Include="Helpers\Adorners\ResizingAdorner.cs" />
     <Compile Include="Helpers\Drawer.cs" />
     <Compile Include="Helpers\Extensions.cs" />
-    <Compile Include="Helpers\FlowDocumentExtension.cs" />
     <Compile Include="Helpers\HotKeyHelper.cs" />
     <Compile Include="Helpers\Selector.cs" />
     <Compile Include="Helpers\StyleHelper.cs" />

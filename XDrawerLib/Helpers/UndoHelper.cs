@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using XDrawerLib.Drawers;
@@ -11,7 +7,7 @@ namespace XDrawerLib.Helpers
 {
   public static class UndoHelper
   {
-    private static int CurrentIndex;
+    private static int _currentIndex;
 
     public enum ActionType
     {
@@ -47,14 +43,14 @@ namespace XDrawerLib.Helpers
 
       Steps.Add(action);
 
-      CurrentIndex = Steps.Count - 1;
+      _currentIndex = Steps.Count - 1;
     }
 
     public static void Undo()
     {
-      if (CurrentIndex == -1) return;
+      if (_currentIndex == -1) return;
 
-      var lastAction = Steps[CurrentIndex];
+      var lastAction = Steps[_currentIndex];
 
       if (lastAction.Type == ActionType.Create)
       {
@@ -74,19 +70,19 @@ namespace XDrawerLib.Helpers
         lastAction.Object.OwnedShape.Height = lastAction.PreviousProps.Size.Height;
       }
 
-      if (CurrentIndex > -1) CurrentIndex--;
+      if (_currentIndex > -1) _currentIndex--;
     }
 
     public static void Redo()
     {
-      if (CurrentIndex == Steps.Count - 1) return;
+      if (_currentIndex == Steps.Count - 1) return;
 
-      if (CurrentIndex + 1 < Steps.Count)
+      if (_currentIndex + 1 < Steps.Count)
       {
-        CurrentIndex++;
+        _currentIndex++;
       }
 
-      var lastAction = Steps[CurrentIndex];
+      var lastAction = Steps[_currentIndex];
 
       if (lastAction.Type == ActionType.Create)
       {

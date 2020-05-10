@@ -94,7 +94,7 @@ namespace XDrawerLib.Drawers
       Canvas.SetLeft(Arrow, x);
     }
 
-    double Angle(double cx, double cy, double ex, double ey)
+    private double Angle(double cx, double cy, double ex, double ey)
     {
       var dy = ey - cy;
       var dx = ex - cx;

@@ -33,50 +33,49 @@ namespace XDrawerLib.Helpers.Adorners
      * bottomLeftThumb*********bottomMiddleThumb**************bottomRightThumb
      * 
      * */
-    Thumb moveThumb, topLeftThumb, middleLeftThumb, bottomLeftThumb, topMiddleThumb, topRightThumb, middleRightThumb, bottomRightThumb, bottomMiddleThumb;
+    Thumb _moveThumb,
+      _topLeftThumb, 
+      _middleLeftThumb,
+      _bottomLeftThumb,
+      _topMiddleThumb,
+      _topRightThumb,
+      _middleRightThumb,
+      _bottomRightThumb,
+      _bottomMiddleThumb;
 
-    Rectangle thumbRectangle;
+    Rectangle _thumbRectangle;
 
-    VisualCollection visualCollection;
+    VisualCollection _visualCollection;
 
-    private UIElement mainAdorner;
-
-    private bool showResizeBorder;
+    private readonly bool _showResizeBorder;
 
     public ResizingAdorner(UIElement adorned) : base(adorned)
     {
       SetDefaults();
 
-      if (adorned is RichTextBox)
-      {
-        showResizeBorder = false;
-      }
-      else
-      {
-        showResizeBorder = true;
-      }
+      _showResizeBorder = !(adorned is RichTextBox);
     }
 
     private void SetDefaults()
     {
-      visualCollection = new VisualCollection(this);
+      _visualCollection = new VisualCollection(this);
 
-      visualCollection.Add(thumbRectangle = GeteResizeRectangle());
-      visualCollection.Add(moveThumb = GetMoveAndRotateThumb());
+      _visualCollection.Add(_thumbRectangle = GetResizeRectangle());
+      _visualCollection.Add(_moveThumb = GetMoveAndRotateThumb());
 
-      visualCollection.Add(topLeftThumb = GetResizeThumb(Cursors.SizeNWSE, HorizontalAlignment.Left, VerticalAlignment.Top));
-      visualCollection.Add(middleLeftThumb = GetResizeThumb(Cursors.SizeWE, HorizontalAlignment.Left, VerticalAlignment.Center));
-      visualCollection.Add(bottomLeftThumb = GetResizeThumb(Cursors.SizeNESW, HorizontalAlignment.Left, VerticalAlignment.Bottom));
+      _visualCollection.Add(_topLeftThumb = GetResizeThumb(Cursors.SizeNWSE, HorizontalAlignment.Left, VerticalAlignment.Top));
+      _visualCollection.Add(_middleLeftThumb = GetResizeThumb(Cursors.SizeWE, HorizontalAlignment.Left, VerticalAlignment.Center));
+      _visualCollection.Add(_bottomLeftThumb = GetResizeThumb(Cursors.SizeNESW, HorizontalAlignment.Left, VerticalAlignment.Bottom));
 
-      visualCollection.Add(topRightThumb = GetResizeThumb(Cursors.SizeNESW, HorizontalAlignment.Right, VerticalAlignment.Top));
-      visualCollection.Add(middleRightThumb = GetResizeThumb(Cursors.SizeWE, HorizontalAlignment.Right, VerticalAlignment.Center));
-      visualCollection.Add(bottomRightThumb = GetResizeThumb(Cursors.SizeNWSE, HorizontalAlignment.Right, VerticalAlignment.Bottom));
+      _visualCollection.Add(_topRightThumb = GetResizeThumb(Cursors.SizeNESW, HorizontalAlignment.Right, VerticalAlignment.Top));
+      _visualCollection.Add(_middleRightThumb = GetResizeThumb(Cursors.SizeWE, HorizontalAlignment.Right, VerticalAlignment.Center));
+      _visualCollection.Add(_bottomRightThumb = GetResizeThumb(Cursors.SizeNWSE, HorizontalAlignment.Right, VerticalAlignment.Bottom));
 
-      visualCollection.Add(topMiddleThumb = GetResizeThumb(Cursors.SizeNS, HorizontalAlignment.Center, VerticalAlignment.Top));
-      visualCollection.Add(bottomMiddleThumb = GetResizeThumb(Cursors.SizeNS, HorizontalAlignment.Center, VerticalAlignment.Bottom));
+      _visualCollection.Add(_topMiddleThumb = GetResizeThumb(Cursors.SizeNS, HorizontalAlignment.Center, VerticalAlignment.Top));
+      _visualCollection.Add(_bottomMiddleThumb = GetResizeThumb(Cursors.SizeNS, HorizontalAlignment.Center, VerticalAlignment.Bottom));
     }
 
-    private Rectangle GeteResizeRectangle()
+    private Rectangle GetResizeRectangle()
     {
       var rectangle = new Rectangle()
       {
@@ -96,7 +95,6 @@ namespace XDrawerLib.Helpers.Adorners
     {
       var thumb = new Thumb()
       {
-        //Background = Brushes.Red,
         Width = THUMB_SIZE,
         Height = THUMB_SIZE,
         HorizontalAlignment = horizontal,
@@ -124,21 +122,14 @@ namespace XDrawerLib.Helpers.Adorners
             if (element.Height + e.VerticalChange > MINIMAL_SIZE)
             {
               element.Height += e.VerticalChange;
-              thumbRectangle.Height += e.VerticalChange;
+              _thumbRectangle.Height += e.VerticalChange;
             }
             break;
-
-          //case VerticalAlignment.Center:
-          //    if ()
-          //    {
-
-          //    }
-          //    break;
           case VerticalAlignment.Top:
             if (element.Height - e.VerticalChange > MINIMAL_SIZE)
             {
               element.Height -= e.VerticalChange;
-              thumbRectangle.Height -= e.VerticalChange;
+              _thumbRectangle.Height -= e.VerticalChange;
 
               Canvas.SetTop(element, Canvas.GetTop(element) + e.VerticalChange);
             }
@@ -150,24 +141,18 @@ namespace XDrawerLib.Helpers.Adorners
             if (element.Width - e.HorizontalChange > MINIMAL_SIZE)
             {
               element.Width -= e.HorizontalChange;
-              var m = thumbRectangle.Width - e.HorizontalChange;
+              var m = _thumbRectangle.Width - e.HorizontalChange;
 
-              thumbRectangle.Width = Math.Abs(m);
+              _thumbRectangle.Width = Math.Abs(m);
               Canvas.SetLeft(element, Canvas.GetLeft(element) + e.HorizontalChange);
             }
             break;
-          //case HorizontalAlignment.Center:
-          //    if (element.Width + e.HorizontalChange > MINIMAL_SIZE)
-          //    {
-          //        element.Width += e.HorizontalChange;
-          //    }
-          //    break;
           case HorizontalAlignment.Right:
             if (element.Width + e.HorizontalChange > MINIMAL_SIZE)
             {
               element.Width += e.HorizontalChange;
-              var m = thumbRectangle.Width + e.HorizontalChange;
-              thumbRectangle.Width = Math.Abs(m);
+              var m = _thumbRectangle.Width + e.HorizontalChange;
+              _thumbRectangle.Width = Math.Abs(m);
             }
             break;
         }
@@ -193,9 +178,9 @@ namespace XDrawerLib.Helpers.Adorners
 
     private void ElementResize(FrameworkElement frameworkElement)
     {
-      if (Double.IsNaN(frameworkElement.Width))
+      if (double.IsNaN(frameworkElement.Width))
         frameworkElement.Width = frameworkElement.RenderSize.Width;
-      if (Double.IsNaN(frameworkElement.Height))
+      if (double.IsNaN(frameworkElement.Height))
         frameworkElement.Height = frameworkElement.RenderSize.Height;
     }
 
@@ -204,9 +189,9 @@ namespace XDrawerLib.Helpers.Adorners
     {
       back.Opacity = 1;
       var fef = new FrameworkElementFactory(typeof(Ellipse));
-      fef.SetValue(Ellipse.FillProperty, back);
-      fef.SetValue(Ellipse.StrokeProperty, Brushes.Green);
-      fef.SetValue(Ellipse.StrokeThicknessProperty, (double)1);
+      fef.SetValue(Shape.FillProperty, back);
+      fef.SetValue(Shape.StrokeProperty, Brushes.Green);
+      fef.SetValue(Shape.StrokeThicknessProperty, (double)1);
       return fef;
     }
 
@@ -214,7 +199,7 @@ namespace XDrawerLib.Helpers.Adorners
     {
       back.Opacity = 0;
       var fef = new FrameworkElementFactory(typeof(Rectangle));
-      fef.SetValue(Ellipse.FillProperty, back);
+      fef.SetValue(Shape.FillProperty, back);
       return fef;
     }
 
@@ -268,7 +253,7 @@ namespace XDrawerLib.Helpers.Adorners
       {
         if (element is RichTextBox)
         {
-          moveThumb.Visibility = Visibility.Hidden;
+          _moveThumb.Visibility = Visibility.Hidden;
         }
 
         element.Tag.ToType<XShape>().OnDoubleClick?.Invoke();
@@ -277,7 +262,7 @@ namespace XDrawerLib.Helpers.Adorners
 
     private Brush GetMoveEllipseBack()
     {
-      string lan = "M841.142857 570.514286c0 168.228571-153.6 336.457143-329.142857 336.457143s-329.142857-153.6-329.142857-336.457143c0-182.857143 153.6-336.457143 329.142857-336.457143v117.028571l277.942857-168.228571L512 0v117.028571c-241.371429 0-438.857143 197.485714-438.857143 453.485715S270.628571 1024 512 1024s438.857143-168.228571 438.857143-453.485714h-109.714286z m0 0";
+      var lan = "M841.142857 570.514286c0 168.228571-153.6 336.457143-329.142857 336.457143s-329.142857-153.6-329.142857-336.457143c0-182.857143 153.6-336.457143 329.142857-336.457143v117.028571l277.942857-168.228571L512 0v117.028571c-241.371429 0-438.857143 197.485714-438.857143 453.485715S270.628571 1024 512 1024s438.857143-168.228571 438.857143-453.485714h-109.714286z m0 0";
       var converter = TypeDescriptor.GetConverter(typeof(Geometry));
       var geometry = (Geometry)converter.ConvertFrom(lan);
       TileBrush bsh = new DrawingBrush(new GeometryDrawing(Brushes.Transparent, new Pen(Brushes.Black, 2), geometry));
@@ -287,7 +272,7 @@ namespace XDrawerLib.Helpers.Adorners
 
     private Brush GetRectangleBack()
     {
-      string lan = "M22,4H2v16h20V4L22,4z";
+      var lan = "M22,4H2v16h20V4L22,4z";
       var converter = TypeDescriptor.GetConverter(typeof(Geometry));
       var geometry = (Geometry)converter.ConvertFrom(lan);
       TileBrush bsh = new DrawingBrush(new GeometryDrawing(Brushes.Transparent, new Pen(Brushes.Black, 2), geometry));
@@ -297,53 +282,45 @@ namespace XDrawerLib.Helpers.Adorners
 
     protected override Size ArrangeOverride(Size finalSize)
     {
-      double offset = (THUMB_SIZE / 2);
-      Size sz = new Size(THUMB_SIZE, THUMB_SIZE);
+      var offset = (THUMB_SIZE / 2);
+      var sz = new Size(THUMB_SIZE, THUMB_SIZE);
 
-      topLeftThumb.Arrange(new Rect(new Point(-offset, -offset), sz));
-      topMiddleThumb.Arrange(new Rect(new Point(AdornedElement.RenderSize.Width / 2 - THUMB_SIZE / 2, -offset), sz));
-      topRightThumb.Arrange(new Rect(new Point(AdornedElement.RenderSize.Width - offset, -offset), sz));
+      _topLeftThumb.Arrange(new Rect(new Point(-offset, -offset), sz));
+      _topMiddleThumb.Arrange(new Rect(new Point(AdornedElement.RenderSize.Width / 2 - THUMB_SIZE / 2, -offset), sz));
+      _topRightThumb.Arrange(new Rect(new Point(AdornedElement.RenderSize.Width - offset, -offset), sz));
 
-      bottomLeftThumb.Arrange(new Rect(new Point(-offset, AdornedElement.RenderSize.Height - offset), sz));
-      bottomMiddleThumb.Arrange(new Rect(new Point(AdornedElement.RenderSize.Width / 2 - THUMB_SIZE / 2, AdornedElement.RenderSize.Height - offset), sz));
-      bottomRightThumb.Arrange(new Rect(new Point(AdornedElement.RenderSize.Width - offset, AdornedElement.RenderSize.Height - offset), sz));
+      _bottomLeftThumb.Arrange(new Rect(new Point(-offset, AdornedElement.RenderSize.Height - offset), sz));
+      _bottomMiddleThumb.Arrange(new Rect(new Point(AdornedElement.RenderSize.Width / 2 - THUMB_SIZE / 2, AdornedElement.RenderSize.Height - offset), sz));
+      _bottomRightThumb.Arrange(new Rect(new Point(AdornedElement.RenderSize.Width - offset, AdornedElement.RenderSize.Height - offset), sz));
 
-      middleLeftThumb.Arrange(new Rect(new Point(-offset, AdornedElement.RenderSize.Height / 2 - THUMB_SIZE / 2), sz));
-      middleRightThumb.Arrange(new Rect(new Point(AdornedElement.RenderSize.Width - offset, AdornedElement.RenderSize.Height / 2 - THUMB_SIZE / 2), sz));
+      _middleLeftThumb.Arrange(new Rect(new Point(-offset, AdornedElement.RenderSize.Height / 2 - THUMB_SIZE / 2), sz));
+      _middleRightThumb.Arrange(new Rect(new Point(AdornedElement.RenderSize.Width - offset, AdornedElement.RenderSize.Height / 2 - THUMB_SIZE / 2), sz));
 
-      if (showResizeBorder)
+      if (_showResizeBorder)
       {
-        thumbRectangle.Arrange(new Rect(new Point(-offset, -offset), new Size(Width = AdornedElement.RenderSize.Width + THUMB_SIZE, Height = AdornedElement.RenderSize.Height + THUMB_SIZE)));
+        _thumbRectangle.Arrange(new Rect(new Point(-offset, -offset), new Size(Width = AdornedElement.RenderSize.Width + THUMB_SIZE, Height = AdornedElement.RenderSize.Height + THUMB_SIZE)));
       }
 
-      moveThumb.Width = finalSize.Width;
-      moveThumb.Height = finalSize.Height;
+      _moveThumb.Width = finalSize.Width;
+      _moveThumb.Height = finalSize.Height;
 
       var r = new Rect(0, 0, finalSize.Width - offset, finalSize.Height - offset);
-      moveThumb.Arrange(r);
+      _moveThumb.Arrange(r);
 
       return finalSize;
     }
 
     protected override Visual GetVisualChild(int index)
     {
-      return visualCollection[index];
+      return _visualCollection[index];
     }
 
-    protected override int VisualChildrenCount
-    {
-      get
-      {
-        return visualCollection.Count;
-      }
-    }
+    protected override int VisualChildrenCount => _visualCollection.Count;
 
 
     public void OnChange()
     {
-      //var element = AdornedElement as FrameworkElement;
-      //var r = new Size(element.ActualWidth, element.ActualHeight);
-      //ArrangeOverride(r);
+     
     }
   }
 }

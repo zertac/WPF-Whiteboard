@@ -216,17 +216,6 @@ namespace XDrawerLib.Helpers
 
     private static bool IsContains(UIElement item)
     {
-      //UIElement item = null;
-
-      //if (o.OwnedShape != null)
-      //{
-      //  item = (UIElement)o.OwnedShape;
-      //}
-      //else
-      //{
-      //  item = (UIElement)o.OwnedControl;
-      //}
-
       if (item == null) return false;
       if (_rect == null) return false;
 
@@ -238,12 +227,12 @@ namespace XDrawerLib.Helpers
 
       if (xScale < 0)
       {
-        x1 = x1 - _rect.ActualWidth;
+        x1 -= _rect.ActualWidth;
       }
 
       if (yScale < 0)
       {
-        y1 = y1 - _rect.ActualHeight;
+        y1 -= _rect.ActualHeight;
       }
 
       var r1 = new Rect(x1, y1, _rect.ActualWidth, _rect.ActualHeight);

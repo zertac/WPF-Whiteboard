@@ -78,8 +78,6 @@ namespace XDrawerLib.Drawers
 
         var path = new Path();
         path.Data = geometry;
-        //path.Width = stroke.GetBounds().Width;
-        //path.Height = stroke.GetBounds().Height;
         path.VerticalAlignment = VerticalAlignment.Stretch;
         path.HorizontalAlignment = HorizontalAlignment.Stretch;
         path.Fill = new SolidColorBrush(Colors.Black);
@@ -89,8 +87,10 @@ namespace XDrawerLib.Drawers
         Canvas.SetLeft(border, stroke.GetBounds().Left);
         Canvas.SetTop(border, stroke.GetBounds().Top);
 
-        var oLst = OwnedControl as List<Border>;
-        oLst.Add(border);
+        if (OwnedControl is List<Border> oLst)
+        {
+          oLst.Add(border);
+        }
 
         Drawer.Objects.Add(Guid.NewGuid().ToString(), this);
         Drawer.Page.Children.Add(border);

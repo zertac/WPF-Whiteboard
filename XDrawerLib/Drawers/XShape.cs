@@ -28,12 +28,6 @@ namespace XDrawerLib.Drawers
       {
         _style = value;
 
-        //if (!(OwnedShape is Line))
-        //{
-        //  if (OwnedShape == null) return;
-        //  OwnedShape.Fill = _style.Background;
-        //}
-
         if (OwnedShape != null)
         {
           OwnedShape.Stroke = _style.Border;
@@ -178,11 +172,12 @@ namespace XDrawerLib.Drawers
 
     public void SetTextStyle(DependencyProperty property, object value)
     {
-      var txt = OwnedControl as RichTextBox;
-
-      var ts = txt.Selection;
-      ts.ApplyPropertyValue(property, value);
-      txt.Focus();
+      if (OwnedControl is RichTextBox txt)
+      {
+        var ts = txt.Selection;
+        ts.ApplyPropertyValue(property, value);
+        txt.Focus();
+      }
     }
 
     public void SetPosition(Point position)

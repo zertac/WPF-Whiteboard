@@ -86,12 +86,7 @@ namespace XDrawerLib.Helpers
       var al = AdornerLayer.GetAdornerLayer(element);
 
       var toRemoveArray = al?.GetAdorners(element);
-      if (toRemoveArray != null)
-      {
-        return (ResizingAdorner)toRemoveArray[0];
-      }
-
-      return null;
+      return (ResizingAdorner) toRemoveArray?[0];
     }
   }
 }

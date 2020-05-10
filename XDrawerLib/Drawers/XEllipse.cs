@@ -54,7 +54,6 @@ namespace XDrawerLib.Drawers
       //  Drawing.Height = Math.Abs(StartPoint.Y - e.Y);
       //}
 
-
       var diffX = e.X - StartPoint.X;
       var diffY = e.Y - StartPoint.Y;
       var scaleX = 1;

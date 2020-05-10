@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using XDrawerLib;
 using XDrawerLib.Helpers;
 using XDrawerLib.Helpers.Adorners;
 
@@ -13,23 +14,14 @@ namespace XDrawer.Whiteboard
   /// </summary>
   public partial class MainWindow : Window
   {
-
-    private UIElement _activeElement;
-
     public MainWindow()
     {
       InitializeComponent();
 
       this.Loaded += MainWindow_Loaded;
 
-      //InkCanvas.Visibility = Visibility.Hidden;
-
       Drawer.Initialize(MainCanvas);
       Drawer.ContinuousDraw = true;
-
-      //this.PreviewMouseLeftButtonDown += MainWindow_PreviewMouseLeftButtonDown;
-      //this.BtnArrow.PreviewMouseLeftButtonDown += Btn_MouseLeftButtonDown;
-      //BtnDraw.PreviewMouseLeftButtonDown += BtnDraw_PreviewMouseLeftButtonDown;
 
       BtnNone.Click += delegate (object sender, RoutedEventArgs args)
       {
@@ -58,18 +50,6 @@ namespace XDrawer.Whiteboard
 
       BtnStyle.Click += delegate (object sender, RoutedEventArgs args)
       {
-        //var a = new DrawerStyle();
-        //a.Background = new SolidColorBrush(Colors.Transparent);
-        //a.Border = new SolidColorBrush(Colors.Blue);
-        //a.BorderSize = 3;
-        //a.Opacity = 1;
-
-        //StyleHelper.CurrentStyle = a;
-
-        //Drawer.GetSelectedObject().SetTextStyle(FontSizeProperty, Convert.ToDouble(32));
-
-       
-
         var style = new DrawerStyle();
         style.Border = new SolidColorBrush(Colors.Black);
         style.Background = new SolidColorBrush(Colors.Red);
