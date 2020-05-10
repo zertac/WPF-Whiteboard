@@ -53,7 +53,7 @@ namespace XDrawerLib.Helpers
     public static bool IsObjectCreating;
     public static bool IsDrawEnded = true;
 
-    public static object ActiveObject;
+    public static FrameworkElement ActiveObject;
 
     public static string CustomShapeData;
 
@@ -231,7 +231,7 @@ namespace XDrawerLib.Helpers
       }
       else if (DrawTool == Tool.Triangle)
       {
-       
+
       }
       else if (DrawTool == Tool.Line)
       {
@@ -252,9 +252,9 @@ namespace XDrawerLib.Helpers
       }
     }
 
-    public static XShape GetSelectedObject()
+    public static FrameworkElement GetSelectedObject()
     {
-      var o = ActiveObject as XShape;
+      var o = ActiveObject.Tag.ToType<XShape>().OwnedShape == null ? ActiveObject.Tag.ToType<XShape>().OwnedShape : (FrameworkElement)ActiveObject.Tag.ToType<XShape>().OwnedControl;
       return o;
     }
   }

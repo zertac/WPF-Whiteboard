@@ -18,7 +18,7 @@ namespace XDrawerLib.Helpers
 
     private static Rectangle _rect;
     private static Point _startPoint;
-
+    
     public static void StartSelect(Point e)
     {
       if (Drawer.DrawTool == Tool.MoveResize) return;
@@ -82,7 +82,8 @@ namespace XDrawerLib.Helpers
     {
       if (Drawer.ActiveObject == null) return;
 
-      var o = Drawer.ActiveObject.ToType<XShape>();
+      var o = Drawer.ActiveObject.Tag.ToType<XShape>();
+
       if (o.OwnedShape != null)
       {
         Drawer.Page.Children.Remove(o.OwnedShape);
@@ -95,8 +96,12 @@ namespace XDrawerLib.Helpers
         {
           foreach (var b in borders)
           {
-            Drawer.Page.Children.Remove(b);
-            Drawer.Objects.Remove(b.Tag.ToType<XInk>().Id);
+            if (Drawer.ActiveObject.Uid == b.Uid)
+            {
+              Drawer.Page.Children.Remove(b);
+              Drawer.Objects.Remove(b.Uid); 
+              break;
+            }
           }
         }
         else
@@ -107,8 +112,10 @@ namespace XDrawerLib.Helpers
       }
     }
 
-    public static void DeleteObject(XShape o)
+    public static void DeleteObject(FrameworkElement ctrl)
     {
+      var o = ctrl.Tag.ToType<XShape>();
+
       if (o.OwnedShape != null)
       {
         Drawer.Page.Children.Remove(o.OwnedShape);
@@ -121,8 +128,12 @@ namespace XDrawerLib.Helpers
         {
           foreach (var b in borders)
           {
-            Drawer.Page.Children.Remove(b);
-            Drawer.Objects.Remove(b.Tag.ToType<XInk>().Id);
+            if (ctrl.Uid == b.Uid)
+            {
+              Drawer.Page.Children.Remove(b);
+              Drawer.Objects.Remove(b.Uid);
+              break;
+            }
           }
         }
         else

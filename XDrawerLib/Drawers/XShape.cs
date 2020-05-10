@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -56,8 +57,6 @@ namespace XDrawerLib.Drawers
       AdornerHelper.RemoveAllAdorners();
 
       Selector.DeselectAll();
-
-      Drawer.ActiveObject = this;
     }
 
     public bool IsSelected
@@ -130,7 +129,31 @@ namespace XDrawerLib.Drawers
         AdornerHelper.AddAdorner(sender);
       }
 
-      Drawer.ActiveObject = this;
+      if (OwnedShape != null)
+      {
+        Drawer.ActiveObject = OwnedShape;
+      }
+
+      if (OwnedControl != null)
+      {
+        if (OwnedControl is List<Border> borders)
+        {
+          var c = (FrameworkElement)sender;
+
+          foreach (var b in borders)
+          {
+            if (b.Uid == c.Uid)
+            {
+              Drawer.ActiveObject = b;
+              break;
+            }
+          }
+        }
+        else
+        {
+          Drawer.ActiveObject = (FrameworkElement)OwnedControl;
+        }
+      }
     }
 
     internal static T Init<T>() where T : new()
@@ -152,7 +175,16 @@ namespace XDrawerLib.Drawers
 
       Style = Style;
 
-      UndoHelper.AddStep(UndoHelper.ActionType.Create, this);
+      if (OwnedShape != null)
+      {
+        UndoHelper.AddStep(UndoHelper.ActionType.Create, OwnedShape);
+      }
+
+      if (OwnedControl != null)
+      {
+        UndoHelper.AddStep(UndoHelper.ActionType.Create, (FrameworkElement)OwnedControl);
+      }
+
     }
 
     public void Cancel()
@@ -182,8 +214,17 @@ namespace XDrawerLib.Drawers
 
     public void SetPosition(Point position)
     {
-      Canvas.SetLeft(OwnedShape,position.X);
-      Canvas.SetTop(OwnedShape,position.Y);
+      if (OwnedShape != null)
+      {
+        Canvas.SetLeft(OwnedShape, position.X);
+        Canvas.SetTop(OwnedShape, position.Y);
+      }
+
+      if (OwnedControl != null)
+      {
+        Canvas.SetLeft((UIElement)OwnedControl, position.X);
+        Canvas.SetTop((UIElement)OwnedControl, position.Y);
+      }
     }
   }
 }

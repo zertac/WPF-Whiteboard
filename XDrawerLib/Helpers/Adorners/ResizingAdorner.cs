@@ -167,7 +167,7 @@ namespace XDrawerLib.Helpers.Adorners
     {
       if (AdornedElement is FrameworkElement element)
       {
-        UndoHelper.AddStep(UndoHelper.ActionType.Resize, element.Tag.ToType<XShape>(), new Point(), _firstSize);
+        UndoHelper.AddStep(UndoHelper.ActionType.Resize, element, new Point(), _firstSize);
       }
     }
 
@@ -238,7 +238,7 @@ namespace XDrawerLib.Helpers.Adorners
     {
       if (AdornedElement is FrameworkElement element)
       {
-        UndoHelper.AddStep(UndoHelper.ActionType.Move, element.Tag.ToType<XShape>(), _firstPosition);
+        UndoHelper.AddStep(UndoHelper.ActionType.Move, element, _firstPosition);
       }
     }
 

@@ -4,6 +4,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using XDrawerLib;
+using XDrawerLib.Drawers;
 using XDrawerLib.Helpers;
 using XDrawerLib.Helpers.Adorners;
 
@@ -56,9 +57,9 @@ namespace XDrawer.Whiteboard
         style.Opacity = 1;
         style.BorderSize = 3;
 
-        UndoHelper.AddStep(UndoHelper.ActionType.SetStyle,Drawer.GetSelectedObject(),new Point(),new Size(), Drawer.GetSelectedObject().Style);
+        UndoHelper.AddStep(UndoHelper.ActionType.SetStyle, Drawer.GetSelectedObject(), new Point(), new Size(), Drawer.GetSelectedObject().Tag.ToType<XShape>().Style);
 
-        Drawer.GetSelectedObject().Style = style;
+        Drawer.GetSelectedObject().Tag.ToType<XShape>().Style = style;
       };
 
       BtnText.Click += delegate (object sender, RoutedEventArgs args)

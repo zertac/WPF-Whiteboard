@@ -37,6 +37,8 @@ namespace XDrawerLib.Drawers
 
       OwnedControl = new List<Border>();
 
+      Style = new DrawerStyle();
+
       Drawer.Page.Children.Add(Drawing);
       Drawer.IsObjectCreating = true;
     }
@@ -75,6 +77,7 @@ namespace XDrawerLib.Drawers
         border.Width = stroke.GetBounds().Width;
         border.Height = stroke.GetBounds().Height;
         border.MouseLeftButtonDown += OnSelect;
+        border.Uid = Guid.NewGuid().ToString();
 
         var path = new Path();
         path.Data = geometry;
@@ -92,8 +95,10 @@ namespace XDrawerLib.Drawers
           oLst.Add(border);
         }
 
-        Drawer.Objects.Add(Guid.NewGuid().ToString(), this);
+        Drawer.Objects.Add(border.Uid, this);
         Drawer.Page.Children.Add(border);
+
+        UndoHelper.AddStep(UndoHelper.ActionType.Create, border);
       }
 
       Drawing = null;
