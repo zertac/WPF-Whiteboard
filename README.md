@@ -27,11 +27,13 @@ This repository contains wpf canvas based whiteboard project.
 Initialize XDrawer
 ```csharp
 Drawer.Initialize({Your own canvas});
-
+ ```
+ 
 User your first brush
 ```csharp
  Drawer.DrawTool = Tool.Rectangle;
- 
+  ```
+  
  Change default brush style
  ```csharp
   var style = new DrawerStyle();
@@ -41,5 +43,5 @@ User your first brush
   style.BorderSize = 3;
   
   StyleHelper.CurrentStyle = style;
- 
+  ```
 
