@@ -21,3 +21,9 @@ This repository contains wpf canvas based whiteboard project.
 - Ink Canvas
 - Arrow
 - Custom Shape
+
+### Using
+
+Initialize XDrawer
+
+<Drawer.Initialize({Your own canvas});>
