@@ -26,4 +26,5 @@ This repository contains wpf canvas based whiteboard project.
 
 Initialize XDrawer
 
-<Drawer.Initialize({Your own canvas});>
+```csharp
+Drawer.Initialize({Your own canvas});
