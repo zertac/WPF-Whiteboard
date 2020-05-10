@@ -90,6 +90,7 @@ namespace XDrawerLib.Helpers.Adorners
       return rectangle;
     }
 
+    private Size _firstSize;
 
     private Thumb GetResizeThumb(Cursor cur, HorizontalAlignment horizontal, VerticalAlignment vertical)
     {
@@ -106,8 +107,8 @@ namespace XDrawerLib.Helpers.Adorners
           VisualTree = GetThumbTemple(new SolidColorBrush(Colors.White))
         }
       };
-
-
+      thumb.DragStarted += Thumb_DragStarted1;
+      thumb.DragCompleted += Thumb_DragCompleted1;
       thumb.DragDelta += (s, e) =>
       {
         var element = AdornedElement as FrameworkElement;
@@ -175,6 +176,19 @@ namespace XDrawerLib.Helpers.Adorners
       };
 
       return thumb;
+    }
+
+    private void Thumb_DragCompleted1(object sender, DragCompletedEventArgs e)
+    {
+      if (AdornedElement is FrameworkElement element)
+      {
+        UndoHelper.AddStep(UndoHelper.ActionType.Resize, element.Tag.ToType<XShape>(), new Point(), _firstSize);
+      }
+    }
+
+    private void Thumb_DragStarted1(object sender, DragStartedEventArgs e)
+    {
+      _firstSize = AdornedElement.RenderSize;
     }
 
     private void ElementResize(FrameworkElement frameworkElement)

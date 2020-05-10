@@ -68,6 +68,11 @@ namespace XDrawerLib.Helpers
       {
         lastAction.Object.Style = lastAction.PreviousProps.Style;
       }
+      else if (lastAction.Type == ActionType.Resize)
+      {
+        lastAction.Object.OwnedShape.Width = lastAction.PreviousProps.Size.Width;
+        lastAction.Object.OwnedShape.Height = lastAction.PreviousProps.Size.Height;
+      }
 
       if (CurrentIndex > -1) CurrentIndex--;
     }
@@ -95,6 +100,11 @@ namespace XDrawerLib.Helpers
       else if (lastAction.Type == ActionType.SetStyle)
       {
         lastAction.Object.Style = lastAction.NextProps.Style;
+      }
+      else if (lastAction.Type == ActionType.Resize)
+      {
+        lastAction.Object.OwnedShape.Width = lastAction.NextProps.Size.Width;
+        lastAction.Object.OwnedShape.Height = lastAction.NextProps.Size.Height;
       }
     }
   }
