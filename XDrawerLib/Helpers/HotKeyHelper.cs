@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 
 namespace XDrawerLib.Helpers
@@ -10,6 +12,7 @@ namespace XDrawerLib.Helpers
     static HotKeyHelper()
     {
       Shortcuts = new Dictionary<KeyFunction, HotKey>();
+      SetDefaultKeys();
     }
 
     private static void SetDefaultKeys()
@@ -22,15 +25,63 @@ namespace XDrawerLib.Helpers
       Shortcuts.Add(KeyFunction.Triangle, new HotKey { PrimaryKey = Key.LeftCtrl, SecondaryKey = Key.N });
       Shortcuts.Add(KeyFunction.Arrow, new HotKey { PrimaryKey = Key.LeftCtrl, SecondaryKey = Key.P });
       Shortcuts.Add(KeyFunction.Custom, new HotKey { PrimaryKey = Key.LeftCtrl, SecondaryKey = Key.H });
-      Shortcuts.Add(KeyFunction.PreserveSize, new HotKey { PrimaryKey = Key.LeftCtrl });
-      Shortcuts.Add(KeyFunction.Cancel, new HotKey { PrimaryKey = Key.Escape });
+      Shortcuts.Add(KeyFunction.PreserveSize, new HotKey { PrimaryKey = Key.LeftShift });
+      Shortcuts.Add(KeyFunction.Cancel, new HotKey { PrimaryKey = Key.Escape, SecondaryKey = Key.None });
     }
 
     public static void ExecuteShortcut()
     {
-      if (Keyboard.IsKeyDown(Key.LeftCtrl) && Keyboard.IsKeyDown(Key.D))
+      var tmp = Shortcuts.Where(x => Keyboard.IsKeyDown(x.Value.PrimaryKey)).ToList();
+      var founded = tmp.Count(x =>
+        (x.Value.SecondaryKey != Key.None && Keyboard.IsKeyDown(x.Value.SecondaryKey)) ||
+        x.Value.SecondaryKey == Key.None) > 0;
+
+      if (founded)
       {
-        Drawer.DrawTool = Tool.Ink;
+        var function = tmp.Single(x =>
+          (x.Value.SecondaryKey != Key.None && Keyboard.IsKeyDown(x.Value.SecondaryKey)) ||
+          x.Value.SecondaryKey == Key.None);
+
+        if (function.Key == KeyFunction.Ink)
+        {
+          Drawer.DrawTool = Tool.Ink;
+        }
+        else if (function.Key == KeyFunction.Line)
+        {
+          Drawer.DrawTool = Tool.Line;
+        }
+        else if (function.Key == KeyFunction.Rectangle)
+        {
+          Drawer.DrawTool = Tool.Rectangle;
+        }
+        else if (function.Key == KeyFunction.Ellipse)
+        {
+          Drawer.DrawTool = Tool.Ellipse;
+        }
+        else if (function.Key == KeyFunction.Text)
+        {
+          Drawer.DrawTool = Tool.Text;
+        }
+        else if (function.Key == KeyFunction.Triangle)
+        {
+          Drawer.DrawTool = Tool.Triangle;
+        }
+        else if (function.Key == KeyFunction.Arrow)
+        {
+          Drawer.DrawTool = Tool.Arrow;
+        }
+        else if (function.Key == KeyFunction.Custom)
+        {
+          Drawer.DrawTool = Tool.Custom;
+        }
+        else if (function.Key == KeyFunction.PreserveSize)
+        {
+
+        }
+        else if (function.Key == KeyFunction.Cancel)
+        {
+
+        }
       }
     }
   }
