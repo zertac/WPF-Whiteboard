@@ -22,6 +22,7 @@ This repository contains wpf canvas based whiteboard project.
 - Ink Canvas
 - Arrow
 - Custom Shape
+- Erase objects and ink strokes by stylus pen inverse
 ### Installation
 Download repository and add to your solution. Add reference as project reference to you own project and start to use XDrawer.
 
