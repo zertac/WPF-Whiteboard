@@ -25,7 +25,7 @@ This repository contains wpf canvas based whiteboard - annotation project.
 - Custom Shape
 
 ### Installation
-Download repository and add to your solution. Add reference as project reference to you own project and start to use XDrawer.
+Download repository and add to your solution. Add reference as project reference to your own project and start to use XDrawer.
 
 ### Using
 
