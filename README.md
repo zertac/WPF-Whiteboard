@@ -27,6 +27,7 @@ This repository contains wpf canvas based whiteboard - annotation project.
 ### Installation
 Download repository and add to your solution. Add reference as project reference to your own project and start to use XDrawer.
 
+You have to install vvvv/SVG for ink strokes to custom path data convertion. Nuget package manager will restore automatically or you can install manually at [https://github.com/vvvv/SVG](https://github.com/vvvv/SVG)
 ### Using
 
 Initialize XDrawer
