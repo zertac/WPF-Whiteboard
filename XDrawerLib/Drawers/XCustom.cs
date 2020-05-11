@@ -31,6 +31,7 @@ namespace XDrawerLib.Drawers
 
       Style = new DrawerStyle(StyleHelper.CurrentStyle);
       Drawing.PreviewMouseLeftButtonDown += base.OnSelect;
+      Drawing.StylusDown += OnErase;
 
       Canvas.SetLeft(Drawing, e.X);
       Canvas.SetTop(Drawing, e.Y);

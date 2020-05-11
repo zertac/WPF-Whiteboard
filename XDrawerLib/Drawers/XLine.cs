@@ -24,8 +24,8 @@ namespace XDrawerLib.Drawers
       OwnedShape = Drawing;
 
       Style = new DrawerStyle(StyleHelper.CurrentStyle);
-      Drawing.MouseLeftButtonDown += base.OnSelect;
-
+      Drawing.MouseLeftButtonDown += OnSelect;
+      Drawing.StylusDown += OnErase;
       Drawer.Page.Children.Add(Drawing);
       Drawer.IsObjectCreating = true;
     }

@@ -46,6 +46,7 @@ namespace XDrawerLib.Drawers
 
       Arrow.Child = draw;
       Arrow.MouseLeftButtonDown += Arrow_MouseLeftButtonDown;
+      Drawing.StylusDown += OnErase;
       Drawer.Page.Children.Add(Arrow);
 
       Drawer.Page.Children.Add(Drawing);

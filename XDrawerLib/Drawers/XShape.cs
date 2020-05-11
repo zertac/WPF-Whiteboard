@@ -156,6 +156,14 @@ namespace XDrawerLib.Drawers
       }
     }
 
+    internal void OnErase(object sender, System.Windows.Input.StylusDownEventArgs e)
+    {
+      if (e.Inverted)
+      {
+        Selector.DeleteObject(OwnedShape);
+      }
+    }
+
     internal static T Init<T>() where T : new()
     {
       Instance = new T();

@@ -77,6 +77,7 @@ namespace XDrawerLib.Drawers
         border.Width = stroke.GetBounds().Width;
         border.Height = stroke.GetBounds().Height;
         border.MouseLeftButtonDown += OnSelect;
+        border.StylusDown += OnErase;
         border.Uid = Guid.NewGuid().ToString();
 
         var path = new Path();

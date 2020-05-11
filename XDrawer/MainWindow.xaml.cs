@@ -58,7 +58,7 @@ namespace XDrawer.Whiteboard
         style.BorderSize = 3;
 
         UndoHelper.AddStep(UndoHelper.ActionType.SetStyle, Drawer.GetSelectedObject(), new Point(), new Size(), Drawer.GetSelectedObject().Tag.ToType<XShape>().Style);
-
+        
         Drawer.GetSelectedObject().Tag.ToType<XShape>().Style = style;
       };
 

@@ -36,6 +36,7 @@ namespace XDrawerLib.Drawers
 
       Style = new DrawerStyle(StyleHelper.CurrentStyle);
       Drawing.MouseLeftButtonDown += OnSelect;
+      Drawing.StylusDown += OnErase;
 
       Canvas.SetLeft(Drawing, e.X);
       Canvas.SetTop(Drawing, e.Y);
@@ -57,8 +58,8 @@ namespace XDrawerLib.Drawers
         case 2:
           {
             var p = new Point();
-            p.X = e.X - StartPoint.X ;
-            p.Y = e.Y - StartPoint.Y ;
+            p.X = e.X - StartPoint.X;
+            p.Y = e.Y - StartPoint.Y;
 
             Drawing.Points[1] = p;
             break;
