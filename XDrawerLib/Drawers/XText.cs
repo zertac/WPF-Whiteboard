@@ -84,6 +84,7 @@ namespace XDrawerLib.Drawers
 
        };
       Textbox.PreviewMouseLeftButtonDown += OnSelect;
+      Textbox.StylusDown += OnErase;
       Textbox.Focus();
 
       OwnedControl = Textbox;

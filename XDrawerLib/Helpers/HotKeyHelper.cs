@@ -31,6 +31,16 @@ namespace XDrawerLib.Helpers
       Shortcuts.Add(KeyFunction.Redo, new HotKey { PrimaryKey = Key.LeftCtrl, SecondaryKey = Key.Y });
     }
 
+    public static bool IsPreserveSize()
+    {
+      if (Keyboard.IsKeyDown(Shortcuts[KeyFunction.PreserveSize].PrimaryKey))
+      {
+        return true;
+      }
+
+      return false;
+    }
+
     public static void ExecuteShortcut()
     {
       var tmp = Shortcuts.Where(x => Keyboard.IsKeyDown(x.Value.PrimaryKey)).ToList();
@@ -75,10 +85,6 @@ namespace XDrawerLib.Helpers
         else if (function.Key == KeyFunction.Custom)
         {
           Drawer.DrawTool = Tool.Custom;
-        }
-        else if (function.Key == KeyFunction.PreserveSize)
-        {
-
         }
         else if (function.Key == KeyFunction.Cancel)
         {

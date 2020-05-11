@@ -58,8 +58,16 @@ namespace XDrawerLib.Drawers
 
       Drawing.RenderTransform = new ScaleTransform(scaleX, scaleY);
 
-      Drawing.Width = Math.Abs(diffX);
-      Drawing.Height = Math.Abs(diffY);
+      if (HotKeyHelper.IsPreserveSize())
+      {
+        Drawing.Width = Math.Abs(diffX);
+        Drawing.Height = Drawing.Width;
+      }
+      else
+      {
+        Drawing.Width = Math.Abs(diffX);
+        Drawing.Height = Math.Abs(diffY);
+      }
     }
   }
 }

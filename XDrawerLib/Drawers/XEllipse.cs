@@ -44,16 +44,7 @@ namespace XDrawerLib.Drawers
 
       //var state = Keyboard.IsKeyDown(Key.LeftCtrl);
 
-      //if (state)
-      //{
-      //  Drawing.Width = Math.Abs(StartPoint.X - e.X);
-      //  Drawing.Height = Drawing.Width;
-      //}
-      //else
-      //{
-      //  Drawing.Width = Math.Abs(StartPoint.X - e.X);
-      //  Drawing.Height = Math.Abs(StartPoint.Y - e.Y);
-      //}
+    
 
       var diffX = e.X - StartPoint.X;
       var diffY = e.Y - StartPoint.Y;
@@ -72,8 +63,16 @@ namespace XDrawerLib.Drawers
 
       Drawing.RenderTransform = new ScaleTransform(scaleX, scaleY);
 
-      Drawing.Width = Math.Abs(diffX);
-      Drawing.Height = Math.Abs(diffY);
+      if (HotKeyHelper.IsPreserveSize())
+      {
+        Drawing.Width = Math.Abs(diffX);
+        Drawing.Height = Drawing.Width;
+      }
+      else
+      {
+        Drawing.Width = Math.Abs(diffX);
+        Drawing.Height = Math.Abs(diffY);
+      }
     }
   }
 }
