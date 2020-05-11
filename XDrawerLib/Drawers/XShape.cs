@@ -197,7 +197,17 @@ namespace XDrawerLib.Drawers
 
     public void Cancel()
     {
-      Drawer.Page.Children.Remove(OwnedShape);
+      Drawer.IsObjectCreating = false;
+
+      if (OwnedShape != null)
+      {
+        Selector.DeleteObject(OwnedShape);
+      }
+
+      if (OwnedControl != null)
+      {
+        Selector.DeleteObject((FrameworkElement)OwnedControl);
+      }
     }
 
     public virtual void Edit()

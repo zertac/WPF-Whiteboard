@@ -83,9 +83,10 @@ namespace XDrawerLib.Drawers
 
     public new void Cancel()
     {
+      base.Cancel();
+
       Drawer.Page.Children.Remove(_shadowLine);
       Drawer.Page.Children.Remove(Drawing);
-      Instance = null;
     }
 
     public void AddPoint(Point e)

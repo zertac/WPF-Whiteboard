@@ -25,7 +25,7 @@ namespace XDrawerLib.Helpers
       Shortcuts.Add(KeyFunction.Arrow, new HotKey { PrimaryKey = Key.LeftCtrl, SecondaryKey = Key.P });
       Shortcuts.Add(KeyFunction.Custom, new HotKey { PrimaryKey = Key.LeftCtrl, SecondaryKey = Key.H });
       Shortcuts.Add(KeyFunction.PreserveSize, new HotKey { PrimaryKey = Key.LeftShift });
-      Shortcuts.Add(KeyFunction.Cancel, new HotKey { PrimaryKey = Key.Escape, SecondaryKey = Key.None });
+      Shortcuts.Add(KeyFunction.Cancel, new HotKey { PrimaryKey = Key.Escape });
       Shortcuts.Add(KeyFunction.Delete, new HotKey { PrimaryKey = Key.T });
       Shortcuts.Add(KeyFunction.Undo, new HotKey { PrimaryKey = Key.LeftCtrl, SecondaryKey = Key.Z });
       Shortcuts.Add(KeyFunction.Redo, new HotKey { PrimaryKey = Key.LeftCtrl, SecondaryKey = Key.Y });
@@ -88,7 +88,7 @@ namespace XDrawerLib.Helpers
         }
         else if (function.Key == KeyFunction.Cancel)
         {
-
+          Drawer.CancelDrawing();
         }
         else if (function.Key == KeyFunction.Delete)
         {

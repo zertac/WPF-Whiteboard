@@ -216,6 +216,7 @@ namespace XDrawerLib.Helpers
     public static void FinishDraw()
     {
       //if (IsEditMode) return;
+      if (!IsObjectCreating) return;
 
       if (DrawTool == Tool.None)
       {
@@ -256,6 +257,14 @@ namespace XDrawerLib.Helpers
     {
       var o = ActiveObject.Tag.ToType<XShape>().OwnedShape == null ? ActiveObject.Tag.ToType<XShape>().OwnedShape : (FrameworkElement)ActiveObject.Tag.ToType<XShape>().OwnedControl;
       return o;
+    }
+
+    public static void CancelDrawing()
+    {
+      if (Objects.Count > 0)
+      {
+        Objects.Last().Value.Cancel();
+      }
     }
   }
 }
