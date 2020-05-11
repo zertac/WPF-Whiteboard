@@ -1,6 +1,6 @@
-# WPF-Whiteboard - (Under construction)
+# WPF-Whiteboard - Annotation (Under construction)
 
-This repository contains wpf canvas based whiteboard project.
+This repository contains wpf canvas based whiteboard - annotation project.
 
 ### General capabilities
 - Draw basic and custom shapes
