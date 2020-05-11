@@ -49,4 +49,38 @@ User your first brush
   
   StyleHelper.CurrentStyle = style;
   ```
+  
+  Get selected object  'return as FrameworkElement
+  
+  ```csharp
+  var element = Drawer.GetSeletectedObject();
+  ```
+  
+  Get selected shape 'return as XShape
+  ```csharp
+  var shape = Drawer.GetSelectedShape();
+  ```
+  
+  Get created shape count
+  ```csharp
+  var count = Drawer.GetShapeCount();
+  ```
+  
+  Cancel drawing
+  ```csharp
+  Drawer.CancelDrawing();
+  ```
+  
+  Delete selected shape
+  ```csharp
+  Selector.DeleteSelected();
+  ```
+  
+  Delete specific shape
+   ```csharp
+  var element = Drawer.GetSelectedObject();
+  Selector.DeleteObject(element);
+  ```
+  
+  
 
