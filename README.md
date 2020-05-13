@@ -1,6 +1,6 @@
-# WPF-Whiteboard - (Under construction)
+# WPF-Whiteboard - Annotation (Under construction)
 
-This repository contains wpf canvas based whiteboard project.
+This repository contains wpf canvas based whiteboard - annotation project.
 
 ### General capabilities
 - Draw basic and custom shapes
@@ -25,8 +25,9 @@ This repository contains wpf canvas based whiteboard project.
 - Custom Shape
 
 ### Installation
-Download repository and add to your solution. Add reference as project reference to you own project and start to use XDrawer.
+Download repository and add to your solution. Add reference as project reference to your own project and start to use XDrawer.
 
+You have to install vvvv/SVG for ink strokes to custom path data convertion. Nuget package manager will restore automatically or you can install manually at [https://github.com/vvvv/SVG](https://github.com/vvvv/SVG)
 ### Using
 
 Initialize XDrawer
@@ -49,4 +50,38 @@ User your first brush
   
   StyleHelper.CurrentStyle = style;
   ```
+  
+  Get selected object  'return as FrameworkElement
+  
+  ```csharp
+  var element = Drawer.GetSeletectedObject();
+  ```
+  
+  Get selected shape 'return as XShape
+  ```csharp
+  var shape = Drawer.GetSelectedShape();
+  ```
+  
+  Get created shape count
+  ```csharp
+  var count = Drawer.GetShapeCount();
+  ```
+  
+  Cancel drawing
+  ```csharp
+  Drawer.CancelDrawing();
+  ```
+  
+  Delete selected shape
+  ```csharp
+  Selector.DeleteSelected();
+  ```
+  
+  Delete specific shape
+   ```csharp
+  var element = Drawer.GetSelectedObject();
+  Selector.DeleteObject(element);
+  ```
+  
+  
 
