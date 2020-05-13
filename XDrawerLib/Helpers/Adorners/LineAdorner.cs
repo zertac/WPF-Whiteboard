@@ -29,6 +29,9 @@ namespace XDrawerLib.Helpers.Adorners
       return fef;
     }
 
+    private Point _firstPosition1;
+    private Point _firstPosition2;
+
     public LineAdorner(UIElement adornedElement) : base(adornedElement)
     {
       _visualChildren = new VisualCollection(this);
@@ -54,6 +57,8 @@ namespace XDrawerLib.Helpers.Adorners
         }
       };
 
+      _startThumb.DragStarted += _startThumb_DragStarted;
+      _startThumb.DragCompleted += _startThumb_DragCompleted;
       _startThumb.DragDelta += StartDragDelta;
       _endThumb.DragDelta += EndDragDelta;
 
@@ -61,6 +66,25 @@ namespace XDrawerLib.Helpers.Adorners
       _visualChildren.Add(_endThumb);
 
       _selectedLine = AdornedElement as Line;
+    }
+
+    private void _startThumb_DragCompleted(object sender, DragCompletedEventArgs e)
+    {
+      if (AdornedElement is Line element)
+      {
+        UndoHelper.AddStep(UndoHelper.ActionType.Move,
+          element,
+          _firstPosition1,
+          element.RenderSize, null, _firstPosition2);
+      }
+    }
+
+    private void _startThumb_DragStarted(object sender, DragStartedEventArgs e)
+    {
+      var element = AdornedElement as Line;
+
+      _firstPosition1 = new Point(element.X1, element.Y1);
+      _firstPosition2 = new Point(element.X2, element.Y2);
     }
 
     private void StartDragDelta(object sender, DragDeltaEventArgs e)

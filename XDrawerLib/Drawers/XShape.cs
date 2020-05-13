@@ -230,12 +230,22 @@ namespace XDrawerLib.Drawers
       }
     }
 
-    public void SetPosition(Point position)
+    public void SetPosition(Point position, Point position2 = new Point())
     {
       if (OwnedShape != null)
       {
-        Canvas.SetLeft(OwnedShape, position.X);
-        Canvas.SetTop(OwnedShape, position.Y);
+        if (OwnedShape is Line line)
+        {
+          line.X1 = position.X;
+          line.Y1 = position.Y;
+          line.X2 = position2.X;
+          line.Y2 = position2.Y;
+        }
+        else
+        {
+          Canvas.SetLeft(OwnedShape, position.X);
+          Canvas.SetTop(OwnedShape, position.Y);
+        }
       }
 
       if (OwnedControl != null)

@@ -259,6 +259,16 @@ namespace XDrawerLib.Helpers
       return o;
     }
 
+    public static XShape GetSelectedShape()
+    {
+      return ActiveObject.Tag.ToType<XShape>();
+    }
+
+    public static int GetShapeCount()
+    {
+      return Objects.Count;
+    }
+
     public static void CancelDrawing()
     {
       if (Objects.Count > 0)

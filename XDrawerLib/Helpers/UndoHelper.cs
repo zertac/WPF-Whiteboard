@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Effects;
+using System.Windows.Shapes;
 using XDrawerLib.Drawers;
 
 namespace XDrawerLib.Helpers
@@ -26,7 +27,7 @@ namespace XDrawerLib.Helpers
       Steps = new List<DrawAction>();
     }
 
-    public static void AddStep(ActionType type, FrameworkElement ctrl, Point preLocation = new Point(), Size preSize = new Size(), DrawerStyle preStyle = null)
+    public static void AddStep(ActionType type, FrameworkElement ctrl, Point preLocation = new Point(), Size preSize = new Size(), DrawerStyle preStyle = null, Point preLocation2 = new Point())
     {
       var o = ctrl.Tag.ToType<XShape>();
 
@@ -35,8 +36,17 @@ namespace XDrawerLib.Helpers
       action.NextProps = new NextProps();
       if (o.OwnedShape != null)
       {
-        action.NextProps.Location = new Point(Canvas.GetLeft(o.OwnedShape), Canvas.GetTop(o.OwnedShape));
-        action.NextProps.Size = new Size(o.OwnedShape.ActualWidth, o.OwnedShape.Height);
+        if (o.OwnedShape is Line line)
+        {
+          action.NextProps.Location = new Point(line.X1, line.Y1);
+          action.NextProps.Location2 = new Point(line.X2, line.Y2);
+          action.NextProps.Size = new Size(o.OwnedShape.ActualWidth, o.OwnedShape.Height);
+        }
+        else
+        {
+          action.NextProps.Location = new Point(Canvas.GetLeft(o.OwnedShape), Canvas.GetTop(o.OwnedShape));
+          action.NextProps.Size = new Size(o.OwnedShape.ActualWidth, o.OwnedShape.Height);
+        }
       }
 
       if (o.OwnedControl != null)
@@ -115,7 +125,7 @@ namespace XDrawerLib.Helpers
       }
       else if (lastAction.Type == ActionType.Move)
       {
-        lastAction.Object.Tag.ToType<XShape>().SetPosition(lastAction.PreviousProps.Location);
+        lastAction.Object.Tag.ToType<XShape>().SetPosition(lastAction.PreviousProps.Location, lastAction.PreviousProps.Location2);
       }
       else if (lastAction.Type == ActionType.SetStyle)
       {
@@ -202,6 +212,7 @@ namespace XDrawerLib.Helpers
   public class PreviousProps
   {
     public Point Location { get; set; }
+    public Point Location2 { get; set; }
     public Size Size { get; set; }
     public DrawerStyle Style { get; set; }
   }
@@ -209,6 +220,7 @@ namespace XDrawerLib.Helpers
   public class NextProps
   {
     public Point Location { get; set; }
+    public Point Location2 { get; set; }
     public Size Size { get; set; }
     public DrawerStyle Style { get; set; }
   }
