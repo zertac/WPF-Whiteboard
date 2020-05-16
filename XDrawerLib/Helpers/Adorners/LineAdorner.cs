@@ -60,6 +60,10 @@ namespace XDrawerLib.Helpers.Adorners
       _startThumb.DragStarted += _startThumb_DragStarted;
       _startThumb.DragCompleted += _startThumb_DragCompleted;
       _startThumb.DragDelta += StartDragDelta;
+
+    
+      _endThumb.DragStarted += _startThumb_DragStarted;
+      _endThumb.DragCompleted += _startThumb_DragCompleted;
       _endThumb.DragDelta += EndDragDelta;
 
       _visualChildren.Add(_startThumb);
@@ -70,7 +74,7 @@ namespace XDrawerLib.Helpers.Adorners
 
     private void _startThumb_DragCompleted(object sender, DragCompletedEventArgs e)
     {
-      if (AdornedElement is Line element)
+      if (_selectedLine is Line element)
       {
         UndoHelper.AddStep(UndoHelper.ActionType.Move,
           element,

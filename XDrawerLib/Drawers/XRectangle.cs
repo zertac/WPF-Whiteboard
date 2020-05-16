@@ -41,8 +41,6 @@ namespace XDrawerLib.Drawers
       Drawer.IsObjectCreating = true;
     }
 
-
-
     public void Update(Point e)
     {
       if (!IsDrawing) return;
