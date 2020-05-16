@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using XDrawerLib.Helpers;
@@ -20,7 +21,7 @@ namespace XDrawerLib.Drawers
       Drawing.Fill = StyleHelper.CurrentStyle.Background;
       Drawing.Stroke = StyleHelper.CurrentStyle.Border;
       Drawing.StrokeThickness = StyleHelper.CurrentStyle.BorderSize;
-      
+      Drawing.Uid = Guid.NewGuid().ToString();
       Drawing.Width = 0;
       Drawing.Height = 0;
       Drawing.Opacity = 0.2;
@@ -31,12 +32,16 @@ namespace XDrawerLib.Drawers
       Style = new DrawerStyle(StyleHelper.CurrentStyle);
       Drawing.PreviewMouseLeftButtonDown += base.OnSelect;
       Drawing.PreviewStylusMove += OnErase;
+      //Drawing.PreviewMouseMove += OnEraseTest;
+
       Canvas.SetLeft(Drawing, e.X);
       Canvas.SetTop(Drawing, e.Y);
 
       Drawer.Page.Children.Add(Drawing);
       Drawer.IsObjectCreating = true;
     }
+
+
 
     public void Update(Point e)
     {

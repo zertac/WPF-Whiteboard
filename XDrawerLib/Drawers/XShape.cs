@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using XDrawerLib.Helpers;
@@ -54,7 +55,7 @@ namespace XDrawerLib.Drawers
         {
             Id = Guid.NewGuid().ToString();
 
-            Console.WriteLine(Id);
+            Console.WriteLine("created :"  +Id);
 
             AdornerHelper.RemoveAllAdorners();
 
@@ -167,7 +168,16 @@ namespace XDrawerLib.Drawers
             }
         }
 
-        internal static T Init<T>() where T : new()
+        //internal void OnEraseTest(object sender, MouseEventArgs e)
+        //{
+        //  if (e.RightButton == MouseButtonState.Pressed)
+        //  {
+        //    Console.WriteLine("removed");
+        //    Selector.DeleteObject(OwnedShape);
+        //  }
+        //}
+
+    internal static T Init<T>() where T : new()
         {
             Instance = new T();
             return (T)Instance;

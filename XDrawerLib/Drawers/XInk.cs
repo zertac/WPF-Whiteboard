@@ -56,7 +56,7 @@ namespace XDrawerLib.Drawers
 
       Drawer.IsObjectCreating = false;
       Drawer.IsDrawEnded = true;
-      Drawer.Objects.Remove(Id);
+      //Drawer.Objects.Remove(Id);
 
       var svg = new SvgDocument();
       var colorServer = new SvgColourServer(System.Drawing.Color.Black);
