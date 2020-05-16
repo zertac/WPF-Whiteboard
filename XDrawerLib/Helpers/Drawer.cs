@@ -130,6 +130,8 @@ namespace XDrawerLib.Helpers
         {
             if (IsEditMode) return;
 
+            Selector.EndDrawing();
+
             if (DrawTool == Tool.Rectangle)
             {
                 var o = new XRectangle();

@@ -78,6 +78,17 @@ namespace XDrawerLib.Helpers
 
     }
 
+    public static void EndDrawing()
+    {
+      foreach (var o in Drawer.Objects)
+      {
+        if (o.Value.IsDrawing)
+        {
+          o.Value.Finish();
+        }
+      }
+    }
+
     public static void DeleteSelected()
     {
       if (Drawer.ActiveObject == null) return;
