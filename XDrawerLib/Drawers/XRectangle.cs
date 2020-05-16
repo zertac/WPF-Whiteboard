@@ -20,6 +20,7 @@ namespace XDrawerLib.Drawers
       Drawing.Fill = StyleHelper.CurrentStyle.Background;
       Drawing.Stroke = StyleHelper.CurrentStyle.Border;
       Drawing.StrokeThickness = StyleHelper.CurrentStyle.BorderSize;
+      
       Drawing.Width = 0;
       Drawing.Height = 0;
       Drawing.Opacity = 0.2;
@@ -29,7 +30,7 @@ namespace XDrawerLib.Drawers
 
       Style = new DrawerStyle(StyleHelper.CurrentStyle);
       Drawing.PreviewMouseLeftButtonDown += base.OnSelect;
-      Drawing.StylusDown += OnErase;
+      Drawing.PreviewStylusMove += OnErase;
       Canvas.SetLeft(Drawing, e.X);
       Canvas.SetTop(Drawing, e.Y);
 
