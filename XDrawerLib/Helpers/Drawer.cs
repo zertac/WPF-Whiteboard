@@ -284,5 +284,10 @@ namespace XDrawerLib.Helpers
                 Objects.Last().Value.Cancel();
             }
         }
+
+        public static void CleanPage()
+        {
+          Selector.DeleteAll();
+        }
     }
 }

@@ -112,6 +112,15 @@
                 VerticalAlignment="Top"
                 Content="Style" />
 
+            <Button
+                x:Name="BtnClean"
+                Width="40"
+                Height="20"
+                Margin="4"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="Clean" />
+
             <CheckBox
                 x:Name="ChkCont"
                 Margin="6"

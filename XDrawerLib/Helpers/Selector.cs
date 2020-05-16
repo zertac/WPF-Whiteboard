@@ -188,6 +188,22 @@ namespace XDrawerLib.Helpers
       }
     }
 
+    public static void DeleteAll()
+    {
+      foreach (var item in Drawer.Objects.Values)
+      {
+        if (item.OwnedShape != null)
+        {
+          DeleteObject(item.OwnedShape);
+        }
+
+        if (item.OwnedControl != null)
+        {
+          DeleteObject((FrameworkElement)item.OwnedControl);
+        }
+      }
+    }
+
     public static void EndEditForObject()
     {
       foreach (var item in Drawer.Objects.Values)

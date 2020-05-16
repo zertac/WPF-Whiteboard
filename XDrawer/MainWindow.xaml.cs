@@ -58,7 +58,7 @@ namespace XDrawer.Whiteboard
         style.BorderSize = 3;
 
         UndoHelper.AddStep(UndoHelper.ActionType.SetStyle, Drawer.GetSelectedObject(), new Point(), new Size(), Drawer.GetSelectedObject().Tag.ToType<XShape>().Style);
-        
+
         Drawer.GetSelectedObject().Tag.ToType<XShape>().Style = style;
       };
 
@@ -92,6 +92,11 @@ namespace XDrawer.Whiteboard
         Drawer.CustomShapeData =
           "M16 2.59375L15.28125 3.28125L2.28125 16.28125L3.71875 17.71875L5 16.4375L5 28L14 28L14 18L18 18L18 28L27 28L27 16.4375L28.28125 17.71875L29.71875 16.28125L16.71875 3.28125 Z M 16 5.4375L25 14.4375L25 26L20 26L20 16L12 16L12 26L7 26L7 14.4375Z";
         Drawer.DrawTool = Tool.Custom;
+      };
+
+      BtnClean.Click += delegate (object sender, RoutedEventArgs args)
+      {
+        Drawer.CleanPage();
       };
     }
 
