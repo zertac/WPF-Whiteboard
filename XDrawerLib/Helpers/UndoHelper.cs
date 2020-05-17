@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Effects;
@@ -41,7 +42,6 @@ namespace XDrawerLib.Helpers
         {
           action.NextProps.Location = new Point(line.X1, line.Y1);
           action.NextProps.Location2 = new Point(line.X2, Canvas.GetTop(o.OwnedShape));
-
         }
         else
         {
@@ -88,6 +88,15 @@ namespace XDrawerLib.Helpers
     public static void Undo()
     {
       if (_currentIndex == -1) return;
+
+      var obj = Drawer.Objects.Last();
+
+      if (obj.Value is XInk xInk)
+      {
+        xInk.Undo();
+      }
+
+      if (Steps.Count == 0) return;
 
       var lastAction = Steps[_currentIndex];
 
@@ -154,7 +163,16 @@ namespace XDrawerLib.Helpers
 
     public static void Redo()
     {
+      var obj = Drawer.Objects.Last();
+
+      if (obj.Value is XInk xInk)
+      {
+        xInk.Redo();
+      }
+
       if (_currentIndex == Steps.Count - 1) return;
+
+      if (Steps.Count == 0) return;
 
       if (_currentIndex + 1 < Steps.Count)
       {

@@ -6,7 +6,6 @@ using System.Windows.Controls;
 using System.Windows.Ink;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using Svg;
 using XDrawerLib.Helpers;
 
 namespace XDrawerLib.Drawers
@@ -14,6 +13,8 @@ namespace XDrawerLib.Drawers
   public class XInk : XShape, IShape
   {
     public InkCanvas Drawing;
+    public List<Stroke> Strokes;
+    private int _currentIndex = 0;
 
     public void Create(Point e)
     {
@@ -25,6 +26,7 @@ namespace XDrawerLib.Drawers
       Drawing.Height = Drawer.Page.ActualHeight;
       Drawing.Tag = this;
       Drawing.Background = new SolidColorBrush(Colors.Transparent);
+      Strokes = new List<Stroke>();
 
       var drawingAttributes = new DrawingAttributes();
       drawingAttributes.Color = Colors.Black;
@@ -34,13 +36,37 @@ namespace XDrawerLib.Drawers
       drawingAttributes.Width = 4;
 
       Drawing.DefaultDrawingAttributes = drawingAttributes;
-
+      Drawing.StrokeCollected += Drawing_StrokeCollected;
+      Drawing.StrokeErased += Drawing_StrokeErased;
       OwnedControl = new List<Border>();
 
       Style = new DrawerStyle();
 
       Drawer.Page.Children.Add(Drawing);
       Drawer.IsObjectCreating = true;
+    }
+
+    private void Drawing_StrokeErased(object sender, RoutedEventArgs e)
+    {
+      ArrangeStrokes();
+    }
+
+    private void ArrangeStrokes()
+    {
+      Strokes.Clear();
+      foreach (var s in Drawing.Strokes)
+      {
+        Strokes.Add(s);
+      }
+
+      _currentIndex = Strokes.Count;
+    }
+
+    private void Drawing_StrokeCollected(object sender, InkCanvasStrokeCollectedEventArgs e)
+    {
+      Strokes.Add(e.Stroke);
+      _currentIndex = Strokes.Count;
+      Console.WriteLine("collected");
     }
 
     public void Update(Point e)
@@ -96,6 +122,43 @@ namespace XDrawerLib.Drawers
       }
 
       Drawing = null;
+    }
+
+    public void Undo()
+    {
+      if (_currentIndex == -1) return;
+      if (Strokes.Count == 0) return;
+
+      Drawing.Strokes.Clear();
+
+      var lst = Strokes.GetRange(0, _currentIndex).ToList();
+      foreach (var s in lst)
+      {
+        Drawing.Strokes.Add(s);
+      }
+
+      if (_currentIndex > 0) _currentIndex--;
+    }
+
+    public void Redo()
+    {
+      if (_currentIndex == -1) return;
+      if (Strokes.Count == 0) return;
+
+      if (_currentIndex < Strokes.Count)
+      {
+        _currentIndex++;
+      }
+
+      Drawing.Strokes.Clear();
+
+      var lst = Strokes.GetRange(0, _currentIndex).ToList();
+      foreach (var s in lst)
+      {
+        Drawing.Strokes.Add(s);
+      }
+
+
     }
   }
 }
