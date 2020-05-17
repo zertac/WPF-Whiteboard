@@ -120,8 +120,6 @@ namespace XDrawerLib.Drawers
 
         UndoHelper.AddStep(UndoHelper.ActionType.Create, border);
       }
-
-      Drawing = null;
     }
 
     public void Undo()

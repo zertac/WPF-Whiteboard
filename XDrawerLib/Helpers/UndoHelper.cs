@@ -89,11 +89,14 @@ namespace XDrawerLib.Helpers
     {
       if (_currentIndex == -1) return;
 
-      var obj = Drawer.Objects.Last();
-
-      if (obj.Value is XInk xInk)
+      if (Drawer.Objects.Count > 0)
       {
-        xInk.Undo();
+        var obj = Drawer.Objects.Last();
+
+        if (obj.Value is XInk xInk)
+        {
+          xInk.Undo();
+        }
       }
 
       if (Steps.Count == 0) return;
@@ -163,11 +166,14 @@ namespace XDrawerLib.Helpers
 
     public static void Redo()
     {
-      var obj = Drawer.Objects.Last();
-
-      if (obj.Value is XInk xInk)
+      if (Drawer.Objects.Count > 0)
       {
-        xInk.Redo();
+        var obj = Drawer.Objects.Last();
+
+        if (obj.Value is XInk xInk)
+        {
+          xInk.Redo();
+        }
       }
 
       if (_currentIndex == Steps.Count - 1) return;
