@@ -49,8 +49,8 @@ namespace XDrawerLib.Drawers
       IsDrawing = false;
       Drawer.IsEditMode = true;
 
-      var myFlowDoc = new FlowDocument();
-      myFlowDoc.Blocks.Add(new Paragraph(new Run("Paragraph 1")));
+      //var myFlowDoc = new FlowDocument();
+      //myFlowDoc.Blocks.Add(new Paragraph(new Run("Paragraph 1")));
 
       Textbox = new RichTextBox
       {
@@ -61,7 +61,11 @@ namespace XDrawerLib.Drawers
         BorderThickness = new Thickness(StyleHelper.CurrentStyle.BorderSize),
         IsReadOnly = false
       };
+
+      Textbox.Document.GetFormattedText();
+
       Textbox.Uid = Guid.NewGuid().ToString();
+
       Canvas.SetLeft(Textbox, Canvas.GetLeft(Shadow));
       Canvas.SetTop(Textbox, Canvas.GetTop(Shadow));
 
@@ -81,8 +85,8 @@ namespace XDrawerLib.Drawers
 
          var adn = AdornerHelper.GetAdorner(sender);
          adn?.OnChange();
-
        };
+
       Textbox.PreviewMouseLeftButtonDown += OnSelect;
       Textbox.StylusDown += OnErase;
       Textbox.Focus();
@@ -120,6 +124,16 @@ namespace XDrawerLib.Drawers
       Textbox.IsReadOnly = true;
       Drawer.IsEditMode = false;
       Drawer.Page.Focus();
+    }
+
+    public void Undo()
+    {
+      Textbox.Undo();
+    }
+
+    public void Redo()
+    {
+      Textbox.Redo();
     }
   }
 }

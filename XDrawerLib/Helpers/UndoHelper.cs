@@ -97,6 +97,14 @@ namespace XDrawerLib.Helpers
         {
           xInk.Undo();
         }
+        else if (obj.Value is XText text)
+        {
+          if (Drawer.IsEditMode)
+          {
+            text.Undo();
+            return;
+          }
+        }
       }
 
       if (Steps.Count == 0) return;
@@ -173,6 +181,14 @@ namespace XDrawerLib.Helpers
         if (obj.Value is XInk xInk)
         {
           xInk.Redo();
+        }
+        else if (obj.Value is XText text)
+        {
+          if (Drawer.IsEditMode)
+          {
+            text.Redo();
+            return;
+          }
         }
       }
 
