@@ -84,7 +84,8 @@ namespace XDrawerLib.Helpers
       {
         if (o.Value.IsDrawing)
         {
-          o.Value.Finish();
+          if (Drawer.DrawTool != Tool.Ink)
+            o.Value.Finish();
         }
       }
     }
