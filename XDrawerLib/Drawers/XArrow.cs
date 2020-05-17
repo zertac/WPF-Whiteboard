@@ -121,5 +121,10 @@ namespace XDrawerLib.Drawers
 
       return Math.Abs(theta);
     }
+
+    public XArrow(Drawer drawer) : base(drawer)
+    {
+      Drawer = drawer;
+    }
   }
 }

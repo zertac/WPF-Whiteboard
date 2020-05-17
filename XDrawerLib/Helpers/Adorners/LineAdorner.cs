@@ -12,6 +12,8 @@ namespace XDrawerLib.Helpers.Adorners
 {
   public class LineAdorner : Adorner
   {
+    public Drawer Drawer;
+
     private readonly Thumb _startThumb;
     private readonly Thumb _endThumb;
     private Line _selectedLine;
@@ -76,7 +78,7 @@ namespace XDrawerLib.Helpers.Adorners
     {
       if (_selectedLine is Line element)
       {
-        UndoHelper.AddStep(UndoHelper.ActionType.Move,
+        Drawer.UndoHelper.AddStep(UndoHelper.ActionType.Move,
           element,
           _firstPosition1,
           element.RenderSize, null, _firstPosition2);

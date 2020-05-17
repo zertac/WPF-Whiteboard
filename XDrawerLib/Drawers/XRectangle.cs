@@ -65,7 +65,7 @@ namespace XDrawerLib.Drawers
 
       Drawing.RenderTransform = new ScaleTransform(scaleX, scaleY);
 
-      if (HotKeyHelper.IsPreserveSize())
+      if (Drawer.HotKeyHelper.IsPreserveSize())
       {
         Drawing.Width = Math.Abs(diffX);
         Drawing.Height = Drawing.Width;
@@ -75,6 +75,11 @@ namespace XDrawerLib.Drawers
         Drawing.Width = Math.Abs(diffX);
         Drawing.Height = Math.Abs(diffY);
       }
+    }
+
+    public XRectangle(Drawer drawer) : base(drawer)
+    {
+      Drawer = drawer;
     }
   }
 }

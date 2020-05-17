@@ -7,16 +7,23 @@ using XDrawerLib.Helpers.Adorners;
 
 namespace XDrawerLib.Helpers
 {
-  public static class AdornerHelper
+  public class AdornerHelper
   {
-    public static void AddAdorner(object sender, object followItem = null)
+    public Drawer Drawer;
+
+    public AdornerHelper(Drawer drawer)
     {
-      Selector.FinishSelect();
+      Drawer = drawer;
+    }
+    public void AddAdorner(object sender, object followItem = null)
+    {
+      Drawer.Selector.FinishSelect();
 
       if (sender is Line line)
       {
         var al = AdornerLayer.GetAdornerLayer(line);
         var adn = new LineAdorner(line);
+        adn.Drawer = Drawer;
         adn.FollowItem = followItem;
         al?.Add(adn);
 
@@ -26,14 +33,14 @@ namespace XDrawerLib.Helpers
       {
         var al = AdornerLayer.GetAdornerLayer((UIElement)sender);
         var adn = new ResizingAdorner((UIElement)sender);
-
+        adn.Drawer = Drawer;
         al?.Add(adn);
 
         Drawer.DrawTool = Tool.MoveResize;
       }
     }
 
-    public static void RemoveAdorner(object sender)
+    public void RemoveAdorner(object sender)
     {
       var element = (UIElement)sender;
       var al = AdornerLayer.GetAdornerLayer(element);
@@ -56,7 +63,7 @@ namespace XDrawerLib.Helpers
       }
     }
 
-    public static void RemoveAllAdorners()
+    public void RemoveAllAdorners()
     {
       foreach (var item in Drawer.Objects.Values)
       {
@@ -80,13 +87,13 @@ namespace XDrawerLib.Helpers
       }
     }
 
-    public static ResizingAdorner GetAdorner(object sender)
+    public ResizingAdorner GetAdorner(object sender)
     {
       var element = (UIElement)sender;
       var al = AdornerLayer.GetAdornerLayer(element);
 
       var toRemoveArray = al?.GetAdorners(element);
-      return (ResizingAdorner) toRemoveArray?[0];
+      return (ResizingAdorner)toRemoveArray?[0];
     }
   }
 }

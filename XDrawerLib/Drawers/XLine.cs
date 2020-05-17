@@ -51,5 +51,10 @@ namespace XDrawerLib.Drawers
         base.Cancel();
       }
     }
+
+    public XLine(Drawer drawer) : base(drawer)
+    {
+      Drawer = drawer;
+    }
   }
 }

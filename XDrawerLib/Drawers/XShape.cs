@@ -24,6 +24,7 @@ namespace XDrawerLib.Drawers
     private DrawerStyle _style;
     internal FrameworkElement FollowItem;
     internal ScaleTransform Inverse;
+    public Drawer Drawer;
 
     public DrawerStyle Style
     {
@@ -53,16 +54,18 @@ namespace XDrawerLib.Drawers
       }
     }
 
-    public XShape()
+    public XShape(Drawer drawer)
     {
+      Drawer = drawer;
+
       Id = Guid.NewGuid().ToString();
       Inverse = new ScaleTransform();
 
       Console.WriteLine("created :" + Id);
 
-      AdornerHelper.RemoveAllAdorners();
+      Drawer.AdornerHelper.RemoveAllAdorners();
 
-      Selector.DeselectAll();
+      Drawer.Selector.DeselectAll();
     }
 
     public bool IsSelected
@@ -121,18 +124,18 @@ namespace XDrawerLib.Drawers
 
       if (Drawer.IsEditMode) return;
 
-      AdornerHelper.RemoveAllAdorners();
-      Selector.DeselectAll();
+      Drawer.AdornerHelper.RemoveAllAdorners();
+      Drawer.Selector.DeselectAll();
 
       IsSelected = true;
 
       if (FollowItem != null)
       {
-        AdornerHelper.AddAdorner(sender, this);
+        Drawer.AdornerHelper.AddAdorner(sender, this);
       }
       else
       {
-        AdornerHelper.AddAdorner(sender);
+        Drawer.AdornerHelper.AddAdorner(sender);
       }
 
       if (OwnedShape != null)
@@ -166,7 +169,7 @@ namespace XDrawerLib.Drawers
     {
       if (e.Inverted)
       {
-        Selector.DeleteObject(OwnedShape);
+        Drawer.Selector.DeleteObject(OwnedShape);
       }
     }
 
@@ -200,30 +203,36 @@ namespace XDrawerLib.Drawers
 
       if (OwnedShape != null)
       {
-        UndoHelper.AddStep(UndoHelper.ActionType.Create, OwnedShape);
+        Drawer.UndoHelper.AddStep(UndoHelper.ActionType.Create, OwnedShape);
       }
 
       if (OwnedControl != null)
       {
-        UndoHelper.AddStep(UndoHelper.ActionType.Create, (FrameworkElement)OwnedControl);
+        Drawer.UndoHelper.AddStep(UndoHelper.ActionType.Create, (FrameworkElement)OwnedControl);
       }
 
       if (Inverse.ScaleX < 1)
       {
-        OwnedShape.RenderTransform = new ScaleTransform(1, 1);
+        if (OwnedShape != null)
+        {
+          OwnedShape.RenderTransform = new ScaleTransform(1, 1);
 
-        var x = Canvas.GetLeft(OwnedShape) - OwnedShape.ActualWidth;
+          var x = Canvas.GetLeft(OwnedShape) - OwnedShape.ActualWidth;
 
-        Canvas.SetLeft(OwnedShape, x);
+          Canvas.SetLeft(OwnedShape, x);
+        }
       }
 
       if (Inverse.ScaleY < 1)
       {
-        OwnedShape.RenderTransform = new ScaleTransform(1, 1);
+        if (OwnedShape != null)
+        {
+          OwnedShape.RenderTransform = new ScaleTransform(1, 1);
 
-        var y = Canvas.GetTop(OwnedShape) - OwnedShape.ActualHeight;
+          var y = Canvas.GetTop(OwnedShape) - OwnedShape.ActualHeight;
 
-        Canvas.SetTop(OwnedShape, y);
+          Canvas.SetTop(OwnedShape, y);
+        }
       }
     }
 
@@ -233,12 +242,12 @@ namespace XDrawerLib.Drawers
 
       if (OwnedShape != null)
       {
-        Selector.DeleteObject(OwnedShape);
+        Drawer.Selector.DeleteObject(OwnedShape);
       }
 
       if (OwnedControl != null)
       {
-        Selector.DeleteObject((FrameworkElement)OwnedControl);
+        Drawer.Selector.DeleteObject((FrameworkElement)OwnedControl);
       }
     }
 

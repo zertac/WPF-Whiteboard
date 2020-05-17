@@ -13,6 +13,8 @@ namespace XDrawerLib.Helpers.Adorners
 {
   public class ResizingAdorner : Adorner
   {
+    public Drawer Drawer;
+
     const double THUMB_SIZE = 16;
     const double MINIMAL_SIZE = 20;
     const double MOVE_OFFSET = 20;
@@ -167,7 +169,7 @@ namespace XDrawerLib.Helpers.Adorners
     {
       if (AdornedElement is FrameworkElement element)
       {
-        UndoHelper.AddStep(UndoHelper.ActionType.Resize, element, new Point(), _firstSize);
+        Drawer.UndoHelper.AddStep(UndoHelper.ActionType.Resize, element, new Point(), _firstSize);
       }
     }
 
@@ -238,7 +240,7 @@ namespace XDrawerLib.Helpers.Adorners
     {
       if (AdornedElement is FrameworkElement element)
       {
-        UndoHelper.AddStep(UndoHelper.ActionType.Move, element, _firstPosition);
+        Drawer.UndoHelper.AddStep(UndoHelper.ActionType.Move, element, _firstPosition);
       }
     }
 

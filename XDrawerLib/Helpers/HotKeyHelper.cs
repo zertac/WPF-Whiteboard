@@ -4,17 +4,20 @@ using System.Windows.Input;
 
 namespace XDrawerLib.Helpers
 {
-  public static class HotKeyHelper
+  public class HotKeyHelper
   {
-    public static Dictionary<KeyFunction, HotKey> Shortcuts;
+    public Dictionary<KeyFunction, HotKey> Shortcuts;
+    public Drawer Drawer;
 
-    static HotKeyHelper()
+    public HotKeyHelper(Drawer drawer)
     {
+      Drawer = drawer;
+
       Shortcuts = new Dictionary<KeyFunction, HotKey>();
       SetDefaultKeys();
     }
 
-    private static void SetDefaultKeys()
+    private void SetDefaultKeys()
     {
       Shortcuts.Add(KeyFunction.Ink, new HotKey { PrimaryKey = Key.LeftCtrl, SecondaryKey = Key.D });
       Shortcuts.Add(KeyFunction.Line, new HotKey { PrimaryKey = Key.LeftCtrl, SecondaryKey = Key.L });
@@ -31,7 +34,7 @@ namespace XDrawerLib.Helpers
       Shortcuts.Add(KeyFunction.Redo, new HotKey { PrimaryKey = Key.LeftCtrl, SecondaryKey = Key.Y });
     }
 
-    public static bool IsPreserveSize()
+    public bool IsPreserveSize()
     {
       if (Keyboard.IsKeyDown(Shortcuts[KeyFunction.PreserveSize].PrimaryKey))
       {
@@ -41,7 +44,7 @@ namespace XDrawerLib.Helpers
       return false;
     }
 
-    public static void ExecuteShortcut()
+    public void ExecuteShortcut()
     {
       var tmp = Shortcuts.Where(x => Keyboard.IsKeyDown(x.Value.PrimaryKey)).ToList();
       var founded = tmp.Count(x =>
@@ -92,20 +95,20 @@ namespace XDrawerLib.Helpers
         }
         else if (function.Key == KeyFunction.Delete)
         {
-          Selector.DeleteSelected();
+          Drawer.Selector.DeleteSelected();
         }
         else if (function.Key == KeyFunction.Undo)
         {
-          UndoHelper.Undo();
+          Drawer.UndoHelper.Undo();
         }
         else if (function.Key == KeyFunction.Redo)
         {
-          UndoHelper.Redo();
+          Drawer.UndoHelper.Redo();
         }
       }
     }
 
-    public static void Bind(KeyFunction function, Key primaryKey, Key secondaryKey = Key.None)
+    public void Bind(KeyFunction function, Key primaryKey, Key secondaryKey = Key.None)
     {
       if (Shortcuts.ContainsKey(function))
       {

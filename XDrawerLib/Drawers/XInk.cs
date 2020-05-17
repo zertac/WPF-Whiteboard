@@ -118,7 +118,7 @@ namespace XDrawerLib.Drawers
         Drawer.Objects.Add(border.Uid, this);
         Drawer.Page.Children.Add(border);
 
-        UndoHelper.AddStep(UndoHelper.ActionType.Create, border);
+        Drawer.UndoHelper.AddStep(UndoHelper.ActionType.Create, border);
       }
     }
 
@@ -155,8 +155,11 @@ namespace XDrawerLib.Drawers
       {
         Drawing.Strokes.Add(s);
       }
+    }
 
-
+    public XInk(Drawer drawer) : base(drawer)
+    {
+      Drawer = drawer;
     }
   }
 }

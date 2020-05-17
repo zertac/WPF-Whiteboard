@@ -54,7 +54,7 @@ namespace XDrawerLib.Drawers
       var diffY = e.Y - StartPoint.Y;
  
 
-      if (HotKeyHelper.IsPreserveSize())
+      if (Drawer.HotKeyHelper.IsPreserveSize())
       {
         Drawing.Width = Math.Abs(diffX);
         Drawing.Height = Drawing.Width;
@@ -64,6 +64,11 @@ namespace XDrawerLib.Drawers
         Drawing.Width = Math.Abs(diffX);
         Drawing.Height = Math.Abs(diffY);
       }
+    }
+
+    public XCustom(Drawer drawer) : base(drawer)
+    {
+      Drawer = drawer;
     }
   }
 }

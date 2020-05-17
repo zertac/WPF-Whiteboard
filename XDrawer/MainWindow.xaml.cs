@@ -15,13 +15,14 @@ namespace XDrawer.Whiteboard
   /// </summary>
   public partial class MainWindow : Window
   {
+    public Drawer Drawer;
     public MainWindow()
     {
       InitializeComponent();
 
       this.Loaded += MainWindow_Loaded;
 
-      Drawer.Initialize(MainCanvas);
+      Drawer = new Drawer(MainCanvas);
       Drawer.ContinuousDraw = true;
 
       BtnNone.Click += delegate (object sender, RoutedEventArgs args)
@@ -57,7 +58,7 @@ namespace XDrawer.Whiteboard
         style.Opacity = 1;
         style.BorderSize = 3;
 
-        UndoHelper.AddStep(UndoHelper.ActionType.SetStyle, Drawer.GetSelectedObject(), new Point(), new Size(), Drawer.GetSelectedObject().Tag.ToType<XShape>().Style);
+        Drawer.UndoHelper.AddStep(UndoHelper.ActionType.SetStyle, Drawer.GetSelectedObject(), new Point(), new Size(), Drawer.GetSelectedObject().Tag.ToType<XShape>().Style);
 
         Drawer.GetSelectedObject().Tag.ToType<XShape>().Style = style;
       };
@@ -101,7 +102,7 @@ namespace XDrawer.Whiteboard
 
       BtnBind.Click += delegate (object sender, RoutedEventArgs args)
       {
-        HotKeyHelper.Bind(KeyFunction.Delete, Key.J);
+        Drawer.HotKeyHelper.Bind(KeyFunction.Delete, Key.J);
       };
     }
 

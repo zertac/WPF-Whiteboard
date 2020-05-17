@@ -7,12 +7,17 @@ using XDrawerLib.Drawers;
 
 namespace XDrawerLib.Helpers
 {
-  public static class Drawer
+  public class Drawer
   {
-    #region PROPERTIES
-    private static Tool _drawTool;
+    public Selector Selector;
+    public HotKeyHelper HotKeyHelper;
+    public UndoHelper UndoHelper;
+    public AdornerHelper AdornerHelper;
 
-    public static Tool DrawTool
+    #region PROPERTIES
+    private Tool _drawTool;
+
+    public Tool DrawTool
     {
       get { return _drawTool; }
       set
@@ -31,33 +36,52 @@ namespace XDrawerLib.Helpers
 
         if (value == Tool.Ink)
         {
-          var o = new XInk();
+          var o = new XInk(this);
           Objects.Add(o.Id, o);
           Objects.Last().Value.ToType<XInk>().Create(new Point());
         }
       }
     }
 
-    private static Canvas _page;
+    private Canvas _page;
 
-    public static Canvas Page
+    public Canvas Page
     {
       get { return _page; }
     }
     #endregion
 
-    public static bool ContinuousDraw;
-    public static Dictionary<string, XShape> Objects;
-    public static bool IsEditMode;
+    public bool ContinuousDraw;
+    public Dictionary<string, XShape> Objects;
+    public bool IsEditMode;
 
-    public static bool IsObjectCreating;
-    public static bool IsDrawEnded = true;
+    public bool IsObjectCreating;
+    public bool IsDrawEnded = true;
 
-    public static FrameworkElement ActiveObject;
+    public FrameworkElement ActiveObject;
 
-    public static string CustomShapeData;
+    public string CustomShapeData;
 
-    public static void Initialize(Canvas canvas)
+    public Drawer()
+    {
+
+    }
+
+    public Drawer Instance;
+
+    public Drawer(Canvas canvas)
+    {
+      Instance = this;
+
+      Selector = new Selector(this);
+      HotKeyHelper = new HotKeyHelper(this);
+      UndoHelper = new UndoHelper(this);
+      AdornerHelper = new AdornerHelper(this);
+
+      Initialize(canvas);
+    }
+
+    private void Initialize(Canvas canvas)
     {
       Selector.Canvas = canvas;
       Objects = new Dictionary<string, XShape>();
@@ -70,17 +94,17 @@ namespace XDrawerLib.Helpers
       if ((_page.Parent as Grid)?.Parent is Window p) p.PreviewKeyDown += P_PreviewKeyDown;
     }
 
-    private static void P_PreviewKeyDown(object sender, KeyEventArgs e)
+    private void P_PreviewKeyDown(object sender, KeyEventArgs e)
     {
       HotKeyHelper.ExecuteShortcut();
     }
 
-    private static void _canvas_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    private void _canvas_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
       FinishDraw();
     }
 
-    private static void _canvas_PreviewMouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+    private void _canvas_PreviewMouseMove(object sender, System.Windows.Input.MouseEventArgs e)
     {
       if (DrawTool != Tool.None && DrawTool != Tool.MoveResize)
       {
@@ -95,7 +119,7 @@ namespace XDrawerLib.Helpers
       }
     }
 
-    private static void _canvas_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    private void _canvas_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
       if (e.StylusDevice != null && e.StylusDevice.Inverted)
       {
@@ -109,7 +133,7 @@ namespace XDrawerLib.Helpers
       }
       else if (DrawTool == Tool.MoveResize)
       {
-        Drawer.DrawTool = Tool.None;
+        DrawTool = Tool.None;
         AdornerHelper.RemoveAllAdorners();
         Selector.EndEditForObject();
       }
@@ -125,7 +149,7 @@ namespace XDrawerLib.Helpers
       }
     }
 
-    private static void StartDraw(Point e)
+    private void StartDraw(Point e)
     {
       if (IsEditMode) return;
 
@@ -138,13 +162,13 @@ namespace XDrawerLib.Helpers
 
       if (DrawTool == Tool.Rectangle)
       {
-        var o = new XRectangle();
+        var o = new XRectangle(this);
         Objects.Add(o.Id, o);
         Objects.Last().Value.ToType<XRectangle>().Create(e);
       }
       else if (DrawTool == Tool.Ellipse)
       {
-        var o = new XEllipse();
+        var o = new XEllipse(this);
         Objects.Add(o.Id, o);
         Objects.Last().Value.ToType<XEllipse>().Create(e);
       }
@@ -152,7 +176,7 @@ namespace XDrawerLib.Helpers
       {
         if (IsDrawEnded)
         {
-          var o = new XTriangle();
+          var o = new XTriangle(this);
           Objects.Add(o.Id, o);
         }
 
@@ -160,13 +184,13 @@ namespace XDrawerLib.Helpers
       }
       else if (DrawTool == Tool.Line)
       {
-        var o = new XLine();
+        var o = new XLine(this);
         Objects.Add(o.Id, o);
         Objects.Last().Value.ToType<XLine>().Create(e);
       }
       else if (DrawTool == Tool.Text)
       {
-        var o = new XText();
+        var o = new XText(this);
         Objects.Add(o.Id, o);
         Objects.Last().Value.ToType<XText>().Create(e);
       }
@@ -178,19 +202,19 @@ namespace XDrawerLib.Helpers
       }
       else if (DrawTool == Tool.Arrow)
       {
-        var o = new XArrow();
+        var o = new XArrow(this);
         Objects.Add(o.Id, o);
         Objects.Last().Value.ToType<XArrow>().Create(e);
       }
       else if (DrawTool == Tool.Custom)
       {
-        var o = new XCustom();
+        var o = new XCustom(this);
         Objects.Add(o.Id, o);
         Objects.Last().Value.ToType<XCustom>().Create(e, CustomShapeData);
       }
     }
 
-    public static void UpdateDraw(Point e)
+    public void UpdateDraw(Point e)
     {
       if (IsEditMode) return;
       if (!IsObjectCreating) return;
@@ -225,7 +249,7 @@ namespace XDrawerLib.Helpers
       }
     }
 
-    public static void FinishDraw()
+    public void FinishDraw()
     {
       //if (IsEditMode) return;
       if (!IsObjectCreating && Selector.IsDrawing == false) return;
@@ -265,23 +289,23 @@ namespace XDrawerLib.Helpers
       }
     }
 
-    public static FrameworkElement GetSelectedObject()
+    public FrameworkElement GetSelectedObject()
     {
       var o = ActiveObject.Tag.ToType<XShape>().OwnedShape == null ? ActiveObject.Tag.ToType<XShape>().OwnedShape : (FrameworkElement)ActiveObject.Tag.ToType<XShape>().OwnedControl;
       return o;
     }
 
-    public static XShape GetSelectedShape()
+    public XShape GetSelectedShape()
     {
       return ActiveObject.Tag.ToType<XShape>();
     }
 
-    public static int GetShapeCount()
+    public int GetShapeCount()
     {
       return Objects.Count;
     }
 
-    public static void CancelDrawing()
+    public void CancelDrawing()
     {
       if (Objects.Count > 0)
       {
@@ -291,7 +315,7 @@ namespace XDrawerLib.Helpers
       if (Selector.IsDrawing)
       {
         List<FrameworkElement> lst = new List<FrameworkElement>();
-        foreach (FrameworkElement c in Drawer.Page.Children)
+        foreach (FrameworkElement c in Page.Children)
         {
           if (c.Uid == "x_selector")
           {
@@ -301,12 +325,12 @@ namespace XDrawerLib.Helpers
 
         for (int i = 0; i < lst.Count; i++)
         {
-          Drawer.Page.Children.Remove(lst[i]);
+          Page.Children.Remove(lst[i]);
         }
       }
     }
 
-    public static void CleanPage()
+    public void CleanPage()
     {
       Selector.DeleteAll();
     }

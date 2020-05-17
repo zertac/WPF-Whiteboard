@@ -8,9 +8,11 @@ using XDrawerLib.Drawers;
 
 namespace XDrawerLib.Helpers
 {
-  public static class UndoHelper
+  public class UndoHelper
   {
-    private static int _currentIndex;
+    public Drawer Drawer;
+
+    private int _currentIndex;
 
     public enum ActionType
     {
@@ -21,14 +23,15 @@ namespace XDrawerLib.Helpers
       Resize
     }
 
-    public static List<DrawAction> Steps;
+    public List<DrawAction> Steps;
 
-    static UndoHelper()
+    public UndoHelper(Drawer drawer)
     {
+      Drawer = drawer;
       Steps = new List<DrawAction>();
     }
 
-    public static void AddStep(ActionType type, FrameworkElement ctrl, Point preLocation = new Point(), Size preSize = new Size(), DrawerStyle preStyle = null, Point preLocation2 = new Point())
+    public void AddStep(ActionType type, FrameworkElement ctrl, Point preLocation = new Point(), Size preSize = new Size(), DrawerStyle preStyle = null, Point preLocation2 = new Point())
     {
       var o = ctrl.Tag.ToType<XShape>();
 
@@ -85,7 +88,7 @@ namespace XDrawerLib.Helpers
       _currentIndex = Steps.Count - 1;
     }
 
-    public static void Undo()
+    public void Undo()
     {
       if (_currentIndex == -1) return;
 
@@ -113,7 +116,7 @@ namespace XDrawerLib.Helpers
 
       if (lastAction.Type == ActionType.Create)
       {
-        Selector.DeleteObject(lastAction.Object);
+        Drawer.Selector.DeleteObject(lastAction.Object);
       }
       if (lastAction.Type == ActionType.Delete)
       {
@@ -172,7 +175,7 @@ namespace XDrawerLib.Helpers
       if (_currentIndex > -1) _currentIndex--;
     }
 
-    public static void Redo()
+    public void Redo()
     {
       if (Drawer.Objects.Count > 0)
       {
@@ -249,7 +252,7 @@ namespace XDrawerLib.Helpers
       }
       else if (lastAction.Type == ActionType.Delete)
       {
-        Selector.DeleteObject(lastAction.Object);
+        Drawer.Selector.DeleteObject(lastAction.Object);
       }
       else if (lastAction.Type == ActionType.Move)
       {

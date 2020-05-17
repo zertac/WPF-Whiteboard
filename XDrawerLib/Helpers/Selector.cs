@@ -11,15 +11,21 @@ using XText = XDrawerLib.Drawers.XText;
 
 namespace XDrawerLib.Helpers
 {
-  public static class Selector
+  public class Selector
   {
-    public static Canvas Canvas;
-    public static bool IsDrawing;
+    public Canvas Canvas;
+    public bool IsDrawing;
+    public Drawer Drawer;
 
     private static Rectangle _rect;
     private static Point _startPoint;
 
-    public static void StartSelect(Point e)
+    public Selector(Drawer drawer)
+    {
+      Drawer = drawer;
+    }
+
+    public void StartSelect(Point e)
     {
       if (Drawer.DrawTool == Tool.MoveResize) return;
 
@@ -40,7 +46,7 @@ namespace XDrawerLib.Helpers
       Canvas.Children.Add(_rect);
     }
 
-    public static void UpdateSelect(Point e)
+    public void UpdateSelect(Point e)
     {
       if (!IsDrawing) return;
 
@@ -65,23 +71,21 @@ namespace XDrawerLib.Helpers
       _rect.Height = Math.Abs(diffY);
     }
 
-    public static void FinishSelect()
+    public void FinishSelect()
     {
       IsDrawing = false;
       FindContainsObjects();
       Canvas.Children.Remove(_rect);
 
-      //Drawer.CancelDrawing();
-
       _rect = null;
     }
 
-    public static void CancelSelect()
+    public void CancelSelect()
     {
 
     }
 
-    public static void EndDrawing()
+    public void EndDrawing()
     {
       foreach (var o in Drawer.Objects)
       {
@@ -93,7 +97,7 @@ namespace XDrawerLib.Helpers
       }
     }
 
-    public static void DeleteSelected()
+    public void DeleteSelected()
     {
       if (Drawer.ActiveObject == null) return;
 
@@ -102,7 +106,7 @@ namespace XDrawerLib.Helpers
       if (o.OwnedShape != null)
       {
         Drawer.Page.Children.Remove(o.OwnedShape);
-        UndoHelper.AddStep(UndoHelper.ActionType.Delete, o.OwnedShape);
+        Drawer.UndoHelper.AddStep(UndoHelper.ActionType.Delete, o.OwnedShape);
       }
 
       if (o.OwnedControl != null)
@@ -115,7 +119,7 @@ namespace XDrawerLib.Helpers
             {
               Drawer.Page.Children.Remove(b);
               Drawer.Objects.Remove(b.Uid);
-              UndoHelper.AddStep(UndoHelper.ActionType.Delete, b);
+              Drawer.UndoHelper.AddStep(UndoHelper.ActionType.Delete, b);
               break;
             }
           }
@@ -124,7 +128,7 @@ namespace XDrawerLib.Helpers
         {
           Drawer.Page.Children.Remove((UIElement)o.OwnedControl);
           Drawer.Objects.Remove(o.Id);
-          UndoHelper.AddStep(UndoHelper.ActionType.Delete, (FrameworkElement)o.OwnedControl);
+          Drawer.UndoHelper.AddStep(UndoHelper.ActionType.Delete, (FrameworkElement)o.OwnedControl);
         }
       }
 
@@ -136,7 +140,7 @@ namespace XDrawerLib.Helpers
       ArrangeObjects();
     }
 
-    public static void ArrangeObjects()
+    public void ArrangeObjects()
     {
       Drawer.Objects = new Dictionary<string, XShape>();
       foreach (FrameworkElement c in Drawer.Page.Children)
@@ -163,7 +167,7 @@ namespace XDrawerLib.Helpers
       }
     }
 
-    public static void DeleteObject(FrameworkElement ctrl)
+    public void DeleteObject(FrameworkElement ctrl)
     {
       var o = ctrl.Tag.ToType<XShape>();
 
@@ -202,7 +206,7 @@ namespace XDrawerLib.Helpers
       ArrangeObjects();
     }
 
-    public static void DeselectAll()
+    public void DeselectAll()
     {
       foreach (var item in Drawer.Objects.Values)
       {
@@ -213,7 +217,7 @@ namespace XDrawerLib.Helpers
       }
     }
 
-    public static void DeleteAll()
+    public void DeleteAll()
     {
       foreach (var item in Drawer.Objects.Values)
       {
@@ -229,7 +233,7 @@ namespace XDrawerLib.Helpers
       }
     }
 
-    public static void EndEditForObject()
+    public void EndEditForObject()
     {
       foreach (var item in Drawer.Objects.Values)
       {
@@ -240,7 +244,7 @@ namespace XDrawerLib.Helpers
       }
     }
 
-    public static void FinishDraw()
+    public void FinishDraw()
     {
       var lst = Drawer.Objects.ToList();
 
@@ -256,9 +260,10 @@ namespace XDrawerLib.Helpers
       }
     }
 
-    private static void FindContainsObjects()
+    private void FindContainsObjects()
     {
       DeselectAll();
+
       foreach (var item in Drawer.Objects.Values)
       {
         if (item.OwnedShape != null)
@@ -294,12 +299,12 @@ namespace XDrawerLib.Helpers
       }
     }
 
-    private static void Identify(XShape item)
+    private void Identify(XShape item)
     {
       item.ToType<XShape>().IsSelected = true;
     }
 
-    private static bool IsContains(UIElement item)
+    private bool IsContains(UIElement item)
     {
       if (item == null) return false;
       if (_rect == null) return false;

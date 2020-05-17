@@ -165,5 +165,10 @@ namespace XDrawerLib.Drawers
         }
       }
     }
+
+    public XTriangle(Drawer drawer) : base(drawer)
+    {
+      Drawer = drawer;
+    }
   }
 }

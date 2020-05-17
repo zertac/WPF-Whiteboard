@@ -83,7 +83,7 @@ namespace XDrawerLib.Drawers
            Textbox.Width = Textbox.Document.GetFormattedText().WidthIncludingTrailingWhitespace + 20;
          }
 
-         var adn = AdornerHelper.GetAdorner(sender);
+         var adn = Drawer.AdornerHelper.GetAdorner(sender);
          adn?.OnChange();
        };
 
@@ -99,7 +99,7 @@ namespace XDrawerLib.Drawers
     {
       base.OnSelect(sender, e);
 
-      var adn = AdornerHelper.GetAdorner(sender);
+      var adn = Drawer.AdornerHelper.GetAdorner(sender);
 
       adn?.OnChange();
     }
@@ -134,6 +134,11 @@ namespace XDrawerLib.Drawers
     public void Redo()
     {
       Textbox.Redo();
+    }
+
+    public XText(Drawer drawer) : base(drawer)
+    {
+      Drawer = drawer;
     }
   }
 }
