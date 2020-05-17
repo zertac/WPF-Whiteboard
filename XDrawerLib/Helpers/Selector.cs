@@ -30,8 +30,9 @@ namespace XDrawerLib.Helpers
       _rect = new Rectangle();
       _rect.Width = 0;
       _rect.Height = 0;
-      _rect.Fill = new SolidColorBrush(Colors.Blue);
-      _rect.Opacity = 0.2;
+      _rect.Fill = StyleHelper.SelectionStyle.Background;
+      _rect.Opacity = StyleHelper.SelectionStyle.Opacity;
+      _rect.Stroke = StyleHelper.SelectionStyle.Border;
       _rect.Uid = "x_selector";
 
       Canvas.SetLeft(_rect, e.X);
@@ -69,6 +70,8 @@ namespace XDrawerLib.Helpers
       IsDrawing = false;
       FindContainsObjects();
       Canvas.Children.Remove(_rect);
+
+      Drawer.CancelDrawing();
 
       _rect = null;
     }

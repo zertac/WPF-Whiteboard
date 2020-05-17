@@ -12,7 +12,7 @@ namespace XDrawerLib.Helpers
       if (SelectionStyle == null)
       {
         SelectionStyle = new DrawerStyle();
-        SelectionStyle.Background = new SolidColorBrush(Colors.Blue);
+        SelectionStyle.Background = new SolidColorBrush(Colors.Red);
         SelectionStyle.Border = new SolidColorBrush(Colors.DarkBlue);
         SelectionStyle.BorderSize = 1;
         SelectionStyle.Opacity = 0.2;

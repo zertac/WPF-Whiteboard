@@ -129,6 +129,8 @@ namespace XDrawerLib.Helpers
     {
       if (IsEditMode) return;
 
+      Selector.FinishSelect();
+
       if (DrawTool != Tool.Triangle)
       {
         Selector.EndDrawing();
@@ -226,7 +228,7 @@ namespace XDrawerLib.Helpers
     public static void FinishDraw()
     {
       //if (IsEditMode) return;
-      if (!IsObjectCreating) return;
+      if (!IsObjectCreating && Selector.IsDrawing == false) return;
 
       if (DrawTool == Tool.None)
       {
@@ -284,6 +286,18 @@ namespace XDrawerLib.Helpers
       if (Objects.Count > 0)
       {
         Objects.Last().Value.Cancel();
+      }
+
+      if (Selector.IsDrawing)
+      {
+        List<FrameworkElement> lst = new List<FrameworkElement>();
+        foreach (FrameworkElement c in Drawer.Page.Children)
+        {
+          if (c.Uid == "x_selector")
+          {
+            Drawer.Page.Children.Remove(c);
+          }
+        }
       }
     }
 
