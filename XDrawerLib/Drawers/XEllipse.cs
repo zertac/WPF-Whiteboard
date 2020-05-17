@@ -24,6 +24,7 @@ namespace XDrawerLib.Drawers
       Drawing.Height = 0;
       Drawing.Opacity = 0.2;
       Drawing.Tag = this;
+      Drawing.Uid = Guid.NewGuid().ToString();
 
       OwnedShape = Drawing;
 

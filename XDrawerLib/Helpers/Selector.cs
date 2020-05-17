@@ -102,48 +102,6 @@ namespace XDrawerLib.Helpers
       if (o.OwnedShape != null)
       {
         Drawer.Page.Children.Remove(o.OwnedShape);
-        ArrangeObjects();
-        UndoHelper.AddStep(UndoHelper.ActionType.Delete, o.OwnedShape);
-      }
-
-      if (o.OwnedControl != null)
-      {
-        var ctrl = (UIElement)o.OwnedShape;
-        if (o.OwnedControl is List<Border> borders)
-        {
-          foreach (var b in borders)
-          {
-            if (ctrl.Uid == b.Uid)
-            {
-              Drawer.Page.Children.Remove(b);
-              Drawer.Objects.Remove(b.Uid);
-              UndoHelper.AddStep(UndoHelper.ActionType.Delete, b);
-              break;
-            }
-          }
-        }
-        else
-        {
-          Drawer.Page.Children.Remove((UIElement)o.OwnedControl);
-          Drawer.Objects.Remove(o.Id);
-          UndoHelper.AddStep(UndoHelper.ActionType.Delete, (FrameworkElement)o.OwnedControl);
-        }
-      }
-
-      if (o.FollowItem != null)
-      {
-        Drawer.Page.Children.Remove(o.FollowItem);
-      }
-
-
-      return;
-
-
-
-      if (o.OwnedShape != null)
-      {
-        Drawer.Page.Children.Remove(o.OwnedShape);
-        Drawer.Objects.Remove(o.Id);
         UndoHelper.AddStep(UndoHelper.ActionType.Delete, o.OwnedShape);
       }
 
@@ -169,6 +127,13 @@ namespace XDrawerLib.Helpers
           UndoHelper.AddStep(UndoHelper.ActionType.Delete, (FrameworkElement)o.OwnedControl);
         }
       }
+
+      if (o.FollowItem != null)
+      {
+        Drawer.Page.Children.Remove(o.FollowItem);
+      }
+
+      ArrangeObjects();
     }
 
     public static void ArrangeObjects()
@@ -179,7 +144,21 @@ namespace XDrawerLib.Helpers
         var obj = c.Tag;
         if (c.Tag != null)
         {
-          Drawer.Objects.Add(c.Tag.ToType<XShape>().Id, c.Tag.ToType<XShape>());
+          if (c.Tag.ToType<XShape>().OwnedControl is List<Border> borders)
+          {
+            foreach (var b in borders)
+            {
+              if (b.Uid == c.Uid)
+              {
+                Drawer.Objects.Add(b.Uid, c.Tag.ToType<XShape>());
+                break;
+              }
+            }
+          }
+          else
+          {
+            Drawer.Objects.Add(c.Tag.ToType<XShape>().Id, c.Tag.ToType<XShape>());
+          }
         }
       }
     }
@@ -192,7 +171,6 @@ namespace XDrawerLib.Helpers
       {
         var a = (UIElement)ctrl;
         Drawer.Page.Children.Remove(a);
-        ArrangeObjects();
       }
 
       if (o.OwnedControl != null)
@@ -220,6 +198,8 @@ namespace XDrawerLib.Helpers
       {
         Drawer.Page.Children.Remove(o.FollowItem);
       }
+
+      ArrangeObjects();
     }
 
     public static void DeselectAll()

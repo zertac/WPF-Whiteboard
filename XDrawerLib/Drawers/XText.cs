@@ -61,7 +61,7 @@ namespace XDrawerLib.Drawers
         BorderThickness = new Thickness(StyleHelper.CurrentStyle.BorderSize),
         IsReadOnly = false
       };
-
+      Textbox.Uid = Guid.NewGuid().ToString();
       Canvas.SetLeft(Textbox, Canvas.GetLeft(Shadow));
       Canvas.SetTop(Textbox, Canvas.GetTop(Shadow));
 

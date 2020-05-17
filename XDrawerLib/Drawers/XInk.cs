@@ -67,6 +67,7 @@ namespace XDrawerLib.Drawers
       var lst = Drawing.Strokes.ToList();
 
       Drawer.Page.Children.Remove(Drawing);
+      Drawer.Objects.Remove(Id);
 
       foreach (var stroke in lst)
       {

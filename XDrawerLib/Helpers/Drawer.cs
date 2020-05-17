@@ -295,8 +295,13 @@ namespace XDrawerLib.Helpers
         {
           if (c.Uid == "x_selector")
           {
-            Drawer.Page.Children.Remove(c);
+            lst.Add(c);
           }
+        }
+
+        for (int i = 0; i < lst.Count; i++)
+        {
+          Drawer.Page.Children.Remove(lst[i]);
         }
       }
     }

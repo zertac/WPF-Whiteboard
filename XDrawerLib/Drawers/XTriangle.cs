@@ -33,6 +33,7 @@ namespace XDrawerLib.Drawers
       Drawing.Points.Add(new Point(0, 0));
       Drawing.Points.Add(new Point(0, 0));
       Drawing.Tag = this;
+      Drawing.Uid = Guid.NewGuid().ToString();
 
       OwnedShape = Drawing;
 
