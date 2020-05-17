@@ -19,6 +19,8 @@ namespace XDrawerLib.Drawers
     public void Create(Point e)
     {
       IsDrawing = true;
+      Drawer.IsDrawEnded = false;
+
       StartPoint = e;
 
       Drawing = new Polygon();
@@ -114,7 +116,7 @@ namespace XDrawerLib.Drawers
       }
       else
       {
-        if (IsDrawing == false) return;
+        //if (IsDrawing == false) return;
 
         var p = new Point();
         p.X = e.X - StartPoint.X;
