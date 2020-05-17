@@ -40,7 +40,8 @@ namespace XDrawerLib.Helpers
         if (o.OwnedShape is Line line)
         {
           action.NextProps.Location = new Point(line.X1, line.Y1);
-          action.NextProps.Location2 = new Point(line.X2, line.Y2);
+          action.NextProps.Location2 = new Point(line.X2, Canvas.GetTop(o.OwnedShape));
+
         }
         else
         {
@@ -99,8 +100,11 @@ namespace XDrawerLib.Helpers
         var shape = lastAction.Object.Tag.ToType<XShape>();
         if (shape.OwnedShape != null)
         {
-          Drawer.Page.Children.Add(shape.OwnedShape);
-          Drawer.Objects.Add(shape.Id, shape);
+          if (!Drawer.Page.Children.Contains(shape.OwnedShape))
+          {
+            Drawer.Page.Children.Add(shape.OwnedShape);
+            Drawer.Objects.Add(shape.Id, shape);
+          }
         }
 
         if (shape.OwnedControl != null)
@@ -111,16 +115,23 @@ namespace XDrawerLib.Helpers
             {
               if (b.Uid == lastAction.Object.Uid)
               {
-                Drawer.Page.Children.Add(b);
-                Drawer.Objects.Add(b.Uid, shape);
+                if (!Drawer.Page.Children.Contains(b))
+                {
+                  Drawer.Page.Children.Add(b);
+                  Drawer.Objects.Add(b.Uid, shape);
+                }
+
                 break;
               }
             }
           }
           else
           {
-            Drawer.Page.Children.Add((FrameworkElement)shape.OwnedControl);
-            Drawer.Objects.Add(shape.Id, shape);
+            if (!Drawer.Page.Children.Contains((FrameworkElement)shape.OwnedControl))
+            {
+              Drawer.Page.Children.Add((FrameworkElement)shape.OwnedControl);
+              Drawer.Objects.Add(shape.Id, shape);
+            }
           }
         }
       }
@@ -157,13 +168,16 @@ namespace XDrawerLib.Helpers
         var shape = lastAction.Object.Tag.ToType<XShape>();
         if (shape.OwnedShape != null)
         {
-          Drawer.Page.Children.Add(shape.OwnedShape);
-          if (shape.FollowItem != null)
+          if (!Drawer.Page.Children.Contains(shape.OwnedShape))
           {
-            Drawer.Page.Children.Add((FrameworkElement)shape.FollowItem);
-          }
+            Drawer.Page.Children.Add(shape.OwnedShape);
+            if (shape.FollowItem != null)
+            {
+              Drawer.Page.Children.Add((FrameworkElement)shape.FollowItem);
+            }
 
-          Drawer.Objects.Add(shape.Id, shape);
+            Drawer.Objects.Add(shape.Id, shape);
+          }
         }
 
         if (shape.OwnedControl != null)
@@ -174,16 +188,22 @@ namespace XDrawerLib.Helpers
             {
               if (b.Uid == lastAction.Object.Uid)
               {
-                Drawer.Page.Children.Add(b);
-                Drawer.Objects.Add(b.Uid, shape);
+                if (!Drawer.Page.Children.Contains(b))
+                {
+                  Drawer.Page.Children.Add(b);
+                  Drawer.Objects.Add(b.Uid, shape);
+                }
                 break;
               }
             }
           }
           else
           {
-            Drawer.Page.Children.Add((FrameworkElement)shape.OwnedControl);
-            Drawer.Objects.Add(shape.Id, shape);
+            if (!Drawer.Page.Children.Contains((FrameworkElement)shape.OwnedControl))
+            {
+              Drawer.Page.Children.Add((FrameworkElement)shape.OwnedControl);
+              Drawer.Objects.Add(shape.Id, shape);
+            }
           }
         }
       }
@@ -193,7 +213,7 @@ namespace XDrawerLib.Helpers
       }
       else if (lastAction.Type == ActionType.Move)
       {
-        lastAction.Object.Tag.ToType<XShape>().SetPosition(lastAction.NextProps.Location,lastAction.NextProps.Location2);
+        lastAction.Object.Tag.ToType<XShape>().SetPosition(lastAction.NextProps.Location, lastAction.NextProps.Location2);
       }
       else if (lastAction.Type == ActionType.SetStyle)
       {

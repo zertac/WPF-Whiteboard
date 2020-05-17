@@ -98,6 +98,11 @@ namespace XDrawer.Whiteboard
       {
         Drawer.CleanPage();
       };
+
+      BtnBind.Click += delegate (object sender, RoutedEventArgs args)
+      {
+        HotKeyHelper.Bind(KeyFunction.Delete, Key.J);
+      };
     }
 
     private void MainWindow_Loaded(object sender, RoutedEventArgs e)

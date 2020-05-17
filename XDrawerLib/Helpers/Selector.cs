@@ -71,7 +71,7 @@ namespace XDrawerLib.Helpers
       FindContainsObjects();
       Canvas.Children.Remove(_rect);
 
-      Drawer.CancelDrawing();
+      //Drawer.CancelDrawing();
 
       _rect = null;
     }
@@ -98,6 +98,47 @@ namespace XDrawerLib.Helpers
       if (Drawer.ActiveObject == null) return;
 
       var o = Drawer.ActiveObject.Tag.ToType<XShape>();
+
+      if (o.OwnedShape != null)
+      {
+        Drawer.Page.Children.Remove(o.OwnedShape);
+        ArrangeObjects();
+        UndoHelper.AddStep(UndoHelper.ActionType.Delete, o.OwnedShape);
+      }
+
+      if (o.OwnedControl != null)
+      {
+        var ctrl = (UIElement)o.OwnedShape;
+        if (o.OwnedControl is List<Border> borders)
+        {
+          foreach (var b in borders)
+          {
+            if (ctrl.Uid == b.Uid)
+            {
+              Drawer.Page.Children.Remove(b);
+              Drawer.Objects.Remove(b.Uid);
+              UndoHelper.AddStep(UndoHelper.ActionType.Delete, b);
+              break;
+            }
+          }
+        }
+        else
+        {
+          Drawer.Page.Children.Remove((UIElement)o.OwnedControl);
+          Drawer.Objects.Remove(o.Id);
+          UndoHelper.AddStep(UndoHelper.ActionType.Delete, (FrameworkElement)o.OwnedControl);
+        }
+      }
+
+      if (o.FollowItem != null)
+      {
+        Drawer.Page.Children.Remove(o.FollowItem);
+      }
+
+
+      return;
+
+
 
       if (o.OwnedShape != null)
       {

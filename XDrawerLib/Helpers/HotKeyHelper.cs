@@ -104,5 +104,21 @@ namespace XDrawerLib.Helpers
         }
       }
     }
+
+    public static void Bind(KeyFunction function, Key primaryKey, Key secondaryKey = Key.None)
+    {
+      if (Shortcuts.ContainsKey(function))
+      {
+        if (primaryKey != Key.None)
+        {
+          Shortcuts[function].PrimaryKey = primaryKey;
+        }
+
+        if (secondaryKey != Key.None)
+        {
+          Shortcuts[function].SecondaryKey = secondaryKey;
+        }
+      }
+    }
   }
 }
