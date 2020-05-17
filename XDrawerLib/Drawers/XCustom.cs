@@ -52,20 +52,7 @@ namespace XDrawerLib.Drawers
 
       var diffX = e.X - StartPoint.X;
       var diffY = e.Y - StartPoint.Y;
-      var scaleX = 1;
-      var scaleY = 1;
-
-      if (diffX < 0)
-      {
-        scaleX = -1;
-      }
-
-      if (diffY < 0)
-      {
-        scaleY = -1;
-      }
-
-      Drawing.RenderTransform = new ScaleTransform(scaleX, scaleY);
+ 
 
       if (HotKeyHelper.IsPreserveSize())
       {

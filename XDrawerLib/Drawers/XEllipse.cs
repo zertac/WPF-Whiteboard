@@ -43,10 +43,6 @@ namespace XDrawerLib.Drawers
     {
       if (!IsDrawing) return;
 
-      //var state = Keyboard.IsKeyDown(Key.LeftCtrl);
-
-    
-
       var diffX = e.X - StartPoint.X;
       var diffY = e.Y - StartPoint.Y;
       var scaleX = 1;
@@ -61,6 +57,9 @@ namespace XDrawerLib.Drawers
       {
         scaleY = -1;
       }
+
+      Inverse.ScaleX = scaleX;
+      Inverse.ScaleY = scaleY;
 
       Drawing.RenderTransform = new ScaleTransform(scaleX, scaleY);
 

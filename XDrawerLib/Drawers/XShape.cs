@@ -23,6 +23,8 @@ namespace XDrawerLib.Drawers
     public Action OnDoubleClick;
     private DrawerStyle _style;
     internal FrameworkElement FollowItem;
+    internal ScaleTransform Inverse;
+
     public DrawerStyle Style
     {
       get => _style;
@@ -54,6 +56,7 @@ namespace XDrawerLib.Drawers
     public XShape()
     {
       Id = Guid.NewGuid().ToString();
+      Inverse = new ScaleTransform();
 
       Console.WriteLine("created :" + Id);
 
@@ -163,7 +166,6 @@ namespace XDrawerLib.Drawers
     {
       if (e.Inverted)
       {
-        Console.WriteLine("removed");
         Selector.DeleteObject(OwnedShape);
       }
     }
@@ -206,6 +208,23 @@ namespace XDrawerLib.Drawers
         UndoHelper.AddStep(UndoHelper.ActionType.Create, (FrameworkElement)OwnedControl);
       }
 
+      if (Inverse.ScaleX < 1)
+      {
+        OwnedShape.RenderTransform = new ScaleTransform(1, 1);
+
+        var x = Canvas.GetLeft(OwnedShape) - OwnedShape.ActualWidth;
+
+        Canvas.SetLeft(OwnedShape, x);
+      }
+
+      if (Inverse.ScaleY < 1)
+      {
+        OwnedShape.RenderTransform = new ScaleTransform(1, 1);
+
+        var y = Canvas.GetTop(OwnedShape) - OwnedShape.ActualHeight;
+
+        Canvas.SetTop(OwnedShape, y);
+      }
     }
 
     public void Cancel()

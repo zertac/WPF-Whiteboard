@@ -60,6 +60,9 @@ namespace XDrawerLib.Drawers
         scaleY = -1;
       }
 
+      Inverse.ScaleX = scaleX;
+      Inverse.ScaleY = scaleY;
+
       Drawing.RenderTransform = new ScaleTransform(scaleX, scaleY);
 
       if (HotKeyHelper.IsPreserveSize())
