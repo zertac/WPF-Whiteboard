@@ -56,18 +56,10 @@ namespace XDrawerLib.Drawers
 
       Drawer.IsObjectCreating = false;
       Drawer.IsDrawEnded = true;
-      //Drawer.Objects.Remove(Id);
-
-      var svg = new SvgDocument();
-      var colorServer = new SvgColourServer(System.Drawing.Color.Black);
-
-      var group = new SvgGroup { Fill = colorServer, Stroke = colorServer };
-      svg.Children.Add(group);
-
-      var lst = Drawing.Strokes.ToList();
-
       Drawer.Page.Children.Remove(Drawing);
       Drawer.Objects.Remove(Id);
+
+      var lst = Drawing.Strokes.ToList();
 
       foreach (var stroke in lst)
       {
