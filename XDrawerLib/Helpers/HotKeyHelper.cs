@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 
@@ -32,6 +33,9 @@ namespace XDrawerLib.Helpers
       Shortcuts.Add(KeyFunction.Delete, new HotKey { PrimaryKey = Key.T });
       Shortcuts.Add(KeyFunction.Undo, new HotKey { PrimaryKey = Key.LeftCtrl, SecondaryKey = Key.Z });
       Shortcuts.Add(KeyFunction.Redo, new HotKey { PrimaryKey = Key.LeftCtrl, SecondaryKey = Key.Y });
+      Shortcuts.Add(KeyFunction.Selection, new HotKey { PrimaryKey = Key.LeftCtrl, SecondaryKey = Key.M });
+      Shortcuts.Add(KeyFunction.None, new HotKey { PrimaryKey = Key.LeftCtrl });
+      Shortcuts.Add(KeyFunction.Pan, new HotKey { PrimaryKey = Key.Space });
     }
 
     public bool IsPreserveSize()
@@ -51,13 +55,31 @@ namespace XDrawerLib.Helpers
         (x.Value.SecondaryKey != Key.None && Keyboard.IsKeyDown(x.Value.SecondaryKey)) ||
         x.Value.SecondaryKey == Key.None) > 0;
 
+      var total = tmp.Count(x =>
+        (x.Value.SecondaryKey != Key.None && Keyboard.IsKeyDown(x.Value.SecondaryKey)) ||
+        x.Value.SecondaryKey == Key.None);
+
+      
+      Console.WriteLine(total);
       if (founded)
       {
-        var function = tmp.Single(x =>
+        var function = tmp.FirstOrDefault(x =>
           (x.Value.SecondaryKey != Key.None && Keyboard.IsKeyDown(x.Value.SecondaryKey)) ||
           x.Value.SecondaryKey == Key.None);
 
-        if (function.Key == KeyFunction.Ink)
+        if (function.Key == KeyFunction.None)
+        {
+          Drawer.DrawTool = Tool.None;
+        }
+        else if (function.Key == KeyFunction.Selection)
+        {
+          Drawer.DrawTool = Tool.Selection;
+        }
+        if (function.Key == KeyFunction.Pan)
+        {
+          Drawer.DrawTool = Tool.None;
+        }
+        else if (function.Key == KeyFunction.Ink)
         {
           Drawer.DrawTool = Tool.Ink;
         }

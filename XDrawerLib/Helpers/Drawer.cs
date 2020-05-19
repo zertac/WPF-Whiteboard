@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using XDrawerLib.Drawers;
 
 namespace XDrawerLib.Helpers
@@ -29,7 +30,7 @@ namespace XDrawerLib.Helpers
           Selector.FinishDraw();
         }
 
-        if (value == Tool.None)
+        if (value == Tool.Selection || value == Tool.None)
         {
           Selector.EndEditForObject();
         }
@@ -91,7 +92,11 @@ namespace XDrawerLib.Helpers
       _page.MouseMove += _canvas_PreviewMouseMove;
       _page.PreviewMouseLeftButtonUp += _canvas_PreviewMouseLeftButtonUp;
 
-      if ((_page.Parent as Grid)?.Parent is Window p) p.PreviewKeyDown += P_PreviewKeyDown;
+      var window = Application.Current.MainWindow;
+      if (window != null)
+      {
+        window.PreviewKeyDown += P_PreviewKeyDown;
+      }
     }
 
     private void P_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -106,13 +111,15 @@ namespace XDrawerLib.Helpers
 
     private void _canvas_PreviewMouseMove(object sender, System.Windows.Input.MouseEventArgs e)
     {
-      if (DrawTool != Tool.None && DrawTool != Tool.MoveResize)
+      if (DrawTool == Tool.None) return;
+
+      if (DrawTool != Tool.Selection && DrawTool != Tool.MoveResize)
       {
         UpdateDraw(e.GetPosition(Page));
       }
       else
       {
-        if (DrawTool == Tool.None)
+        if (DrawTool == Tool.Selection)
         {
           Selector.UpdateSelect(e.GetPosition(Page));
         }
@@ -121,19 +128,21 @@ namespace XDrawerLib.Helpers
 
     private void _canvas_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
+      if (DrawTool == Tool.None) return;
+
       if (e.StylusDevice != null && e.StylusDevice.Inverted)
       {
         return;
       }
 
-      if (DrawTool == Tool.None)
+      if (DrawTool == Tool.Selection)
       {
         Selector.StartSelect(e.GetPosition(Page));
         Selector.EndEditForObject();
       }
       else if (DrawTool == Tool.MoveResize)
       {
-        DrawTool = Tool.None;
+        DrawTool = Tool.Selection;
         AdornerHelper.RemoveAllAdorners();
         Selector.EndEditForObject();
       }
@@ -254,7 +263,7 @@ namespace XDrawerLib.Helpers
       //if (IsEditMode) return;
       if (!IsObjectCreating && Selector.IsDrawing == false) return;
 
-      if (DrawTool == Tool.None)
+      if (DrawTool == Tool.Selection)
       {
         Selector.FinishSelect();
       }
@@ -291,7 +300,7 @@ namespace XDrawerLib.Helpers
 
     public FrameworkElement GetSelectedObject()
     {
-      var o = ActiveObject.Tag.ToType<XShape>().OwnedShape == null ? ActiveObject.Tag.ToType<XShape>().OwnedShape : (FrameworkElement)ActiveObject.Tag.ToType<XShape>().OwnedControl;
+      var o = ActiveObject.Tag.ToType<XShape>().OwnedShape == null ? (FrameworkElement)ActiveObject.Tag.ToType<XShape>().OwnedControl : ActiveObject.Tag.ToType<XShape>().OwnedShape;
       return o;
     }
 

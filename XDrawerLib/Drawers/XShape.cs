@@ -113,14 +113,14 @@ namespace XDrawerLib.Drawers
         }
         else
         {
-          if (Drawer.DrawTool != Tool.None && Drawer.DrawTool != Tool.MoveResize)
+          if (Drawer.DrawTool != Tool.Selection && Drawer.DrawTool != Tool.MoveResize)
           {
             e.Handled = true;
           }
         }
       }
 
-      if (Drawer.DrawTool != Tool.None && Drawer.DrawTool != Tool.MoveResize) return;
+      if (Drawer.DrawTool != Tool.Selection && Drawer.DrawTool != Tool.MoveResize) return;
 
       if (Drawer.IsEditMode) return;
 
@@ -195,7 +195,7 @@ namespace XDrawerLib.Drawers
       if (OwnedShape != null)
         OwnedShape.Opacity = StyleHelper.CurrentStyle.Opacity;
 
-      Drawer.DrawTool = Drawer.ContinuousDraw ? Drawer.DrawTool : Tool.None;
+      Drawer.DrawTool = Drawer.ContinuousDraw ? Drawer.DrawTool : Tool.Selection;
       Drawer.IsObjectCreating = false;
       Drawer.IsDrawEnded = true;
 

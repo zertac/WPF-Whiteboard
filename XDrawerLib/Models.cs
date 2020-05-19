@@ -6,6 +6,7 @@ namespace XDrawerLib
   public enum Tool
   {
     None,
+    Selection,
     Ink,
     Line,
     Rectangle,
@@ -19,6 +20,9 @@ namespace XDrawerLib
 
   public enum KeyFunction
   {
+    None,
+    Selection,
+    Pan,
     Ink,
     Line,
     Rectangle,
