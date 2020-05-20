@@ -293,7 +293,7 @@ namespace XDrawerLib.Helpers
                             var s = IsContains(ink);
                             if (s)
                             {
-                                Identify(item);
+                                Identify(ink);
                             }
                         }
                     }
@@ -312,6 +312,14 @@ namespace XDrawerLib.Helpers
         private void Identify(XShape item)
         {
             item.ToType<XShape>().IsSelected = true;
+        }
+
+        private void Identify(Border item)
+        {
+            item.Tag.ToType<XShape>().IsSelected = true;
+
+            item.BorderBrush = new SolidColorBrush(Colors.Aqua);
+            item.BorderThickness = new Thickness(3);
         }
 
         private bool IsContains(FrameworkElement item)
