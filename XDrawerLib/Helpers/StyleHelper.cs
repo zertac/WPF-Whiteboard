@@ -23,7 +23,7 @@ namespace XDrawerLib.Helpers
         CurrentStyle = new DrawerStyle();
         CurrentStyle.Background = new SolidColorBrush(Colors.Transparent);
         CurrentStyle.Border = new SolidColorBrush(Colors.Black);
-        CurrentStyle.BorderSize = 8;
+        CurrentStyle.BorderSize = 2;
         CurrentStyle.FontSize = 16;
         CurrentStyle.Opacity = 1;
       }

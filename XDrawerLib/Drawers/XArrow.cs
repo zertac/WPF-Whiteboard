@@ -12,11 +12,12 @@ namespace XDrawerLib.Drawers
     public Line Drawing;
     public Border Arrow;
 
+    private double arrowSize = 32;
+
     public void Create(Point e)
     {
       IsDrawing = true;
       StartPoint = e;
-
 
       Drawing = new Line();
       OwnedShape = Drawing;
@@ -34,8 +35,8 @@ namespace XDrawerLib.Drawers
 
       Arrow = new Border();
       Arrow.Background = Style.Background;
-      Arrow.Width = 32;
-      Arrow.Height = 32;
+      Arrow.Width = arrowSize;
+      Arrow.Height = arrowSize;
       Arrow.Opacity = 0.2;
       Arrow.RenderTransformOrigin = new Point(0.5, 0.5);
 
@@ -94,8 +95,8 @@ namespace XDrawerLib.Drawers
     {
       var a = Angle(Drawing.X1, Drawing.Y1, Drawing.X2, Drawing.Y2);
 
-      var x = Drawing.X2 - 16;
-      var y = Drawing.Y2 - 16;
+      var x = Drawing.X2 - (arrowSize / 2);
+      var y = Drawing.Y2 - (arrowSize / 2);
 
       var rt = new RotateTransform();
       rt.Angle = -(a);
