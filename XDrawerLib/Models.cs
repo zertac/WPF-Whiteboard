@@ -35,7 +35,8 @@ namespace XDrawerLib
     Cancel,
     Delete,
     Undo,
-    Redo
+    Redo,
+    SelectAll
   }
 
   public class DrawerStyle

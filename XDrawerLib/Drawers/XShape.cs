@@ -238,6 +238,8 @@ namespace XDrawerLib.Drawers
 
     public void Cancel()
     {
+      if (!IsDrawing) return;
+      
       Drawer.IsObjectCreating = false;
 
       if (OwnedShape != null)

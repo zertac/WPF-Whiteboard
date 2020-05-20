@@ -95,7 +95,7 @@ namespace XDrawerLib.Helpers
       var window = Application.Current.MainWindow;
       if (window != null)
       {
-        window.PreviewKeyDown += P_PreviewKeyDown;
+        window.KeyDown += P_PreviewKeyDown;
       }
     }
 

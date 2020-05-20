@@ -97,47 +97,57 @@ namespace XDrawerLib.Helpers
       }
     }
 
+    public void SelectAll()
+    {
+      foreach (var o in Drawer.Objects.Values)
+      {
+        Identify(o);
+      }
+    }
+
     public void DeleteSelected()
     {
-      if (Drawer.ActiveObject == null) return;
 
-      var o = Drawer.ActiveObject.Tag.ToType<XShape>();
+      var objList = Drawer.Objects.Where(x => x.Value.IsSelected).ToList();
 
-      if (o.OwnedShape != null)
+      foreach (KeyValuePair<string, XShape> o in objList)
       {
-        Drawer.Page.Children.Remove(o.OwnedShape);
-        Drawer.UndoHelper.AddStep(UndoHelper.ActionType.Delete, o.OwnedShape);
-      }
-
-      if (o.OwnedControl != null)
-      {
-        if (o.OwnedControl is List<Border> borders)
+        if (o.Value.OwnedShape != null)
         {
-          foreach (var b in borders)
+          Drawer.Page.Children.Remove(o.Value.OwnedShape);
+          Drawer.UndoHelper.AddStep(UndoHelper.ActionType.Delete, o.Value.OwnedShape);
+        }
+
+        if (o.Value.OwnedControl != null)
+        {
+          if (o.Value.OwnedControl is List<Border> borders)
           {
-            if (Drawer.ActiveObject.Uid == b.Uid)
+            foreach (var b in borders)
             {
-              Drawer.Page.Children.Remove(b);
-              Drawer.Objects.Remove(b.Uid);
-              Drawer.UndoHelper.AddStep(UndoHelper.ActionType.Delete, b);
-              break;
+              if (Drawer.ActiveObject.Uid == b.Uid)
+              {
+                Drawer.Page.Children.Remove(b);
+                Drawer.Objects.Remove(b.Uid);
+                Drawer.UndoHelper.AddStep(UndoHelper.ActionType.Delete, b);
+                break;
+              }
             }
           }
+          else
+          {
+            Drawer.Page.Children.Remove((UIElement)o.Value.OwnedControl);
+            Drawer.Objects.Remove(o.Value.Id);
+            Drawer.UndoHelper.AddStep(UndoHelper.ActionType.Delete, (FrameworkElement)o.Value.OwnedControl);
+          }
         }
-        else
+
+        if (o.Value.FollowItem != null)
         {
-          Drawer.Page.Children.Remove((UIElement)o.OwnedControl);
-          Drawer.Objects.Remove(o.Id);
-          Drawer.UndoHelper.AddStep(UndoHelper.ActionType.Delete, (FrameworkElement)o.OwnedControl);
+          Drawer.Page.Children.Remove(o.Value.FollowItem);
         }
-      }
 
-      if (o.FollowItem != null)
-      {
-        Drawer.Page.Children.Remove(o.FollowItem);
+        ArrangeObjects();
       }
-
-      ArrangeObjects();
     }
 
     public void ArrangeObjects()
