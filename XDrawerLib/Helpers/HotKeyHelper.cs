@@ -53,103 +53,123 @@ namespace XDrawerLib.Helpers
     public void ExecuteShortcut()
     {
       Console.WriteLine("pressed");
-      var tmp = Shortcuts.Where(x => Keyboard.IsKeyDown(x.Value.PrimaryKey)).ToList();
-      var founded = tmp.Count(x =>
-        (x.Value.SecondaryKey != Key.None && Keyboard.IsKeyDown(x.Value.SecondaryKey)) ||
-        x.Value.SecondaryKey == Key.None) > 0;
+      //var tmp = Shortcuts.Where(x => Keyboard.IsKeyDown(x.Value.PrimaryKey)).ToList();
+      //var founded = tmp.Count(x =>
+      //  (x.Value.SecondaryKey != Key.None && Keyboard.IsKeyDown(x.Value.SecondaryKey)) ||
+      //  x.Value.SecondaryKey == Key.None) > 0;
 
-      var total = tmp.Count(x =>
-        (x.Value.SecondaryKey != Key.None && Keyboard.IsKeyDown(x.Value.SecondaryKey)) ||
-        x.Value.SecondaryKey == Key.None);
+      //var total = tmp.Count(x =>
+      //  (x.Value.SecondaryKey != Key.None && Keyboard.IsKeyDown(x.Value.SecondaryKey)) ||
+      //  x.Value.SecondaryKey == Key.None);
 
+      KeyValuePair<KeyFunction, HotKey>? function = null;
 
-      if (founded)
+      foreach (var s in Shortcuts)
       {
-       
-        var function = tmp.FirstOrDefault(x =>
-          (x.Value.SecondaryKey != Key.None && Keyboard.IsKeyDown(x.Value.SecondaryKey)) ||
-          x.Value.SecondaryKey == Key.None);
+        if (s.Value.PrimaryKey != Key.None)
+        {
+          if (Keyboard.IsKeyDown(s.Value.PrimaryKey))
+          {
+            function = s;
 
-        if (function.Key == KeyFunction.None)
-        {
-          Drawer.DrawTool = Tool.None;
-        }
-        else if (function.Key == KeyFunction.Selection)
-        {
-          Drawer.DrawTool = Tool.Selection;
-          Console.WriteLine("selection");
-        }
-        if (function.Key == KeyFunction.Pan)
-        {
-          Drawer.DrawTool = Tool.None;
-          Console.WriteLine("pan");
-        }
-        else if (function.Key == KeyFunction.Ink)
-        {
-          Drawer.DrawTool = Tool.Ink;
-          Console.WriteLine("ink");
-        }
-        else if (function.Key == KeyFunction.Line)
-        {
-          Drawer.DrawTool = Tool.Line;
-          Console.WriteLine("line");
-        }
-        else if (function.Key == KeyFunction.Rectangle)
-        {
-          Drawer.DrawTool = Tool.Rectangle;
-          Console.WriteLine("rectangle");
-        }
-        else if (function.Key == KeyFunction.Ellipse)
-        {
-          Drawer.DrawTool = Tool.Ellipse;
-          Console.WriteLine("ellipse");
-        }
-        else if (function.Key == KeyFunction.Text)
-        {
-          Drawer.DrawTool = Tool.Text;
-          Console.WriteLine("text");
-        }
-        else if (function.Key == KeyFunction.Triangle)
-        {
-          Drawer.DrawTool = Tool.Triangle;
-          Console.WriteLine("triange");
-        }
-        else if (function.Key == KeyFunction.Arrow)
-        {
-          Drawer.DrawTool = Tool.Arrow;
-          Console.WriteLine("arrow");
-        }
-        else if (function.Key == KeyFunction.Custom)
-        {
-          Drawer.DrawTool = Tool.Custom;
-          Console.WriteLine("custom");
-        }
-        else if (function.Key == KeyFunction.Cancel)
-        {
-          Drawer.CancelDrawing();
-          Console.WriteLine("cancel");
-        }
-        else if (function.Key == KeyFunction.Delete)
-        {
-          Drawer.Selector.DeleteSelected();
-          Console.WriteLine("delete");
-        }
-        else if (function.Key == KeyFunction.Undo)
-        {
-          Drawer.UndoHelper.Undo();
-          Console.WriteLine("undo");
-        }
-        else if (function.Key == KeyFunction.Redo)
-        {
-          Drawer.UndoHelper.Redo();
-          Console.WriteLine("redo");
-        }
-        else if (function.Key == KeyFunction.SelectAll)
-        {
-          Drawer.Selector.SelectAll();
-          Console.WriteLine("select all");
+            if (s.Value.SecondaryKey != Key.None)
+            {
+              if (Keyboard.IsKeyDown(s.Value.SecondaryKey))
+              {
+                function = s;
+                break;
+              }
+            }
+          } 
         }
       }
+
+      if (function == null) return;
+
+      //var function = tmp.FirstOrDefault(x =>
+      //  (x.Value.SecondaryKey != Key.None && Keyboard.IsKeyDown(x.Value.SecondaryKey)) ||
+      //  x.Value.SecondaryKey == Key.None);
+
+      if (function.Value.Key == KeyFunction.None)
+      {
+        Drawer.DrawTool = Tool.None;
+      }
+      else if (function.Value.Key == KeyFunction.Selection)
+      {
+        Drawer.DrawTool = Tool.Selection;
+        Console.WriteLine("selection");
+      }
+      if (function.Value.Key == KeyFunction.Pan)
+      {
+        Drawer.DrawTool = Tool.None;
+        Console.WriteLine("pan");
+      }
+      else if (function.Value.Key == KeyFunction.Ink)
+      {
+        Drawer.DrawTool = Tool.Ink;
+        Console.WriteLine("ink");
+      }
+      else if (function.Value.Key == KeyFunction.Line)
+      {
+        Drawer.DrawTool = Tool.Line;
+        Console.WriteLine("line");
+      }
+      else if (function.Value.Key == KeyFunction.Rectangle)
+      {
+        Drawer.DrawTool = Tool.Rectangle;
+        Console.WriteLine("rectangle");
+      }
+      else if (function.Value.Key == KeyFunction.Ellipse)
+      {
+        Drawer.DrawTool = Tool.Ellipse;
+        Console.WriteLine("ellipse");
+      }
+      else if (function.Value.Key == KeyFunction.Text)
+      {
+        Drawer.DrawTool = Tool.Text;
+        Console.WriteLine("text");
+      }
+      else if (function.Value.Key == KeyFunction.Triangle)
+      {
+        Drawer.DrawTool = Tool.Triangle;
+        Console.WriteLine("triange");
+      }
+      else if (function.Value.Key == KeyFunction.Arrow)
+      {
+        Drawer.DrawTool = Tool.Arrow;
+        Console.WriteLine("arrow");
+      }
+      else if (function.Value.Key == KeyFunction.Custom)
+      {
+        Drawer.DrawTool = Tool.Custom;
+        Console.WriteLine("custom");
+      }
+      else if (function.Value.Key == KeyFunction.Cancel)
+      {
+        Drawer.CancelDrawing();
+        Console.WriteLine("cancel");
+      }
+      else if (function.Value.Key == KeyFunction.Delete)
+      {
+        Drawer.Selector.DeleteSelected();
+        Console.WriteLine("delete");
+      }
+      else if (function.Value.Key == KeyFunction.Undo)
+      {
+        Drawer.UndoHelper.Undo();
+        Console.WriteLine("undo");
+      }
+      else if (function.Value.Key == KeyFunction.Redo)
+      {
+        Drawer.UndoHelper.Redo();
+        Console.WriteLine("redo");
+      }
+      else if (function.Value.Key == KeyFunction.SelectAll)
+      {
+        Drawer.Selector.SelectAll();
+        Console.WriteLine("select all");
+      }
+
     }
 
     public void Bind(KeyFunction function, Key primaryKey, Key secondaryKey = Key.None)
