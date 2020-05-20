@@ -347,6 +347,34 @@ namespace XDrawerLib.Helpers
 
                 return false;
             }
+            else if (item.Tag is XArrow arrow)
+            {
+                var xScale = (double)_rect.RenderTransform.GetValue(ScaleTransform.ScaleXProperty);
+                var yScale = (double)_rect.RenderTransform.GetValue(ScaleTransform.ScaleYProperty);
+
+                var x1 = Canvas.GetLeft(_rect);
+                var y1 = Canvas.GetTop(_rect);
+
+                if (xScale < 0)
+                {
+                    x1 -= _rect.ActualWidth;
+                }
+
+                if (yScale < 0)
+                {
+                    y1 -= _rect.ActualHeight;
+                }
+
+                var r1 = new Rect(x1, y1, _rect.ActualWidth, _rect.ActualHeight);
+
+                var s = LineIntersectsRect(new Point(arrow.Drawing.X1, arrow.Drawing.Y1), new Point(arrow.Drawing.X2, arrow.Drawing.Y2), r1);
+                if (s)
+                {
+                    return true;
+                }
+
+                return false;
+            }
             else
             {
                 var xScale = (double)_rect.RenderTransform.GetValue(ScaleTransform.ScaleXProperty);
