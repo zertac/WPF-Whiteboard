@@ -27,7 +27,7 @@ namespace XDrawer.Whiteboard
 
       BtnNone.Click += delegate (object sender, RoutedEventArgs args)
       {
-        Drawer.DrawTool = Tool.None;
+        Drawer.DrawTool = Tool.Selection;
       };
 
       BtnRectangle.Click += delegate (object sender, RoutedEventArgs args)
