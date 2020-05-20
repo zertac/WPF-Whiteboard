@@ -31,14 +31,13 @@ namespace XDrawerLib.Helpers
       Shortcuts.Add(KeyFunction.Custom, new HotKey { PrimaryKey = Key.LeftCtrl, SecondaryKey = Key.H });
       Shortcuts.Add(KeyFunction.PreserveSize, new HotKey { PrimaryKey = Key.LeftShift });
       Shortcuts.Add(KeyFunction.Cancel, new HotKey { PrimaryKey = Key.Escape });
-      Shortcuts.Add(KeyFunction.Delete, new HotKey { PrimaryKey = Key.T });
+      Shortcuts.Add(KeyFunction.Delete, new HotKey { PrimaryKey = Key.LeftAlt, SecondaryKey = Key.T });
       Shortcuts.Add(KeyFunction.Undo, new HotKey { PrimaryKey = Key.LeftCtrl, SecondaryKey = Key.Z });
       Shortcuts.Add(KeyFunction.Redo, new HotKey { PrimaryKey = Key.LeftCtrl, SecondaryKey = Key.Y });
       Shortcuts.Add(KeyFunction.Selection, new HotKey { PrimaryKey = Key.LeftCtrl, SecondaryKey = Key.Q });
       Shortcuts.Add(KeyFunction.None, new HotKey { PrimaryKey = Key.LeftCtrl });
-      Shortcuts.Add(KeyFunction.Pan, new HotKey { PrimaryKey = Key.Space });
+      Shortcuts.Add(KeyFunction.Pan, new HotKey { PrimaryKey = Key.LeftAlt });
       Shortcuts.Add(KeyFunction.SelectAll, new HotKey { PrimaryKey = Key.LeftAlt, SecondaryKey = Key.B });
-
     }
 
     public bool IsPreserveSize()

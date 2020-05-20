@@ -115,7 +115,7 @@ namespace XDrawerLib.Drawers
     {
       Shadow.Opacity = 1;
 
-      Drawer.IsEditMode = false;
+      //Drawer.IsEditMode = false;
       base.Finish();
     }
 

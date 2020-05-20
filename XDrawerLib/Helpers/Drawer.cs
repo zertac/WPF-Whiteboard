@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -91,13 +92,13 @@ namespace XDrawerLib.Helpers
       _page.PreviewMouseLeftButtonDown += _canvas_PreviewMouseLeftButtonDown;
       _page.MouseMove += _canvas_PreviewMouseMove;
       _page.PreviewMouseLeftButtonUp += _canvas_PreviewMouseLeftButtonUp;
-
       var window = Application.Current.MainWindow;
       if (window != null)
       {
         window.KeyDown += P_PreviewKeyDown;
       }
     }
+
 
     private void P_PreviewKeyDown(object sender, KeyEventArgs e)
     {
@@ -285,8 +286,17 @@ namespace XDrawerLib.Helpers
       }
       else if (DrawTool == Tool.Text)
       {
-        Objects.Last().Value.Edit();
-        Objects.Last().Value.Finish();
+        if (!(Objects.Last().Value is XText txt)) return;
+
+        if (IsEditMode == false)
+        {
+          txt.Edit();
+          txt.Finish();
+        }
+        else
+        {
+          DrawTool = Tool.Selection;
+        }
       }
       else if (DrawTool == Tool.Arrow)
       {
