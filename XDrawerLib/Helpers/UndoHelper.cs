@@ -175,8 +175,18 @@ namespace XDrawerLib.Helpers
             }
             else if (lastAction.Type == ActionType.Resize)
             {
-                lastAction.Object.Tag.ToType<XShape>().OwnedShape.Width = lastAction.PreviousProps.Size.Width;
-                lastAction.Object.Tag.ToType<XShape>().OwnedShape.Height = lastAction.PreviousProps.Size.Height;
+                if (lastAction.Object.Tag.ToType<XShape>().OwnedShape != null)
+                {
+                    lastAction.Object.Tag.ToType<XShape>().OwnedShape.Width = lastAction.PreviousProps.Size.Width;
+                    lastAction.Object.Tag.ToType<XShape>().OwnedShape.Height = lastAction.PreviousProps.Size.Height;
+                }
+
+                if (lastAction.Object.Tag.ToType<XShape>().OwnedControl != null)
+                {
+                    var obj = (FrameworkElement)lastAction.Object;
+                    obj.Width = lastAction.PreviousProps.Size.Width;
+                    obj.Height = lastAction.PreviousProps.Size.Height;
+                }
             }
 
             if (_currentIndex > -1) _currentIndex--;
@@ -278,8 +288,18 @@ namespace XDrawerLib.Helpers
             }
             else if (lastAction.Type == ActionType.Resize)
             {
-                lastAction.Object.Tag.ToType<XShape>().OwnedShape.Width = lastAction.NextProps.Size.Width;
-                lastAction.Object.Tag.ToType<XShape>().OwnedShape.Height = lastAction.NextProps.Size.Height;
+                if (lastAction.Object.Tag.ToType<XShape>().OwnedShape != null)
+                {
+                    lastAction.Object.Tag.ToType<XShape>().OwnedShape.Width = lastAction.NextProps.Size.Width;
+                    lastAction.Object.Tag.ToType<XShape>().OwnedShape.Height = lastAction.NextProps.Size.Height;
+                }
+
+                if (lastAction.Object.Tag.ToType<XShape>().OwnedControl != null)
+                {
+                    var obj = (FrameworkElement)lastAction.Object;
+                    obj.Width = lastAction.NextProps.Size.Width;
+                    obj.Height = lastAction.NextProps.Size.Height;
+                }
             }
         }
     }
