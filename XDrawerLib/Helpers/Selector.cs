@@ -91,7 +91,7 @@ namespace XDrawerLib.Helpers
             {
                 if (o.Value.IsDrawing)
                 {
-                    if (Drawer.DrawTool != Tool.Ink)
+                    if (Drawer.DrawTool != Tool.Ink && Drawer.DrawTool != Tool.Highlight)
                         o.Value.Finish();
                 }
             }
@@ -229,7 +229,9 @@ namespace XDrawerLib.Helpers
 
         public void DeleteAll()
         {
-            foreach (var item in Drawer.Objects.Values)
+            var list = Drawer.Objects.Values.ToList();
+
+            foreach (var item in list)
             {
                 if (item.OwnedShape != null)
                 {
@@ -238,7 +240,17 @@ namespace XDrawerLib.Helpers
 
                 if (item.OwnedControl != null)
                 {
-                    DeleteObject((FrameworkElement)item.OwnedControl);
+                    if (item.OwnedControl is List<Border> borders)
+                    {
+                        foreach (var o in borders)
+                        {
+                            DeleteObject(o);
+                        }
+                    }
+                    else
+                    {
+                        DeleteObject((FrameworkElement)item.OwnedControl);
+                    }
                 }
             }
         }
@@ -331,7 +343,7 @@ namespace XDrawerLib.Helpers
             {
                 var xScale = (double)_rect.RenderTransform.GetValue(ScaleTransform.ScaleXProperty);
                 var yScale = (double)_rect.RenderTransform.GetValue(ScaleTransform.ScaleYProperty);
-                
+
                 var x1 = Canvas.GetLeft(_rect);
                 var y1 = Canvas.GetTop(_rect);
 
