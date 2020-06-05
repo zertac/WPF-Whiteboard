@@ -139,6 +139,8 @@ namespace XDrawerLib.Helpers
 
         private void _canvas_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            ActiveObject = null;
+
             if (DrawTool == Tool.None) return;
 
             if (e.StylusDevice != null && e.StylusDevice.Inverted)
@@ -364,6 +366,281 @@ namespace XDrawerLib.Helpers
             Selector.FinishDraw();
             Selector.DeleteAll();
             DrawTool = _drawTool;
+        }
+
+        public void SetBackground(Brush brush)
+        {
+            foreach (var o in Objects)
+            {
+                if (o.Value.IsSelected)
+                {
+                    var style = new DrawerStyle();
+                    style.Background = brush;
+                    style.BorderSize = o.Value.Style.BorderSize;
+                    style.Border = o.Value.Style.Border;
+                    style.FontSize = o.Value.Style.FontSize;
+                    style.Opacity = o.Value.Style.Opacity;
+
+                    o.Value.Style = style;
+                }
+            }
+
+            if (ActiveObject != null)
+            {
+                var style = new DrawerStyle();
+                style.Background = brush;
+                style.BorderSize = ActiveObject.Tag.ToType<XShape>().Style.BorderSize;
+                style.Border = ActiveObject.Tag.ToType<XShape>().Style.Border;
+                style.FontSize = ActiveObject.Tag.ToType<XShape>().Style.FontSize;
+                style.Opacity = ActiveObject.Tag.ToType<XShape>().Style.Opacity;
+
+                ActiveObject.Tag.ToType<XShape>().Style = style;
+            }
+        }
+
+        public void SetBorder(Brush brush)
+        {
+            foreach (var o in Objects)
+            {
+                if (o.Value.IsSelected)
+                {
+                    var style = new DrawerStyle();
+                    style.Background = o.Value.Style.Background;
+                    style.BorderSize = o.Value.Style.BorderSize;
+                    style.Border = brush;
+                    style.FontSize = o.Value.Style.FontSize;
+                    style.Opacity = o.Value.Style.Opacity;
+
+                    o.Value.Style = style;
+                }
+            }
+
+            if (ActiveObject != null)
+            {
+                var style = new DrawerStyle();
+                style.Background = ActiveObject.Tag.ToType<XShape>().Style.Background;
+                style.BorderSize = ActiveObject.Tag.ToType<XShape>().Style.BorderSize;
+                style.Border = brush;
+                style.FontSize = ActiveObject.Tag.ToType<XShape>().Style.FontSize;
+                style.Opacity = ActiveObject.Tag.ToType<XShape>().Style.Opacity;
+
+                ActiveObject.Tag.ToType<XShape>().Style = style;
+            }
+        }
+
+        public void SetBorderSize(double value)
+        {
+            foreach (var o in Objects)
+            {
+                if (o.Value.IsSelected)
+                {
+                    var status = true;
+                    if (value < 0)
+                    {
+                        if (o.Value.Style.BorderSize < 1)
+                        {
+                            status = false;
+                        }
+                    }
+                    else if (value > 0)
+                    {
+                        if (o.Value.Style.BorderSize > 20)
+                        {
+                            status = false;
+                        }
+                    }
+
+                    if (status)
+                    {
+                        var style = new DrawerStyle();
+                        style.Background = o.Value.Style.Background;
+                        style.BorderSize = o.Value.Style.BorderSize + value;
+                        style.Border = o.Value.Style.Border;
+                        style.FontSize = o.Value.Style.FontSize;
+                        style.Opacity = o.Value.Style.Opacity;
+
+                        o.Value.Style = style;
+                    }
+                }
+            }
+
+            if (ActiveObject != null)
+            {
+                var status = true;
+                if (value < 0)
+                {
+                    if (ActiveObject.Tag.ToType<XShape>().Style.BorderSize < 1)
+                    {
+                        status = false;
+                    }
+                }
+                else if (value > 0)
+                {
+                    if (ActiveObject.Tag.ToType<XShape>().Style.BorderSize > 20)
+                    {
+                        status = false;
+                    }
+                }
+
+                if (status)
+                {
+                    var style = new DrawerStyle();
+                    style.Background = ActiveObject.Tag.ToType<XShape>().Style.Background;
+                    style.BorderSize = ActiveObject.Tag.ToType<XShape>().Style.BorderSize + value;
+                    style.Border = ActiveObject.Tag.ToType<XShape>().Style.Border;
+                    style.FontSize = ActiveObject.Tag.ToType<XShape>().Style.FontSize;
+                    style.Opacity = ActiveObject.Tag.ToType<XShape>().Style.Opacity;
+
+                    ActiveObject.Tag.ToType<XShape>().Style = style;
+                }
+            }
+        }
+
+        public void SetFontSize(double value)
+        {
+            foreach (var o in Objects)
+            {
+                if (o.Value.IsSelected)
+                {
+                    var status = true;
+                    if (value < 0)
+                    {
+                        if (o.Value.Style.FontSize < 1)
+                        {
+                            status = false;
+                        }
+                    }
+                    else if (value > 0)
+                    {
+                        if (o.Value.Style.FontSize > 60)
+                        {
+                            status = false;
+                        }
+                    }
+
+                    if (o.Value.Style.FontSize + value < 1)
+                    {
+                        status = false;
+                    }
+
+                    if (status)
+                    {
+                        var style = new DrawerStyle();
+                        style.Background = o.Value.Style.Background;
+                        style.BorderSize = o.Value.Style.BorderSize;
+                        style.Border = o.Value.Style.Border;
+                        style.FontSize = o.Value.Style.FontSize + value;
+                        style.Opacity = o.Value.Style.Opacity;
+
+                        o.Value.Style = style;
+                    }
+                }
+            }
+
+            if (ActiveObject != null)
+            {
+                var status = true;
+                if (value < 0)
+                {
+                    if (ActiveObject.Tag.ToType<XShape>().Style.FontSize < 1)
+                    {
+                        status = false;
+                    }
+                }
+                else if (value > 0)
+                {
+                    if (ActiveObject.Tag.ToType<XShape>().Style.FontSize > 60)
+                    {
+                        status = false;
+                    }
+                }
+
+                if (ActiveObject.Tag.ToType<XShape>().Style.FontSize + value < 1)
+                {
+                    status = false;
+                }
+
+                if (status)
+                {
+                    var style = new DrawerStyle();
+                    style.Background = ActiveObject.Tag.ToType<XShape>().Style.Background;
+                    style.BorderSize = ActiveObject.Tag.ToType<XShape>().Style.BorderSize;
+                    style.Border = ActiveObject.Tag.ToType<XShape>().Style.Border;
+                    style.FontSize = ActiveObject.Tag.ToType<XShape>().Style.FontSize + value;
+                    style.Opacity = ActiveObject.Tag.ToType<XShape>().Style.Opacity;
+
+                    ActiveObject.Tag.ToType<XShape>().Style = style;
+                }
+            }
+        }
+
+        public void SetOpacity(double value)
+        {
+            foreach (var o in Objects)
+            {
+                if (o.Value.IsSelected)
+                {
+                    var status = true;
+                    if (value < 0)
+                    {
+                        if (o.Value.Style.Opacity < 1)
+                        {
+                            status = false;
+                        }
+                    }
+                    else if (value > 0)
+                    {
+                        if (o.Value.Style.Opacity > 1)
+                        {
+                            status = false;
+                        }
+                    }
+
+                    if (status)
+                    {
+                        var style = new DrawerStyle();
+                        style.Background = o.Value.Style.Background;
+                        style.BorderSize = o.Value.Style.BorderSize;
+                        style.Border = o.Value.Style.Border;
+                        style.FontSize = o.Value.Style.FontSize;
+                        style.Opacity = value;
+
+                        o.Value.Style = style;
+                    }
+                }
+            }
+
+            if (ActiveObject != null)
+            {
+
+                var status = true;
+                if (value < 0)
+                {
+                    if (ActiveObject.Tag.ToType<XShape>().Style.Opacity < 1)
+                    {
+                        status = false;
+                    }
+                }
+                else if (value > 0)
+                {
+                    if (ActiveObject.Tag.ToType<XShape>().Style.Opacity > 1)
+                    {
+                        status = false;
+                    }
+                }
+
+                if (status)
+                {
+                    var style = new DrawerStyle();
+                    style.Background = ActiveObject.Tag.ToType<XShape>().Style.Background;
+                    style.BorderSize = ActiveObject.Tag.ToType<XShape>().Style.BorderSize;
+                    style.Border = ActiveObject.Tag.ToType<XShape>().Style.Border;
+                    style.FontSize = ActiveObject.Tag.ToType<XShape>().Style.FontSize;
+                    style.Opacity = value;
+
+                    ActiveObject.Tag.ToType<XShape>().Style = style;
+                }
+            }
         }
     }
 }
